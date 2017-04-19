@@ -1,7 +1,9 @@
-package ch.hes.foreignlanguageschool;
+package ch.hes.foreignlanguageschool.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import ch.hes.foreignlanguageschool.R;
 
 public class MainActivity extends AppCompatActivity {
 
