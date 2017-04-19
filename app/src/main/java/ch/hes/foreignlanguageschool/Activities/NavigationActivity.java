@@ -18,10 +18,26 @@ import ch.hes.foreignlanguageschool.R;
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
+    //tags used to attach the fragments
+    private final String TAG_HOME = "Home";
+    private final String TAG_CALENDAR = "Calendar";
+    private final String TAG_ASSIGNMENTS = "Assignments";
+    private final String TAG_LECTURES = "Lectures";
+    private final String TAG_STUDENTS = "Students";
+    private final String TAG_TEACHERS = "Teachers";
+
+    //index to identify current nav menu item
+    private int navItemIndex = 0;
+
+    //toolbar titles respected to selected nav menu item
+    private String[] activityTitles;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -82,17 +98,17 @@ public class NavigationActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_home) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_calendar) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_assignments) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_lectures) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_students) {
+
+        } else if (id == R.id.nav_teachers) {
 
         }
 
