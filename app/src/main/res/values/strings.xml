@@ -13,5 +13,16 @@
     <string name="LecturesNavigation">Lectures</string>
     <string name="StudentsNavigation">Students</string>
     <string name="TeachersNavigation">Teachers</string>
+    <string name="SettingsNavigation">Settings</string>
+
+    <string-array name="MenuItems">
+        <item>Home</item>
+        <item>Calendar</item>
+        <item>Assignments</item>
+        <item>Lectures</item>
+        <item>Students</item>
+        <item>Teachers</item>
+        <item>Settings</item>
+    </string-array>
 
 </resources>
