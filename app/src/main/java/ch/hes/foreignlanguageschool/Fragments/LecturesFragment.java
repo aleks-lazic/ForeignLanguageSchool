@@ -1,4 +1,4 @@
-package ch.hes.foreignlanguageschool.Test;
+package ch.hes.foreignlanguageschool.Fragments;
 
 import android.content.Context;
 import android.net.Uri;
