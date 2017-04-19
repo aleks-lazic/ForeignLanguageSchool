@@ -1,11 +1,13 @@
 package ch.hes.foreignlanguageschool.Activities;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,7 +18,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import ch.hes.foreignlanguageschool.DAO.Teacher;
 import ch.hes.foreignlanguageschool.Fragments.AssignmentsFragment;
 import ch.hes.foreignlanguageschool.Fragments.CalendarFragment;
 import ch.hes.foreignlanguageschool.Fragments.HomeFragment;
@@ -26,10 +27,10 @@ import ch.hes.foreignlanguageschool.Fragments.StudentsFragment;
 import ch.hes.foreignlanguageschool.Fragments.TeachersFragment;
 import ch.hes.foreignlanguageschool.R;
 
-import static android.R.id.toggle;
+import static ch.hes.foreignlanguageschool.R.id.fab;
 
-public class NavigationActivity extends AppCompatActivity {
-
+public class NavigationActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     //tags used to attach the fragments
     private final String TAG_HOME = "Home";
@@ -65,53 +66,37 @@ public class NavigationActivity extends AppCompatActivity {
 
         mHandler = new Handler();
 
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        setUpNavigationView();
-
-        //everything about floating action button
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Patrick enculé", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
 
-
         // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.MenuItems);
 
-        if (savedInstanceState == null) {
-            navItemIndex = 0;
-            CURRENT_TAG = TAG_HOME;
-            loadHomeFragment();
-        }
+
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
     public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawers();
-            return;
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
-
-        // This code loads home fragment when back key is pressed
-        // when user is in other fragment than home
-        if (shouldLoadHomeFragOnBackPress) {
-            // checking if user is on other navigation menu
-            // rather than home
-            if (navItemIndex != 0) {
-                navItemIndex = 0;
-                CURRENT_TAG = TAG_HOME;
-                loadHomeFragment();
-                return;
-            }
-        }
-
-        super.onBackPressed();
     }
 
     @Override
@@ -136,125 +121,44 @@ public class NavigationActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setUpNavigationView() {
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
+        // Handle navigation view item clicks here.
+        int id = menuItem.getItemId();
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                // Handle navigation view item clicks here.
-                int id = menuItem.getItemId();
-
-                if (id == R.id.nav_home) {
-                    navItemIndex = 0;
-                    CURRENT_TAG = TAG_HOME;
-                } else if (id == R.id.nav_calendar) {
-                    navItemIndex = 1;
-                    CURRENT_TAG = TAG_CALENDAR;
-                } else if (id == R.id.nav_assignments) {
-                    navItemIndex = 2;
-                    CURRENT_TAG = TAG_ASSIGNMENTS;
-                } else if (id == R.id.nav_lectures) {
-                    navItemIndex = 3;
-                    CURRENT_TAG = TAG_LECTURES;
-                } else if (id == R.id.nav_students) {
-                    navItemIndex = 4;
-                    CURRENT_TAG = TAG_STUDENTS;
-                } else if (id == R.id.nav_teachers) {
-                    navItemIndex = 5;
-                    CURRENT_TAG = TAG_TEACHERS;
-                } else {
-                    navItemIndex = 0;
-                }
-
-                //Checking if the item in in checked state or not, if not make it checked
-                if (menuItem.isChecked()) {
-                    menuItem.setChecked(false);
-                } else {
-                    menuItem.setChecked(true);
-                }
-
-                menuItem.setChecked(true);
-                loadHomeFragment();
-
-                return true;
-            }
-        });
-
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
-                super.onDrawerClosed(drawerView);
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
-                super.onDrawerOpened(drawerView);
-            }
-        };
-
-        //Setting the actionbarToggle to drawer layout
-        drawer.setDrawerListener(actionBarDrawerToggle);
-
-        //calling sync state is necessary or else your hamburger icon wont show up
-        actionBarDrawerToggle.syncState();
-    }
-
-    // Sometimes, when fragment has huge data, screen seems hanging
-    // when switching between navigation menus
-    // So using runnable, the fragment is loaded with cross fade effect
-    // This effect can be seen in GMail app
-    Runnable mPendingRunnable = new Runnable() {
-        @Override
-        public void run() {
-            // update the main content by replacing fragments
-            Fragment fragment = getHomeFragment();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                    android.R.anim.fade_out);
-            fragmentTransaction.replace(R.id.drawer_layout, fragment, CURRENT_TAG);
-            fragmentTransaction.commitAllowingStateLoss();
+        if (id == R.id.nav_home) {
+            navItemIndex = 0;
+            CURRENT_TAG = TAG_HOME;
+        } else if (id == R.id.nav_calendar) {
+            navItemIndex = 1;
+            CURRENT_TAG = TAG_CALENDAR;
+        } else if (id == R.id.nav_assignments) {
+            navItemIndex = 2;
+            CURRENT_TAG = TAG_ASSIGNMENTS;
+        } else if (id == R.id.nav_lectures) {
+            navItemIndex = 3;
+            CURRENT_TAG = TAG_LECTURES;
+        } else if (id == R.id.nav_students) {
+            navItemIndex = 4;
+            CURRENT_TAG = TAG_STUDENTS;
+        } else if (id == R.id.nav_teachers) {
+            navItemIndex = 5;
+            CURRENT_TAG = TAG_TEACHERS;
+        } else {
+            navItemIndex = 0;
         }
-    };
-
-    private Fragment getHomeFragment() {
-        switch (navItemIndex) {
-            case 0:
-                // home
-                HomeFragment homeFragment = new HomeFragment();
-                return homeFragment;
-            case 1:
-                // calendar
-                CalendarFragment calendarFragment = new CalendarFragment();
-                return calendarFragment;
-            case 2:
-                // assignments
-                AssignmentsFragment assignmentsFragment = new AssignmentsFragment();
-                return assignmentsFragment;
-            case 3:
-                // Lectures
-                LecturesFragment lecturesFragment = new LecturesFragment();
-                return lecturesFragment;
-
-            case 4:
-                // students
-                StudentsFragment studentsFragment = new StudentsFragment();
-                return studentsFragment;
-            case 5:
-                // teachers
-                TeachersFragment teachersFragment = new TeachersFragment();
-                return teachersFragment;
-            case 6:
-                // settings
-                SettingsFragment settingsFragment = new SettingsFragment();
-                return settingsFragment;
-            default:
-                return new HomeFragment();
+        //Checking if the item in in checked state or not, if not make it checked
+        if (menuItem.isChecked()) {
+            menuItem.setChecked(false);
+        } else {
+            menuItem.setChecked(true);
         }
-    }
 
+        menuItem.setChecked(true);
+        loadHomeFragment();
+        return true;
+    }
 
     private void loadHomeFragment() {
 
@@ -274,27 +178,11 @@ public class NavigationActivity extends AppCompatActivity {
             return;
         }
 
-        // Sometimes, when fragment has huge data, screen seems hanging
-        // when switching between navigation menus
-        // So using runnable, the fragment is loaded with cross fade effect
-        // This effect can be seen in GMail app
-        Runnable mPendingRunnable = new Runnable() {
-            @Override
-            public void run() {
-                // update the main content by replacing fragments
-                Fragment fragment = getHomeFragment();
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                        android.R.anim.fade_out);
-                fragmentTransaction.replace(R.id.drawer_layout, fragment, CURRENT_TAG);
-                fragmentTransaction.commitAllowingStateLoss();
-            }
-        };
+        Fragment fragment = getHomeFragment();
+        FragmentManager fragmentManager = getFragmentManager(); // For AppCompat use getSupportFragmentManager
 
-        // If mPendingRunnable is not null, then add to the message queue
-        if (mPendingRunnable != null) {
-            mHandler.post(mPendingRunnable);
-        }
+        //fragmentManager.beginTransaction().replace(R.id.drawer_layout, fragment).commit();
+
 
         // show or hide the fab button
         toggleFab();
@@ -305,6 +193,49 @@ public class NavigationActivity extends AppCompatActivity {
         // refresh toolbar menu
         invalidateOptionsMenu();
 
+    }
+
+    private Fragment getHomeFragment() {
+        switch (navItemIndex) {
+            case 0:
+                // home
+                HomeFragment homeFragment = new HomeFragment();
+                Log.d("Aleks", "GetHomeFragment "+navItemIndex);
+                return homeFragment;
+            case 1:
+                // calendar
+                CalendarFragment calendarFragment = new CalendarFragment();
+                Log.d("Aleks", "GetHomeFragment "+navItemIndex);
+                return calendarFragment;
+            case 2:
+                // assignments
+                AssignmentsFragment assignmentsFragment = new AssignmentsFragment();
+                Log.d("Aleks", "GetHomeFragment "+navItemIndex);
+                return assignmentsFragment;
+            case 3:
+                // Lectures
+                LecturesFragment lecturesFragment = new LecturesFragment();
+                Log.d("Aleks", "GetHomeFragment "+navItemIndex);
+                return lecturesFragment;
+
+            case 4:
+                // students
+                StudentsFragment studentsFragment = new StudentsFragment();
+                Log.d("Aleks", "GetHomeFragment "+navItemIndex);
+                return studentsFragment;
+            case 5:
+                // teachers
+                TeachersFragment teachersFragment = new TeachersFragment();
+                Log.d("Aleks", "GetHomeFragment "+navItemIndex);
+                return teachersFragment;
+            case 6:
+                // settings
+                SettingsFragment settingsFragment = new SettingsFragment();
+                Log.d("Aleks", "GetHomeFragment "+navItemIndex);
+                return settingsFragment;
+            default:
+                return new HomeFragment();
+        }
     }
 
     private void selectNavMenu() {
@@ -322,4 +253,5 @@ public class NavigationActivity extends AppCompatActivity {
             fab.hide();
         }
     }
+
 }
