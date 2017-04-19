@@ -26,6 +26,10 @@
             android:id="@+id/nav_teachers"
             android:icon="@drawable/ic_teachers"
             android:title="@string/TeachersNavigation" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/SettingsNavigation" />
     </group>
 
     <item android:title="Communicate">
