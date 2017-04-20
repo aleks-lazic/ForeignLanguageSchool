@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ForeignLanguageSchool</string>
+    <string name="app_name">EcoleDeLangueEtrangère</string>
+    <string name="AssignmentsNavigation">Tâches</string>
+    <string name="CalendarNavigation">Calendrier</string>
+    <string name="HomeNavigation">Accueil</string>
+    <string name="LecturesNavigation">Cours</string>
+    <string name="SettingsNavigation">Options</string>
+    <string name="StudentsNavigation">Elèves</string>
+    <string name="TeachersNavigation">Professeurs</string>
+    <string name="action_settings">Options</string>
 </resources>
