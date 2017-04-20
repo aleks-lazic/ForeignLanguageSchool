@@ -1,5 +1,5 @@
 
-# Created by https://www.gitignore.io/api/android,androidstudio
+# Created by https://www.gitignore.io/api/java,android,androidstudio
 
 ### Android ###
 # Built application files
@@ -165,5 +165,21 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-# End of https://www.gitignore.io/api/android,androidstudio
-0
+### Java ###
+# Compiled class file
+
+# Log file
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+
+# Package Files #
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+
+# End of https://www.gitignore.io/api/java,android,androidstudio
