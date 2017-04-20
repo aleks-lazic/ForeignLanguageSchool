@@ -27,6 +27,7 @@ import ch.hes.foreignlanguageschool.Fragments.StudentsFragment;
 import ch.hes.foreignlanguageschool.Fragments.TeachersFragment;
 import ch.hes.foreignlanguageschool.R;
 
+import static android.R.attr.fragment;
 import static ch.hes.foreignlanguageschool.R.id.fab;
 
 public class NavigationActivity extends AppCompatActivity
@@ -67,7 +68,12 @@ public class NavigationActivity extends AppCompatActivity
 
         mHandler = new Handler();
 
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+
         fab = (FloatingActionButton) findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,13 +86,12 @@ public class NavigationActivity extends AppCompatActivity
         activityTitles = getResources().getStringArray(R.array.MenuItems);
 
 
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+
         navigationView.setNavigationItemSelectedListener(this);
 
         if (savedInstanceState == null) {
@@ -153,7 +158,7 @@ public class NavigationActivity extends AppCompatActivity
             navItemIndex = 5;
             CURRENT_TAG = TAG_TEACHERS;
         } else if(id == R.id.nav_settings){
-            CURRENT_TAG = TAG_TEACHERS;
+            CURRENT_TAG = TAG_SETTINGS;
             navItemIndex = 6;
         }
         //Checking if the item in in checked state or not, if not make it checked
@@ -186,12 +191,24 @@ public class NavigationActivity extends AppCompatActivity
             return;
         }
 
-        //to replace the current fragment with another one
-        Fragment fragment = getHomeFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.drawer_layout, fragment, CURRENT_TAG);
+        Runnable mPendingRunnable = new Runnable() {
+            @Override
+            public void run() {
+                //to replace the current fragment with another one
+                Fragment fragment = getHomeFragment();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+                fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
+                fragmentTransaction.commitAllowingStateLoss();
+            }
+        };
 
-        Log.d("Aleks", "Current tag "+CURRENT_TAG + fragment.getClass().getSimpleName());
+        if (mPendingRunnable != null) {
+            mHandler.post(mPendingRunnable);
+        }
+
+
+//        Log.d("Aleks", "Current tag "+CURRENT_TAG + fragment.getClass().getSimpleName());
         // show or hide the fab button
         toggleFab();
 
