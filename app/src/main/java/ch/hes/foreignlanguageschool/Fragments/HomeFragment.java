@@ -102,6 +102,8 @@ public class HomeFragment extends Fragment {
         // Set the list of assignments
         mListView2 = (ListView) view.findViewById(R.id.home_assignments);
 
+
+
         mListView2.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(),
                 android.R.layout.simple_list_item_1 , assignments));
 
