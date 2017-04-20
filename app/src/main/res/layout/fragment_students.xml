@@ -4,10 +4,11 @@
     android:layout_height="match_parent"
     tools:context="ch.hes.foreignlanguageschool.Fragments.StudentsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <ListView
+        android:id="@+id/students_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/StudentsNavigation" />
+        android:layout_marginTop="25dp" />
 
 </FrameLayout>
