@@ -21,7 +21,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <!--<include layout="@layout/content_navigation" />-->
+    <!--<include layout="@layout/content_navigation" sdfsdfsafdas/>-->
 
     <FrameLayout
         android:id="@+id/frame"
