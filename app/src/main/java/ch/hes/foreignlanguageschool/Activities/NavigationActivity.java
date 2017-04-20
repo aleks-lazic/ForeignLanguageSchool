@@ -93,7 +93,7 @@ public class NavigationActivity extends AppCompatActivity
 //
 //        dbLecture = new DBLecture(databaseHelper);
 
-        Log.d("Aleks", dbTeacher.getTeacherById(1).getFirstName());
+        //Log.d("Aleks", dbTeacher.getTeacherById(1).getFirstName());
 //
 //
 //        dbLecture.insertValues("Engish", "English advanced course", dbTeacher.getTeacherById(1).getId());
