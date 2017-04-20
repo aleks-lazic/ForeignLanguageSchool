@@ -27,6 +27,7 @@ public class DBAssignment {
         values.put(db.getASSIGNMENT_TITLE(), title);
         values.put(db.getASSIGNMENT_DESCRIPTION(), description);
         values.put(db.getASSIGNMENT_DATE(), date);
+        values.put(db.getIMAGE_NAME(), "assignment-icon.png");
         values.put(db.getASSIGNMENT_FKTEACHER(), idTeacher);
 
         sql.insert(db.getTableAssignement(), null, values);
@@ -52,7 +53,8 @@ public class DBAssignment {
                 assignment.setTitle(cursor.getString(1));
                 assignment.setDescription(cursor.getString(2));
                 assignment.setDate(cursor.getString(3));
-                assignment.setTeacher(teacher.getTeacherById(Integer.parseInt(cursor.getString(4))));
+                assignment.setImageName(cursor.getString(4));
+                assignment.setTeacher(teacher.getTeacherById(Integer.parseInt(cursor.getString(5))));
 
                 // Adding assignment to list
                 assignmentsList.add(assignment);

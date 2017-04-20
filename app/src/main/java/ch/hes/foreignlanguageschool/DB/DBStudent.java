@@ -31,6 +31,7 @@ public class DBStudent {
         values.put(db.getSTUDENT_MAIL(), mail);
         values.put(db.getSTUDENT_STARTDATE(), startDate);
         values.put(db.getSTUDENT_ENDDATE(), endDate);
+        values.put(db.getIMAGE_NAME(), "student-icon.png");
 
         sql.insert(db.getTableStudent(), null, values);
         sql.close();
@@ -56,6 +57,7 @@ public class DBStudent {
         student.setMail(cursor.getString(5));
         student.setStartDate(cursor.getString(6));
         student.setEndDate(cursor.getString(7));
+        student.setImageName(cursor.getString(8));
 
         // return teacher
         return student;
@@ -75,7 +77,7 @@ public class DBStudent {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                Student student = studentDb.getStudentById(Integer.parseInt(cursor.getString(1)));
+                Student student = studentDb.getStudentById(Integer.parseInt(cursor.getString(0)));
 
                 // Adding student to list
                 studentsList.add(student);
@@ -106,6 +108,7 @@ public class DBStudent {
                 student.setMail(cursor.getString(5));
                 student.setStartDate(cursor.getString(6));
                 student.setEndDate(cursor.getString(7));
+                student.setImageName(cursor.getString((8)));
 
                 // Adding student to list
                 studentsList.add(student);
