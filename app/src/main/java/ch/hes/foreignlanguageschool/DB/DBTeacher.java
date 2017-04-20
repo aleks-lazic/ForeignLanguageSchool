@@ -3,6 +3,7 @@ package ch.hes.foreignlanguageschool.DB;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,16 +38,26 @@ public class DBTeacher {
     }
 
     public Teacher getTeacherById(int idTeacher) {
+        Log.d("Aleks", "jE SUIS DANS LA METHODE FDP");
+
         SQLiteDatabase sql = db.getWritableDatabase();
 
         Teacher teacher = new Teacher();
         String selectQuery = "SELECT * FROM " + db.getTableTeacher() + " WHERE " + db.getKeyId() + " = " + idTeacher;
 
         Cursor cursor = sql.rawQuery(selectQuery, null);
+        Log.d("Aleks", cursor.toString());
 
         if(cursor != null){
+            Log.d("Aleks", "Cursor n'est pas nul");
             cursor.moveToFirst();
         }
+
+        Log.d("Aleks", cursor.getString(0));
+        Log.d("Aleks", cursor.getString(1));
+        Log.d("Aleks", cursor.getString(2));
+        Log.d("Aleks", cursor.getString(3));
+        Log.d("Aleks", cursor.getString(4));
 
         teacher.setId(Integer.parseInt(cursor.getString(0)));
         teacher.setFirstName(cursor.getString(1));
