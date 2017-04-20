@@ -1,6 +1,6 @@
 package ch.hes.foreignlanguageschool.Activities;
 
-import android.app.FragmentManager;
+import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -39,6 +39,7 @@ public class NavigationActivity extends AppCompatActivity
     private final String TAG_LECTURES = "Lectures";
     private final String TAG_STUDENTS = "Students";
     private final String TAG_TEACHERS = "Teachers";
+    private final String TAG_SETTINGS = "Settings";
 
     private String CURRENT_TAG = "";
 
@@ -87,6 +88,12 @@ public class NavigationActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        if (savedInstanceState == null) {
+            navItemIndex = 0;
+            CURRENT_TAG = TAG_HOME;
+            loadHomeFragment();
+        }
     }
 
     @Override
@@ -145,8 +152,9 @@ public class NavigationActivity extends AppCompatActivity
         } else if (id == R.id.nav_teachers) {
             navItemIndex = 5;
             CURRENT_TAG = TAG_TEACHERS;
-        } else {
-            navItemIndex = 0;
+        } else if(id == R.id.nav_settings){
+            CURRENT_TAG = TAG_TEACHERS;
+            navItemIndex = 6;
         }
         //Checking if the item in in checked state or not, if not make it checked
         if (menuItem.isChecked()) {
@@ -179,11 +187,10 @@ public class NavigationActivity extends AppCompatActivity
         }
 
         Fragment fragment = getHomeFragment();
-        FragmentManager fragmentManager = getFragmentManager(); // For AppCompat use getSupportFragmentManager
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.drawer_layout, fragment, CURRENT_TAG);
 
-        //fragmentManager.beginTransaction().replace(R.id.drawer_layout, fragment).commit();
-
-
+        Log.d("Aleks", "Current tag "+CURRENT_TAG + fragment.getClass().getSimpleName());
         // show or hide the fab button
         toggleFab();
 
@@ -200,38 +207,38 @@ public class NavigationActivity extends AppCompatActivity
             case 0:
                 // home
                 HomeFragment homeFragment = new HomeFragment();
-                Log.d("Aleks", "GetHomeFragment "+navItemIndex);
+                Log.d("Aleks", "GetHomeFragment " + navItemIndex);
                 return homeFragment;
             case 1:
                 // calendar
                 CalendarFragment calendarFragment = new CalendarFragment();
-                Log.d("Aleks", "GetHomeFragment "+navItemIndex);
+                Log.d("Aleks", "GetHomeFragment " + navItemIndex);
                 return calendarFragment;
             case 2:
                 // assignments
                 AssignmentsFragment assignmentsFragment = new AssignmentsFragment();
-                Log.d("Aleks", "GetHomeFragment "+navItemIndex);
+                Log.d("Aleks", "GetHomeFragment " + navItemIndex);
                 return assignmentsFragment;
             case 3:
                 // Lectures
                 LecturesFragment lecturesFragment = new LecturesFragment();
-                Log.d("Aleks", "GetHomeFragment "+navItemIndex);
+                Log.d("Aleks", "GetHomeFragment " + navItemIndex);
                 return lecturesFragment;
 
             case 4:
                 // students
                 StudentsFragment studentsFragment = new StudentsFragment();
-                Log.d("Aleks", "GetHomeFragment "+navItemIndex);
+                Log.d("Aleks", "GetHomeFragment " + navItemIndex);
                 return studentsFragment;
             case 5:
                 // teachers
                 TeachersFragment teachersFragment = new TeachersFragment();
-                Log.d("Aleks", "GetHomeFragment "+navItemIndex);
+                Log.d("Aleks", "GetHomeFragment " + navItemIndex);
                 return teachersFragment;
             case 6:
                 // settings
                 SettingsFragment settingsFragment = new SettingsFragment();
-                Log.d("Aleks", "GetHomeFragment "+navItemIndex);
+                Log.d("Aleks", "GetHomeFragment " + navItemIndex);
                 return settingsFragment;
             default:
                 return new HomeFragment();
