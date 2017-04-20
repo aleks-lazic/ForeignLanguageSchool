@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import ch.hes.foreignlanguageschool.R;
 
@@ -29,6 +31,12 @@ public class LecturesFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private ListView mListView;
+
+    String[] lectures = new String[]{
+            "English", "IT", "Business", "Grammar"
+    };
 
     public LecturesFragment() {
         // Required empty public constructor
@@ -65,7 +73,15 @@ public class LecturesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_lectures, container, false);
+        View view = inflater.inflate(R.layout.fragment_lectures, container, false);
+
+        // Set the list of lectures
+        mListView = (ListView) view.findViewById(R.id.lectures_list);
+
+        mListView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(),
+                android.R.layout.simple_list_item_1 , lectures));
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
