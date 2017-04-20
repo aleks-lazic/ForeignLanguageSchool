@@ -105,7 +105,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + ASSIGNMENT_FKTEACHER + " TEXT NOT NULL, "
             + "FOREIGN KEY(" + ASSIGNMENT_FKTEACHER + ") REFERENCES " + TABLE_TEACHER + "(" + KEY_ID + "));";
 
-
     private final String CREATE_DAY_TABLE = "CREATE TABLE " + TABLE_DAY + "("
             + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + DAY_NAME + " TEXT NOT NULL );";

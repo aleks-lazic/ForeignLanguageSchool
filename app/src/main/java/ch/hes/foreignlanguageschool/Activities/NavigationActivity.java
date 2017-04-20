@@ -71,10 +71,29 @@ public class NavigationActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
 
+        this.deleteDatabase("DBForeignSchool");
+
         //everything about database
         databaseHelper = DatabaseHelper.getInstance(this);
 
-        dbLecture = new DBLecture(databaseHelper);
+        dbTeacher = new DBTeacher(databaseHelper);
+//        dbTeacher.insertValues("Alexandre", "Cotting", "alexandre.cotting@hevs.ch");
+//        dbTeacher.insertValues("Jean-Claude", "Rey", "j-c.rey@hotmail.com");
+//        dbTeacher.insertValues("Michel", "Favre", "michel.favre@gmail.com");
+//        dbTeacher.insertValues("Predrag", "Ljubicic", "pedjo.ljubo@mail.srb");
+//
+//        dbDay = new DBDay(databaseHelper);
+//        dbDay.insertValues("Monday");
+//        dbDay.insertValues("Tuesday");
+//        dbDay.insertValues("Wednesday");
+//        dbDay.insertValues("Thursday");
+//        dbDay.insertValues("Friday");
+//        dbDay.insertValues("Saturday");
+//        dbDay.insertValues("Sunday");
+//
+//        dbLecture = new DBLecture(databaseHelper);
+
+        Log.d("Aleks", dbTeacher.getTeacherById(1).getFirstName());
 //
 //
 //        dbLecture.insertValues("Engish", "English advanced course", dbTeacher.getTeacherById(1).getId());

@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 import ch.hes.foreignlanguageschool.DAO.Teacher;
 import ch.hes.foreignlanguageschool.DB.DBTeacher;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
@@ -70,12 +72,6 @@ public class CalendarFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
-
-        TextView textView = (TextView) view.findViewById(R.id.calendar_textView);
-        DatabaseHelper databaseHelper = DatabaseHelper.getInstance(getContext());
-        DBTeacher dbTeacher = new DBTeacher(databaseHelper);
-        Teacher teacher = dbTeacher.getTeacherById(1);
-        textView.setText(teacher.getFirstName());
         return view;
     }
 
