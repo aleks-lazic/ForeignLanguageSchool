@@ -26,7 +26,6 @@ public class DBLecture {
 
         SQLiteDatabase sql = db.getWritableDatabase();
 
-        Log.d("Aleks", "je suis dans le dbLecture");
         ContentValues values = new ContentValues();
         values.put(db.getLECTURE_NAME(), name);
         values.put(db.getLECTURE_DESCRIPTION(), description);

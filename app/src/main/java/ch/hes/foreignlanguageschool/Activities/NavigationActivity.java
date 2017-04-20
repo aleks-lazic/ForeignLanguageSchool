@@ -17,6 +17,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import ch.hes.foreignlanguageschool.DB.DBAssignment;
 import ch.hes.foreignlanguageschool.DB.DBDay;
 import ch.hes.foreignlanguageschool.DB.DBLecture;
@@ -71,39 +74,52 @@ public class NavigationActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
 
+        //Don't delete for the moment
         this.deleteDatabase("DBForeignSchool");
 
         //everything about database
         databaseHelper = DatabaseHelper.getInstance(this);
 
+        //adding teachers
         dbTeacher = new DBTeacher(databaseHelper);
-//        dbTeacher.insertValues("Alexandre", "Cotting", "alexandre.cotting@hevs.ch");
-//        dbTeacher.insertValues("Jean-Claude", "Rey", "j-c.rey@hotmail.com");
-//        dbTeacher.insertValues("Michel", "Favre", "michel.favre@gmail.com");
-//        dbTeacher.insertValues("Predrag", "Ljubicic", "pedjo.ljubo@mail.srb");
-//
-//        dbDay = new DBDay(databaseHelper);
-//        dbDay.insertValues("Monday");
-//        dbDay.insertValues("Tuesday");
-//        dbDay.insertValues("Wednesday");
-//        dbDay.insertValues("Thursday");
-//        dbDay.insertValues("Friday");
-//        dbDay.insertValues("Saturday");
-//        dbDay.insertValues("Sunday");
-//
-//        dbLecture = new DBLecture(databaseHelper);
+        dbTeacher.insertValues("Alexandre", "Cotting", "alexandre.cotting@hevs.ch");
+        dbTeacher.insertValues("Jean-Claude", "Rey", "j-c.rey@hotmail.com");
+        dbTeacher.insertValues("Michel", "Favre", "michel.favre@gmail.com");
+        dbTeacher.insertValues("Predrag", "Ljubicic", "pedjo.ljubo@mail.srb");
 
-        //Log.d("Aleks", dbTeacher.getTeacherById(1).getFirstName());
-//
-//
-//        dbLecture.insertValues("Engish", "English advanced course", dbTeacher.getTeacherById(1).getId());
-//        dbLecture.insertValues("Written Communication", "Written communication course for beginners", dbTeacher.getTeacherById(1).getId());
-//        dbLecture.insertValues("IT", "IT course for beginners", dbTeacher.getTeacherById(2).getId());
-//        dbLecture.insertValues("Grammary", "English grammary course", dbTeacher.getTeacherById(2).getId());
-//        dbLecture.insertValues("Speaking", "Speaking course", dbTeacher.getTeacherById(3).getId());
-//        dbLecture.insertValues("Listening", "Listening course", dbTeacher.getTeacherById(3).getId());
-//        dbLecture.insertValues("Business", "Business course", dbTeacher.getTeacherById(4).getId());
-//        dbLecture.insertValues("Project Management", "This course will teach you how to handle a project", dbTeacher.getTeacherById(4).getId());
+        //adding days
+        dbDay = new DBDay(databaseHelper);
+        dbDay.insertValues("Monday");
+        dbDay.insertValues("Tuesday");
+        dbDay.insertValues("Wednesday");
+        dbDay.insertValues("Thursday");
+        dbDay.insertValues("Friday");
+        dbDay.insertValues("Saturday");
+        dbDay.insertValues("Sunday");
+
+        //adding lectures
+        dbLecture = new DBLecture(databaseHelper);
+        dbLecture.insertValues("Engish", "English advanced course", dbTeacher.getTeacherById(1).getId());
+        dbLecture.insertValues("Written Communication", "Written communication course for beginners", dbTeacher.getTeacherById(1).getId());
+        dbLecture.insertValues("IT", "IT course for beginners", dbTeacher.getTeacherById(2).getId());
+        dbLecture.insertValues("Grammary", "English grammary course", dbTeacher.getTeacherById(2).getId());
+        dbLecture.insertValues("Speaking", "Speaking course", dbTeacher.getTeacherById(3).getId());
+        dbLecture.insertValues("Listening", "Listening course", dbTeacher.getTeacherById(3).getId());
+        dbLecture.insertValues("Business", "Business course", dbTeacher.getTeacherById(4).getId());
+        dbLecture.insertValues("Project Management", "This course will teach you how to handle a project", dbTeacher.getTeacherById(4).getId());
+
+        //adding students
+        dbStudent = new DBStudent(databaseHelper);
+        String currentDate = new SimpleDateFormat("dd.MM.yyyy").format(new Date());
+        dbStudent.insertValues("Aleksandar", "Lazic", "Rue Centrale 8", "Serbia", "aleks.lazic@hotmail.com", currentDate, "0");
+        dbStudent.insertValues("Bernard", "Dubois", "Route des anémones 40", "Suisse", "bernard.dubois@gmail.com", currentDate, "0");
+        dbStudent.insertValues("Kristijan", "Palesko", "Rue de la gare 8", "Croatia", "kiki.palesh@hotmail.com", currentDate, "0");
+        dbStudent.insertValues("Vlado", "Mitrovic", "Rue de l'armée 15", "Bosnia", "vlado.mitro@myarmy.com", currentDate, "0");
+        dbStudent.insertValues("Noah", "Bonvin", "Rue de Tsarbouye 45", "Ouganda", "noah.b@hevs.ch", currentDate, "0");
+
+        //adding assignments
+        dbAssignment = new DBAssignment(databaseHelper);
+        dbAssignment.insertValues("Correction IT exams", null, currentDate, dbTeacher.getTeacherById(4).getId());
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);

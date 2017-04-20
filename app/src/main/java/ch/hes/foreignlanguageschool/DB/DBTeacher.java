@@ -34,6 +34,7 @@ public class DBTeacher {
         values.put(db.getIMAGE_NAME(), "person-icon.png");
 
         sql.insert(db.getTableTeacher(), null, values);
+
         sql.close();
     }
 
@@ -43,21 +44,20 @@ public class DBTeacher {
         SQLiteDatabase sql = db.getWritableDatabase();
 
         Teacher teacher = new Teacher();
-        String selectQuery = "SELECT * FROM " + db.getTableTeacher() + " WHERE " + db.getKeyId() + " = " + idTeacher;
+        String selectQuery = "SELECT "
+                +db.getKeyId()+", "
+                +db.getTEACHER_FIRSTNAME()+", "
+                +db.getTEACHER_LASTNAME()+", "
+                +db.getTEACHER_MAIL()+", "
+                +db.getIMAGE_NAME()+
+                " FROM " + db.getTableTeacher() + " WHERE " + db.getKeyId() + " = " + idTeacher;
 
         Cursor cursor = sql.rawQuery(selectQuery, null);
-        Log.d("Aleks", cursor.toString());
 
         if(cursor != null){
-            Log.d("Aleks", "Cursor n'est pas nul");
             cursor.moveToFirst();
         }
 
-        Log.d("Aleks", cursor.getString(0));
-        Log.d("Aleks", cursor.getString(1));
-        Log.d("Aleks", cursor.getString(2));
-        Log.d("Aleks", cursor.getString(3));
-        Log.d("Aleks", cursor.getString(4));
 
         teacher.setId(Integer.parseInt(cursor.getString(0)));
         teacher.setFirstName(cursor.getString(1));

@@ -79,20 +79,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + STUDENT_MAIL + " TEXT NOT NULL, "
             + STUDENT_STARTDATE + " TEXT NOT NULL, "
             + STUDENT_ENDDATE + " TEXT, "
-            + IMAGE_NAME + "TEXT);";
+            + IMAGE_NAME + " TEXT);";
 
     private final String CREATE_TEACHER_TABLE = "CREATE TABLE " + TABLE_TEACHER + "("
             + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + TEACHER_FIRSTNAME + " TEXT NOT NULL, "
             + TEACHER_LASTNAME + " TEXT NOT NULL, "
             + TEACHER_MAIL + " TEXT NOT NULL, "
-            + IMAGE_NAME + "TEXT);";
+            + IMAGE_NAME + " TEXT);";
 
     private final String CREATE_LECTURE_TABLE = "CREATE TABLE " + TABLE_LECTURE + "("
             + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + LECTURE_NAME + " TEXT NOT NULL, "
             + LECTURE_DESCRIPTION + " TEXT NOT NULL, "
-            + IMAGE_NAME + "TEXT NOT NULL, "
+            + IMAGE_NAME + " TEXT NOT NULL, "
             + LECTURE_FKTEACHER + " TEXT NOT NULL, "
             + "FOREIGN KEY(" + LECTURE_FKTEACHER + ") REFERENCES " + TABLE_TEACHER + "(" + KEY_ID + "));";
 
@@ -101,7 +101,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + ASSIGNMENT_TITLE + " TEXT NOT NULL, "
             + ASSIGNMENT_DESCRIPTION + " TEXT, "
             + ASSIGNMENT_DATE + " TEXT, "
-            + IMAGE_NAME + "TEXT NOT NULL, "
+            + IMAGE_NAME + " TEXT NOT NULL, "
             + ASSIGNMENT_FKTEACHER + " TEXT NOT NULL, "
             + "FOREIGN KEY(" + ASSIGNMENT_FKTEACHER + ") REFERENCES " + TABLE_TEACHER + "(" + KEY_ID + "));";
 
