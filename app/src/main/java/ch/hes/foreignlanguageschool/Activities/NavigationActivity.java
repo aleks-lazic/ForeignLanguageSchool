@@ -75,7 +75,7 @@ public class NavigationActivity extends AppCompatActivity
         databaseHelper = DatabaseHelper.getInstance(this);
 
         dbLecture = new DBLecture(databaseHelper);
-
+//
 //
 //        dbLecture.insertValues("Engish", "English advanced course", dbTeacher.getTeacherById(1).getId());
 //        dbLecture.insertValues("Written Communication", "Written communication course for beginners", dbTeacher.getTeacherById(1).getId());
