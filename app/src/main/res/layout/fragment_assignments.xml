@@ -4,11 +4,9 @@
     android:layout_height="match_parent"
     tools:context="ch.hes.foreignlanguageschool.Fragments.AssignmentsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/textView2"
+    <ListView
+        android:id="@+id/assignments_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/AssignmentsNavigation" />
-
+        android:layout_marginTop="25dp" />
 </FrameLayout>

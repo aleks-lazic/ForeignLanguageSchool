@@ -7,8 +7,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import ch.hes.foreignlanguageschool.Activities.NavigationActivity;
 import ch.hes.foreignlanguageschool.R;
+
+import static android.os.Build.VERSION_CODES.M;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +38,17 @@ public class HomeFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private ListView mListView;
+    private ListView mListView2;
+
+    String[] lectures = new String[]{
+            "English", "IT", "Business", "Grammar"
+    };
+
+    String[] assignments = new String[]{
+            "Android Project", "HTML Project", "Exam Security", "Cloud Extension Project"
+    };
 
     public HomeFragment() {
         // Required empty public constructor
@@ -66,7 +86,26 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        // Set the Date of the Day
+        String date = new SimpleDateFormat("dd"+" "+"MM"+" " +"yyyy").format(new Date());
+        TextView textView = (TextView)view.findViewById(R.id.dateDay);
+        textView.setText(date);
+
+        // Set the list of lectures
+        mListView = (ListView) view.findViewById(R.id.home_lectures);
+
+        mListView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(),
+                android.R.layout.simple_list_item_1 , lectures));
+
+        // Set the list of assignments
+        mListView2 = (ListView) view.findViewById(R.id.home_assignments);
+
+        mListView2.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(),
+                android.R.layout.simple_list_item_1 , assignments));
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
