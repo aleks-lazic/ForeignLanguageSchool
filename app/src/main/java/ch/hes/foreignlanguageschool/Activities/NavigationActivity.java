@@ -186,6 +186,7 @@ public class NavigationActivity extends AppCompatActivity
             return;
         }
 
+        //to replace the current fragment with another one
         Fragment fragment = getHomeFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.drawer_layout, fragment, CURRENT_TAG);
