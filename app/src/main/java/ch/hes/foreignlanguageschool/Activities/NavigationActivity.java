@@ -49,6 +49,7 @@ public class NavigationActivity extends AppCompatActivity
 
     private String CURRENT_TAG = "";
 
+
     //index to identify current nav menu item
     private int navItemIndex = 0;
 
