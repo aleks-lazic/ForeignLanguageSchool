@@ -13,6 +13,7 @@ public class Teacher {
     private String lastName;
     private String mail;
     private List<Assignment> assignmentList;
+    private String imageName;
 
     public Teacher(int id, String firstName, String lastName, String mail) {
         this.id = id;
@@ -62,5 +63,13 @@ public class Teacher {
 
     public void setAssignmentList(List<Assignment> assignmentList) {
         this.assignmentList = assignmentList;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 }

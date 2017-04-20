@@ -1,23 +1,28 @@
 package ch.hes.foreignlanguageschool.Activities;
 
-import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
+import ch.hes.foreignlanguageschool.DB.DBAssignment;
+import ch.hes.foreignlanguageschool.DB.DBDay;
+import ch.hes.foreignlanguageschool.DB.DBLecture;
+import ch.hes.foreignlanguageschool.DB.DBStudent;
+import ch.hes.foreignlanguageschool.DB.DBTeacher;
+import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.Fragments.AssignmentsFragment;
 import ch.hes.foreignlanguageschool.Fragments.CalendarFragment;
 import ch.hes.foreignlanguageschool.Fragments.HomeFragment;
@@ -26,9 +31,6 @@ import ch.hes.foreignlanguageschool.Fragments.SettingsFragment;
 import ch.hes.foreignlanguageschool.Fragments.StudentsFragment;
 import ch.hes.foreignlanguageschool.Fragments.TeachersFragment;
 import ch.hes.foreignlanguageschool.R;
-
-import static android.R.attr.fragment;
-import static ch.hes.foreignlanguageschool.R.id.fab;
 
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -47,8 +49,6 @@ public class NavigationActivity extends AppCompatActivity
     //index to identify current nav menu item
     private int navItemIndex = 0;
 
-    private boolean shouldLoadHomeFragOnBackPress = true;
-
     //toolbar titles respected to selected nav menu item
     private String[] activityTitles;
 
@@ -58,10 +58,34 @@ public class NavigationActivity extends AppCompatActivity
     private Toolbar toolbar;
     private Handler mHandler;
 
+    //Database
+    private DatabaseHelper databaseHelper;
+    private DBAssignment dbAssignment;
+    private DBDay dbDay;
+    private DBLecture dbLecture;
+    private DBStudent dbStudent;
+    private DBTeacher dbTeacher;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
+
+        //everything about database
+        databaseHelper = DatabaseHelper.getInstance(this);
+
+        dbLecture = new DBLecture(databaseHelper);
+
+//
+//        dbLecture.insertValues("Engish", "English advanced course", dbTeacher.getTeacherById(1).getId());
+//        dbLecture.insertValues("Written Communication", "Written communication course for beginners", dbTeacher.getTeacherById(1).getId());
+//        dbLecture.insertValues("IT", "IT course for beginners", dbTeacher.getTeacherById(2).getId());
+//        dbLecture.insertValues("Grammary", "English grammary course", dbTeacher.getTeacherById(2).getId());
+//        dbLecture.insertValues("Speaking", "Speaking course", dbTeacher.getTeacherById(3).getId());
+//        dbLecture.insertValues("Listening", "Listening course", dbTeacher.getTeacherById(3).getId());
+//        dbLecture.insertValues("Business", "Business course", dbTeacher.getTeacherById(4).getId());
+//        dbLecture.insertValues("Project Management", "This course will teach you how to handle a project", dbTeacher.getTeacherById(4).getId());
+
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -157,7 +181,7 @@ public class NavigationActivity extends AppCompatActivity
         } else if (id == R.id.nav_teachers) {
             navItemIndex = 5;
             CURRENT_TAG = TAG_TEACHERS;
-        } else if(id == R.id.nav_settings){
+        } else if (id == R.id.nav_settings) {
             CURRENT_TAG = TAG_SETTINGS;
             navItemIndex = 6;
         }

@@ -3,6 +3,7 @@ package ch.hes.foreignlanguageschool.DB;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,15 +18,19 @@ public class DBLecture {
 
     private DatabaseHelper db;
 
-    public DBLecture(DatabaseHelper db) {this.db =  db;}
+    public DBLecture(DatabaseHelper db) {
+        this.db = db;
+    }
 
     public void insertValues(String name, String description, int idTeacher) {
 
         SQLiteDatabase sql = db.getWritableDatabase();
 
+        Log.d("Aleks", "je suis dans le dbLecture");
         ContentValues values = new ContentValues();
         values.put(db.getLECTURE_NAME(), name);
         values.put(db.getLECTURE_DESCRIPTION(), description);
+        values.put(db.getIMAGE_NAME(), "lecture-icon.png");
         values.put(db.getLECTURE_FKTEACHER(), idTeacher);
 
         sql.insert(db.getTableLecture(), null, values);
@@ -50,8 +55,9 @@ public class DBLecture {
                 lecture.setId(Integer.parseInt(cursor.getString(0)));
                 lecture.setName(cursor.getString(1));
                 lecture.setDescription(cursor.getString(2));
-                lecture.setTeacher(teacher.getTeacherById(Integer.parseInt(cursor.getString(3))));
-//                lecture.setStudentsList(student.getStudentsListByLecture(Integer.parseInt(cursor.getString(4))));
+                lecture.setImageName(cursor.getString((3)));
+                lecture.setTeacher(teacher.getTeacherById(Integer.parseInt(cursor.getString(4))));
+//              lecture.setStudentsList(student.getStudentsListByLecture(Integer.parseInt(cursor.getString(5))));
 
                 // Adding lecture to list
                 lecturesList.add(lecture);

@@ -17,6 +17,7 @@ public class Student {
     private String startDate;
     private String endDate;
     private List<Lecture> lecturesList;
+    private String imageName;
 
     public Student(int id, String firstName, String lastName, String address, String country, String mail, String startDate, String endDate) {
         this.id = id;
@@ -101,5 +102,13 @@ public class Student {
 
     public void setLecturesList(List<Lecture> lecturesList) {
         this.lecturesList = lecturesList;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 }

@@ -11,6 +11,7 @@ public class Assignment {
     private String description;
     private String date;
     private Teacher teacher;
+    private String imageName;
 
     public Assignment(int id, String title, String description, String date, Teacher teacher) {
         this.id = id;
@@ -60,5 +61,13 @@ public class Assignment {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 }

@@ -13,6 +13,7 @@ public class Lecture {
     private String description;
     private Teacher teacher;
     private List<Student> studentsList;
+    private String imageName;
 
     public Lecture(int id, String name, String description, Teacher teacher) {
         this.id = id;
@@ -61,5 +62,13 @@ public class Lecture {
 
     public void setStudentsList(List<Student> studentsList) {
         this.studentsList = studentsList;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 }

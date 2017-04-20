@@ -30,6 +30,7 @@ public class DBTeacher {
         values.put(db.getTEACHER_FIRSTNAME(), firstName);
         values.put(db.getTEACHER_LASTNAME(), lastName);
         values.put(db.getTEACHER_MAIL(), mail);
+        values.put(db.getIMAGE_NAME(), "person-icon.png");
 
         sql.insert(db.getTableTeacher(), null, values);
         sql.close();
@@ -51,6 +52,9 @@ public class DBTeacher {
         teacher.setFirstName(cursor.getString(1));
         teacher.setLastName(cursor.getString(2));
         teacher.setMail(cursor.getString(3));
+        teacher.setImageName(cursor.getString(4));
+
+        sql.close();
 
         // return teacher
         return teacher;
@@ -73,6 +77,7 @@ public class DBTeacher {
                 teacher.setFirstName(cursor.getString(1));
                 teacher.setLastName(cursor.getString(2));
                 teacher.setMail(cursor.getString(3));
+                teacher.setImageName(cursor.getString(4));
 
                 // Adding teacher to list
                 teachersList.add(teacher);
