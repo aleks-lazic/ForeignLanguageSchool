@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -65,6 +66,8 @@ public class CalendarFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        setHasOptionsMenu(false);
     }
 
     @Override
@@ -72,6 +75,10 @@ public class CalendarFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
+
+        //add everything linked to the lectures
+       // ListView lecturesListView = (ListView) view.findViewById(R.id.)
+
         return view;
     }
 

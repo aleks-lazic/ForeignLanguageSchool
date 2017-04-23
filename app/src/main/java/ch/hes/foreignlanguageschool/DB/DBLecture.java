@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.hes.foreignlanguageschool.DAO.Lecture;
+import ch.hes.foreignlanguageschool.DAO.Student;
+
+import static android.R.attr.description;
+import static android.R.attr.name;
 
 /**
  * Created by patrickclivaz on 11.04.17.
@@ -65,5 +69,41 @@ public class DBLecture {
 
         // return lectures list
         return lecturesList;
+    }
+
+    public void addStudentToLecture(int idStudent, int idLecture) {
+
+        SQLiteDatabase sql = db.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(db.getLECTURESTUDENT_FKLECTURE(), idLecture);
+        values.put(db.getLECTURESTUDENT_FKSTUDENT(), idStudent);
+
+        sql.insert(db.getTableLecturestudent(), null, values);
+
+        sql.close();
+
+    }
+
+    public void addStudentsToLecture(Student[] students, int idLecture) {
+
+        for (Student s : students
+                ) {
+            addStudentToLecture(s.getId(), idLecture);
+
+        }
+    }
+
+    public void addDayAndHoursToLecture(int idLecture, int idDay, String startTime, String endTime){
+        SQLiteDatabase sql = db.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(db.getLECTUREDATE_FKLECTURE(), idLecture);
+        values.put(db.getLECTUREDATE_FKDAY(), idDay);
+        values.put(db.getLECTUREDATE_STARTTIME(), startTime);
+        values.put(db.getLECTUREDATE_ENDTIME(), endTime);
+
+        sql.insert(db.getTableLecture(), null, values);
+        sql.close();
     }
 }

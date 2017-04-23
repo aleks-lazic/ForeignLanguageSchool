@@ -96,7 +96,6 @@ public class NavigationActivity extends AppCompatActivity
         dbDay.insertValues("Thursday");
         dbDay.insertValues("Friday");
         dbDay.insertValues("Saturday");
-        dbDay.insertValues("Sunday");
 
         //adding lectures
         dbLecture = new DBLecture(databaseHelper);
@@ -121,6 +120,12 @@ public class NavigationActivity extends AppCompatActivity
         //adding assignments
         dbAssignment = new DBAssignment(databaseHelper);
         dbAssignment.insertValues("Correction IT exams", null, currentDate, dbTeacher.getTeacherById(4).getId());
+
+        //adding students to lecture
+        dbLecture.addStudentToLecture(1, 1);
+
+        //adding lectures to a date
+        dbLecture.addDayAndHoursToLecture(1,1, "10:30", "12:00" );
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
