@@ -5,7 +5,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import ch.hes.foreignlanguageschool.DAO.Lecture;
@@ -94,7 +99,7 @@ public class DBLecture {
         }
     }
 
-    public void addDayAndHoursToLecture(int idLecture, int idDay, String startTime, String endTime){
+    public void addDayAndHoursToLecture(int idLecture, int idDay, String startTime, String endTime) {
         SQLiteDatabase sql = db.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -103,7 +108,90 @@ public class DBLecture {
         values.put(db.getLECTUREDATE_STARTTIME(), startTime);
         values.put(db.getLECTUREDATE_ENDTIME(), endTime);
 
-        sql.insert(db.getTableLecture(), null, values);
+        sql.insert(db.getTableLecturedate(), null, values);
         sql.close();
+    }
+
+    public ArrayList<Lecture> getLecturesForSpecialDate(int year, int month, int dayOfMonth) {
+
+        //adapt the current date to the sqlite format
+        String yearString = Integer.toString(year);
+        String dayString = Integer.toString(dayOfMonth);
+        String monthString;
+
+        if (month < 10)
+            monthString = Integer.toString(month + 1);
+        else {
+            monthString = Integer.toString(month);
+        }
+
+        String date = dayString + "/" + monthString + "/" + yearString;
+
+        Calendar cal = new GregorianCalendar(year, Integer.parseInt(monthString), dayOfMonth);
+        int result = cal.get(Calendar.DAY_OF_WEEK);
+        int dayOfWeek = getIdOfDayWeek(result);
+        Log.d("Aleks", "Day : "+result);
+
+        SQLiteDatabase sql = db.getWritableDatabase();
+
+        ArrayList<Lecture> lecturesList = new ArrayList<Lecture>();
+        String selectQuery = "SELECT "
+                + db.getKeyId() + ", "
+                + db.getLECTURE_NAME() + ", "
+                + db.getLECTURE_DESCRIPTION() + ", "
+                + db.getIMAGE_NAME() + ", "
+                + db.getLECTURE_FKTEACHER() + ", "
+                + db.getLECTUREDATE_FKDAY() + ", "
+                + db.getLECTUREDATE_STARTTIME() + ", "
+                + db.getLECTUREDATE_ENDTIME() + " "
+                + "FROM " + db.getTableLecture()
+                + " LEFT JOIN " + db.getTableLecturedate() + " ON " + db.getTableLecture() + "." + db.getKeyId() + " = " + db.getTableLecturedate() + "." + db.getLECTUREDATE_FKLECTURE()
+                + " WHERE " + db.getLECTUREDATE_FKDAY() + " = " + dayOfWeek;
+
+
+        Cursor cursor = sql.rawQuery(selectQuery, null);
+
+        DBTeacher teacher = new DBTeacher(db);
+        DBStudent student = new DBStudent(db);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Lecture lecture = new Lecture();
+                lecture.setId(Integer.parseInt(cursor.getString(0)));
+                lecture.setName(cursor.getString(1));
+                lecture.setDescription(cursor.getString(2));
+                lecture.setImageName(cursor.getString((3)));
+                lecture.setTeacher(teacher.getTeacherById(Integer.parseInt(cursor.getString(4))));
+                lecture.setIdDay(Integer.parseInt(cursor.getString(5)));
+                lecture.setStartTime(cursor.getString(6));
+                lecture.setStartTime(cursor.getString(7));
+
+                // Adding lecture to list
+                lecturesList.add(lecture);
+            } while (cursor.moveToNext());
+        }
+
+        // return lectures list
+        return lecturesList;
+    }
+
+    private int getIdOfDayWeek(int day) {
+        switch (day) {
+            case 4:
+                return 1;
+            case 5:
+                return 2;
+            case 6:
+                return 3;
+            case 7:
+                return 4;
+            case 1:
+                return 5;
+            case 2:
+                return 6;
+        }
+
+        return 7;
     }
 }

@@ -8,7 +8,7 @@
     <!-- TODO: Update blank fragment layout -->
 
     <CalendarView
-        android:id="@+id/calendarView"
+        android:id="@+id/calendar_calendarview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -29,20 +29,11 @@
         android:layout_height="match_parent"
         android:padding="6dp">
 
-        <ImageView
-            android:id="@+id/calendar_lectures_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp" />
 
-        <TextView
-            android:id="@+id/calendar_lectures_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/calendar_lectures_image"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_toRightOf="@+id/calendar_lectures_image" />
+        <ListView
+            android:id="@+id/calendar_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ListView>
 
 
     </RelativeLayout>

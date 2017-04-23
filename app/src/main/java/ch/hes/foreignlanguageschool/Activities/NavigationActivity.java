@@ -111,6 +111,7 @@ public class NavigationActivity extends AppCompatActivity
         //adding students
         dbStudent = new DBStudent(databaseHelper);
         String currentDate = new SimpleDateFormat("dd.MM.yyyy").format(new Date());
+        Log.d("Date", currentDate);
         dbStudent.insertValues("Aleksandar", "Lazic", "Rue Centrale 8", "Serbia", "aleks.lazic@hotmail.com", currentDate, "0");
         dbStudent.insertValues("Bernard", "Dubois", "Route des anémones 40", "Suisse", "bernard.dubois@gmail.com", currentDate, "0");
         dbStudent.insertValues("Kristijan", "Palesko", "Rue de la gare 8", "Croatia", "kiki.palesh@hotmail.com", currentDate, "0");

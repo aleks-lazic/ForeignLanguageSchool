@@ -3,19 +3,30 @@ package ch.hes.foreignlanguageschool.Fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 import java.util.List;
 
+import ch.hes.foreignlanguageschool.DAO.Lecture;
 import ch.hes.foreignlanguageschool.DAO.Teacher;
+import ch.hes.foreignlanguageschool.DB.DBLecture;
 import ch.hes.foreignlanguageschool.DB.DBTeacher;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
+
+import static android.R.attr.id;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,11 +85,28 @@ public class CalendarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_calendar, container, false);
+        final View view = inflater.inflate(R.layout.fragment_calendar, container, false);
 
         //add everything linked to the lectures
-       // ListView lecturesListView = (ListView) view.findViewById(R.id.)
+         ListView lecturesListView = (ListView) view.findViewById(R.id.calendar_listview);
 
+        //select everything for current date
+        DatabaseHelper db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
+        final DBLecture dbLecture = new DBLecture(db);
+
+        CalendarView cv = (CalendarView)view.findViewById(R.id.calendar_calendarview);
+        cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView viewCalendar, int year, int month, int dayOfMonth) {
+
+                ArrayList<Lecture> lectures = dbLecture.getLecturesForSpecialDate(year, month, dayOfMonth);
+                Log.d("Aleks", "Size lectures" +lectures.size());
+                Log.d("Aleks", "Month"+month);
+                Log.d("Aleks", "Day"+dayOfMonth);
+
+            }
+        });
         return view;
     }
 

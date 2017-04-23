@@ -14,6 +14,9 @@ public class Lecture {
     private Teacher teacher;
     private List<Student> studentsList;
     private String imageName;
+    private int idDay;
+    private String startTime;
+    private String endTime;
 
     public Lecture(int id, String name, String description, Teacher teacher) {
         this.id = id;
@@ -22,7 +25,8 @@ public class Lecture {
         this.teacher = teacher;
     }
 
-    public Lecture(){}
+    public Lecture() {
+    }
 
     public int getId() {
         return id;
@@ -70,5 +74,30 @@ public class Lecture {
 
     public void setImageName(String imageName) {
         this.imageName = imageName;
+    }
+
+
+    public int getIdDay() {
+        return idDay;
+    }
+
+    public void setIdDay(int idDay) {
+        this.idDay = idDay;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 }
