@@ -17,10 +17,7 @@ import ch.hes.foreignlanguageschool.DAO.Lecture;
 import ch.hes.foreignlanguageschool.DAO.Student;
 import ch.hes.foreignlanguageschool.DB.DBLecture;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
-import ch.hes.foreignlanguageschool.Fragments.LecturesFragment;
 import ch.hes.foreignlanguageschool.R;
-
-import static android.R.attr.key;
 
 public class LectureActivity extends AppCompatActivity {
 
@@ -30,7 +27,7 @@ public class LectureActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lectures);
+        setContentView(R.layout.activity_lecture);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

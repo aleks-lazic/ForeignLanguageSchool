@@ -8,10 +8,158 @@
     tools:context="ch.hes.foreignlanguageschool.Activities.StudentActivity"
     tools:showIn="@layout/activity_student">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/large_text" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/title_firstname_student"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="25dp"
+            android:text="@string/FistnameTitle"
+            android:textColor="#FF9800"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/student_firstname"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="55dp"
+            android:layout_marginBottom="95dp"/>
+
+        <TextView
+            android:id="@+id/title_student_lastname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="95dp"
+            android:text="@string/LastnameTitle"
+            android:textColor="#FF9800"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/student_lastname"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="125dp"
+            android:layout_marginBottom="95dp"/>
+
+        <TextView
+            android:id="@+id/title_student_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="165dp"
+            android:text="@string/AddressTitle"
+            android:textColor="#FF9800"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/student_address"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="195dp"
+            android:layout_marginBottom="95dp"/>
+
+        <TextView
+            android:id="@+id/title_student_country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="95dp"
+            android:text="@string/CountryTitle"
+            android:textColor="#FF9800"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/student_country"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="125dp"
+            android:layout_marginBottom="95dp"/>
+
+        <TextView
+            android:id="@+id/title_student_mail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="165dp"
+            android:text="@string/MailTitle"
+            android:textColor="#FF9800"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/student_mail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="195dp"
+            android:layout_marginBottom="95dp"/>
+
+
+        <TextView
+            android:id="@+id/title_startdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="95dp"
+            android:text="@string/StartDateTitle"
+            android:textColor="#FF9800"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/student_startdate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="125dp"
+            android:layout_marginBottom="95dp"/>
+
+        <TextView
+            android:id="@+id/title_enddate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="165dp"
+            android:text="@string/EndDateTitle"
+            android:textColor="#FF9800"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/student_enddate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="195dp"
+            android:layout_marginBottom="95dp"/>
+
+    </RelativeLayout>
 
 </android.support.v4.widget.NestedScrollView>

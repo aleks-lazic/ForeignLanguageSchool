@@ -120,5 +120,12 @@
     <string name="DueDateTitle">Due Date</string>
     <string name="title_activity_teacher">TeacherActivity</string>
     <string name="title_activity_student">StudentActivity</string>
+    <string name="FistnameTitle">Firstname</string>
+    <string name="LastnameTitle">Lastname</string>
+    <string name="AddressTitle">Address</string>
+    <string name="CountryTitle">Country</string>
+    <string name="StartDateTitle">Start Date</string>
+    <string name="EndDateTitle">End Date</string>
+    <string name="MailTitle">Mail</string>
 
 </resources>

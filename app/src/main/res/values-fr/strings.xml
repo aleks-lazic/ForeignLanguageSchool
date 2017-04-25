@@ -12,4 +12,11 @@
     <string name="TeacherTitle">Professeur</string>
     <string name="DescriptionTitle">Description</string>
     <string name="DueDateTitle">Date d\'échéance</string>
+    <string name="AddressTitle">Adresse</string>
+    <string name="CountryTitle">Pays</string>
+    <string name="FistnameTitle">Prénom</string>
+    <string name="StartDateTitle">Date de début</string>
+    <string name="EndDateTitle">Date de fin</string>
+    <string name="LastnameTitle">Nom</string>
+    <string name="MailTitle">Mail</string>
 </resources>
