@@ -112,11 +112,11 @@ public class NavigationActivity extends AppCompatActivity
         dbStudent = new DBStudent(databaseHelper);
         String currentDate = new SimpleDateFormat("dd.MM.yyyy").format(new Date());
         Log.d("Date", currentDate);
-        dbStudent.insertValues("Aleksandar", "Lazic", "Rue Centrale 8", "Serbia", "aleks.lazic@hotmail.com", currentDate, "0");
-        dbStudent.insertValues("Bernard", "Dubois", "Route des anémones 40", "Suisse", "bernard.dubois@gmail.com", currentDate, "0");
-        dbStudent.insertValues("Kristijan", "Palesko", "Rue de la gare 8", "Croatia", "kiki.palesh@hotmail.com", currentDate, "0");
-        dbStudent.insertValues("Vlado", "Mitrovic", "Rue de l'armée 15", "Bosnia", "vlado.mitro@myarmy.com", currentDate, "0");
-        dbStudent.insertValues("Noah", "Bonvin", "Rue de Tsarbouye 45", "Ouganda", "noah.b@hevs.ch", currentDate, "0");
+        dbStudent.insertValues("Aleksandar", "Lazic", "Rue Centrale 8", "Serbia", "aleks.lazic@hotmail.com", currentDate, "30.06.2017");
+        dbStudent.insertValues("Bernard", "Dubois", "Route des anémones 40", "Suisse", "bernard.dubois@gmail.com", currentDate, "30.07.207");
+        dbStudent.insertValues("Kristijan", "Palesko", "Rue de la gare 8", "Croatia", "kiki.palesh@hotmail.com", currentDate, "30.08.2017");
+        dbStudent.insertValues("Vlado", "Mitrovic", "Rue de l'armée 15", "Bosnia", "vlado.mitro@myarmy.com", currentDate, "30.09.2017");
+        dbStudent.insertValues("Noah", "Bonvin", "Rue de Tsarbouye 45", "Ouganda", "noah.b@hevs.ch", currentDate, "30.05.2017");
 
         //adding assignments
         dbAssignment = new DBAssignment(databaseHelper);
