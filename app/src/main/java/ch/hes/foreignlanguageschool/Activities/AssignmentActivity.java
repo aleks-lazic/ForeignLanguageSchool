@@ -59,7 +59,6 @@ public class AssignmentActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         finish();

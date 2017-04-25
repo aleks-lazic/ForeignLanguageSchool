@@ -1,17 +1,21 @@
 package ch.hes.foreignlanguageschool.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import ch.hes.foreignlanguageschool.Activities.AssignmentActivity;
+import ch.hes.foreignlanguageschool.Activities.StudentActivity;
 import ch.hes.foreignlanguageschool.DAO.Student;
 import ch.hes.foreignlanguageschool.DB.DBLecture;
 import ch.hes.foreignlanguageschool.DB.DBStudent;
@@ -95,6 +99,18 @@ public class StudentsFragment extends Fragment {
 
         mListView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(),
                 android.R.layout.simple_list_item_1 , tabStudents));
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                Intent myIntent = new Intent(view.getContext(), StudentActivity.class);
+
+                myIntent.putExtra("list",students.get(position));
+
+                startActivity(myIntent);
+            }
+        });
 
         return view;
     }

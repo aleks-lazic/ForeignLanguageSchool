@@ -10,70 +10,55 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp">
 
         <TextView
             android:id="@+id/title_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="50dp"
             android:layout_marginTop="25dp"
             android:text="@string/DescriptionTitle"
-            android:textColor="#FF9800"
+            android:textColor="@color/colorAccent"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/lecture_description"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="55dp"
-            android:layout_marginBottom="95dp"/>
+            android:layout_marginTop="55dp" />
 
         <TextView
             android:id="@+id/title_teacher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="50dp"
             android:layout_marginTop="95dp"
             android:text="@string/TeacherTitle"
-            android:textColor="#FF9800"
+            android:textColor="@color/colorAccent"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/lecture_teacher"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="125dp"
-            android:layout_marginBottom="95dp"/>
+            android:layout_marginTop="125dp" />
 
 
         <TextView
             android:id="@+id/title_lectures_students"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="50dp"
             android:layout_marginTop="165dp"
             android:text="@string/StudentsNavigation"
-            android:textColor="#FF9800"
+            android:textColor="@color/colorAccent"
             android:textSize="18sp" />
 
         <ListView
             android:id="@+id/lectures_students"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="195dp"
-            android:layout_marginBottom="40dp"/>
+            android:layout_marginTop="195dp" />
 
 </RelativeLayout>
 

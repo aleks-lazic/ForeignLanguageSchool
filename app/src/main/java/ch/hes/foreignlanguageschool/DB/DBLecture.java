@@ -49,7 +49,7 @@ public class DBLecture {
         SQLiteDatabase sql = db.getWritableDatabase();
 
         ArrayList<Lecture> lecturesList = new ArrayList<Lecture>();
-        String selectQuery = "SELECT * FROM " + db.getTableLecture();
+        String selectQuery = "SELECT * FROM " + db.getTableLecture() + " ORDER BY " + db.getLECTURE_NAME();
 
         Cursor cursor = sql.rawQuery(selectQuery, null);
 

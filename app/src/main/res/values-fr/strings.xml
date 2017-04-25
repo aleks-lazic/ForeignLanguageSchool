@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">EcoleDeLangueEtrangère</string>
+    <string name="app_name">iTeach</string>
     <string name="AssignmentsNavigation">Tâches</string>
     <string name="CalendarNavigation">Calendrier</string>
-    <string name="HomeNavigation">Accueil</string>
     <string name="LecturesNavigation">Cours</string>
     <string name="SettingsNavigation">Options</string>
     <string name="StudentsNavigation">Elèves</string>
@@ -19,4 +18,5 @@
     <string name="EndDateTitle">Date de fin</string>
     <string name="LastnameTitle">Nom</string>
     <string name="MailTitle">Mail</string>
+    <string name="TodayNavigation">Aujourd\'hui</string>
 </resources>
