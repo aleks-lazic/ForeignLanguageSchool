@@ -31,7 +31,7 @@ public class DBTeacher {
         values.put(db.getTEACHER_FIRSTNAME(), firstName);
         values.put(db.getTEACHER_LASTNAME(), lastName);
         values.put(db.getTEACHER_MAIL(), mail);
-        values.put(db.getIMAGE_NAME(), "teacher-icon.png");
+        values.put(db.getIMAGE_NAME(), "teacher-icon");
 
         sql.insert(db.getTableTeacher(), null, values);
 

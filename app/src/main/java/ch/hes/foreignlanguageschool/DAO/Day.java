@@ -1,10 +1,12 @@
 package ch.hes.foreignlanguageschool.DAO;
 
+import java.io.Serializable;
+
 /**
  * Created by patrickclivaz on 11.04.17.
  */
 
-public class Day {
+public class Day implements Serializable {
 
     private int id;
     private String name;

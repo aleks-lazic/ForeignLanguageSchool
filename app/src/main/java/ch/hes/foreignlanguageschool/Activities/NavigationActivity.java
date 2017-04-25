@@ -99,7 +99,7 @@ public class NavigationActivity extends AppCompatActivity
 
         //adding lectures
         dbLecture = new DBLecture(databaseHelper);
-        dbLecture.insertValues("Engish", "English advanced course", dbTeacher.getTeacherById(1).getId());
+        dbLecture.insertValues("English", "English advanced course", dbTeacher.getTeacherById(1).getId());
         dbLecture.insertValues("Written Communication", "Written communication course for beginners", dbTeacher.getTeacherById(1).getId());
         dbLecture.insertValues("IT", "IT course for beginners", dbTeacher.getTeacherById(2).getId());
         dbLecture.insertValues("Grammary", "English grammary course", dbTeacher.getTeacherById(2).getId());
@@ -126,7 +126,11 @@ public class NavigationActivity extends AppCompatActivity
         dbLecture.addStudentToLecture(1, 1);
 
         //adding lectures to a date
-        dbLecture.addDayAndHoursToLecture(1,1, "10:30", "12:00" );
+        dbLecture.addDayAndHoursToLecture(1, 1, "08:30", "10:00");
+        dbLecture.addDayAndHoursToLecture(2, 2, "08:30", "10:00");
+        dbLecture.addDayAndHoursToLecture(3, 3, "08:30", "10:00");
+        dbLecture.addDayAndHoursToLecture(4, 4, "08:30", "10:00");
+        dbLecture.addDayAndHoursToLecture(5, 5, "08:30", "10:00");
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);

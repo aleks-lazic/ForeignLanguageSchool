@@ -1,12 +1,13 @@
 package ch.hes.foreignlanguageschool.DAO;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by patrickclivaz on 11.04.17.
  */
 
-public class Lecture {
+public class Lecture implements Serializable{
 
     private int id;
     private String name;

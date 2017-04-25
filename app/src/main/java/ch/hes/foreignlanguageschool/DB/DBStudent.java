@@ -31,7 +31,7 @@ public class DBStudent {
         values.put(db.getSTUDENT_MAIL(), mail);
         values.put(db.getSTUDENT_STARTDATE(), startDate);
         values.put(db.getSTUDENT_ENDDATE(), endDate);
-        values.put(db.getIMAGE_NAME(), "student-icon.png");
+        values.put(db.getIMAGE_NAME(), "student-icon");
 
         sql.insert(db.getTableStudent(), null, values);
         sql.close();

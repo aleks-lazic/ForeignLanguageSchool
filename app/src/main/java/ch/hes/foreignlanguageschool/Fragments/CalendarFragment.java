@@ -1,6 +1,7 @@
 package ch.hes.foreignlanguageschool.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -10,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,6 +22,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.hes.foreignlanguageschool.Adapters.CustomListAdapter;
 import ch.hes.foreignlanguageschool.DAO.Lecture;
 import ch.hes.foreignlanguageschool.DAO.Teacher;
 import ch.hes.foreignlanguageschool.DB.DBLecture;
@@ -88,25 +92,46 @@ public class CalendarFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_calendar, container, false);
 
         //add everything linked to the lectures
-         ListView lecturesListView = (ListView) view.findViewById(R.id.calendar_listview);
+        ListView lecturesListView = (ListView) view.findViewById(R.id.calendar_listview);
 
         //select everything for current date
         DatabaseHelper db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
         final DBLecture dbLecture = new DBLecture(db);
 
-        CalendarView cv = (CalendarView)view.findViewById(R.id.calendar_calendarview);
+        CalendarView cv = (CalendarView) view.findViewById(R.id.calendar_calendarview);
         cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
 
             @Override
             public void onSelectedDayChange(@NonNull CalendarView viewCalendar, int year, int month, int dayOfMonth) {
 
                 ArrayList<Lecture> lectures = dbLecture.getLecturesForSpecialDate(year, month, dayOfMonth);
-                Log.d("Aleks", "Size lectures" +lectures.size());
-                Log.d("Aleks", "Month"+month);
-                Log.d("Aleks", "Day"+dayOfMonth);
+
+                ListView listview_lectures = (ListView) view.findViewById(R.id.calendar_listview);
+                String lecturesName[] = new String[lectures.size()];
+                String imageName[] = new String[lectures.size()];
+
+                for (int i = 0; i < lecturesName.length; i++) {
+                    lecturesName[i] = lectures.get(i).getName();
+                    imageName[i] = lectures.get(i).getImageName();
+                }
+
+                CustomListAdapter customAdapter = new CustomListAdapter(getActivity(), lecturesName, imageName);
+                listview_lectures.setAdapter(customAdapter);
 
             }
         });
+
+        lecturesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+//                Intent intent = new Intent(getActivity());
+//                intent.putExtra("myLecture", lectures.get(position));
+
+            }
+        });
+
+
         return view;
     }
 

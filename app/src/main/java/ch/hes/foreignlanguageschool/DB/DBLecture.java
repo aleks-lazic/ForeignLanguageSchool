@@ -38,7 +38,7 @@ public class DBLecture {
         ContentValues values = new ContentValues();
         values.put(db.getLECTURE_NAME(), name);
         values.put(db.getLECTURE_DESCRIPTION(), description);
-        values.put(db.getIMAGE_NAME(), "lecture-icon.png");
+        values.put(db.getIMAGE_NAME(), "lecture-icon");
         values.put(db.getLECTURE_FKTEACHER(), idTeacher);
 
         sql.insert(db.getTableLecture(), null, values);
