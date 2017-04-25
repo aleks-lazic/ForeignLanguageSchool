@@ -23,9 +23,11 @@
             android:name=".Activities.LecturesActivity"
             android:label="@string/title_activity_lectures"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activities.AssignmentsActivity"
+            android:label="@string/title_activity_assignment"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

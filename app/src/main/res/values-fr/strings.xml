@@ -9,4 +9,6 @@
     <string name="StudentsNavigation">Elèves</string>
     <string name="TeachersNavigation">Professeurs</string>
     <string name="action_settings">Options</string>
+    <string name="TeacherTitle">Professeur</string>
+    <string name="DescriptionTitle">Description</string>
 </resources>

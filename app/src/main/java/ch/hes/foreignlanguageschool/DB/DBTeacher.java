@@ -71,12 +71,12 @@ public class DBTeacher {
         return teacher;
     }
 
-    public List<Teacher> getAllTeachers() {
+    public ArrayList<Teacher> getAllTeachers() {
 
         SQLiteDatabase sql = db.getWritableDatabase();
 
-        List<Teacher> teachersList = new ArrayList<Teacher>();
-        String selectQuery = "SELECT * FROM " + db.getTableTeacher();
+        ArrayList<Teacher> teachersList = new ArrayList<Teacher>();
+        String selectQuery = "SELECT * FROM " + db.getTableTeacher()+ " ORDER BY " + db.getTEACHER_FIRSTNAME() + ", "+ db.getTEACHER_LASTNAME();
 
         Cursor cursor = sql.rawQuery(selectQuery, null);
 

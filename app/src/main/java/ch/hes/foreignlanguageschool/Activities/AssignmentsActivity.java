@@ -8,52 +8,40 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
+import ch.hes.foreignlanguageschool.DAO.Assignment;
 import ch.hes.foreignlanguageschool.DAO.Lecture;
-import ch.hes.foreignlanguageschool.DAO.Student;
+import ch.hes.foreignlanguageschool.DB.DBAssignment;
 import ch.hes.foreignlanguageschool.DB.DBLecture;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
-import ch.hes.foreignlanguageschool.Fragments.LecturesFragment;
 import ch.hes.foreignlanguageschool.R;
 
-import static android.R.attr.key;
-
-public class LecturesActivity extends AppCompatActivity {
-
-    private ListView studentsLecture;
-    private ArrayList<Student> students;
+public class AssignmentsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lectures);
+        setContentView(R.layout.activity_assignment);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         DatabaseHelper db = DatabaseHelper.getInstance(getApplicationContext());
-        DBLecture dbLecture = new DBLecture(db);
+        DBAssignment dbAssignment = new DBAssignment(db);
 
         Intent intent = getIntent();
 
-        Lecture lecture = (Lecture)intent.getSerializableExtra("list");
-        setTitle(lecture.getName());
+        Assignment assignment = (Assignment) intent.getSerializableExtra("list");
+        setTitle(assignment.getTitle());
 
-        TextView description = (TextView)findViewById(R.id.lecture_description);
+        TextView description = (TextView)findViewById(R.id.assignment_description);
 
-        description.setText(lecture.getDescription());
+        description.setText(assignment.getDescription());
 
-        TextView teacher = (TextView)findViewById(R.id.lecture_teacher);
+        TextView teacher = (TextView)findViewById(R.id.assignment_teacher);
 
-        teacher.setText(lecture.getTeacher().getFirstName()+ " " + lecture.getTeacher().getLastName());
+        teacher.setText(assignment.getTeacher().getFirstName()+ " " + assignment.getTeacher().getLastName());
 //        teacher.setOnClickListener();
-
-        // Set the list of students
-        studentsLecture = (ListView) findViewById(R.id.lectures_students);
-
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

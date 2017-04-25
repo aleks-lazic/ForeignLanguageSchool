@@ -1,15 +1,23 @@
 package ch.hes.foreignlanguageschool.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
+import ch.hes.foreignlanguageschool.Activities.AssignmentsActivity;
+import ch.hes.foreignlanguageschool.DAO.Assignment;
+import ch.hes.foreignlanguageschool.DB.DBAssignment;
+import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
 
 /**
@@ -34,9 +42,7 @@ public class AssignmentsFragment extends Fragment {
 
     private ListView mListView;
 
-    String[] assignments = new String[]{
-            "Android Project", "HTML Project", "Exam Security", "Cloud Extension Project"
-    };
+    private ArrayList<Assignment> assignments;
 
     public AssignmentsFragment() {
         // Required empty public constructor
@@ -78,8 +84,31 @@ public class AssignmentsFragment extends Fragment {
         // Set the list of assignments
         mListView = (ListView) view.findViewById(R.id.assignments_list);
 
+        DatabaseHelper db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
+        DBAssignment dbAssignment = new DBAssignment(db);
+
+        assignments = dbAssignment.getAllAssignments();
+
+        String[] tabAssignments = new String[assignments.size()];
+
+        for (int i = 0; i<tabAssignments.length;i++){
+            tabAssignments[i] = assignments.get(i).getTitle();
+        }
+
         mListView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(),
-                android.R.layout.simple_list_item_1 , assignments));
+                android.R.layout.simple_list_item_1 , tabAssignments));
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                Intent myIntent = new Intent(view.getContext(), AssignmentsActivity.class);
+
+                myIntent.putExtra("list",assignments.get(position));
+
+                startActivity(myIntent);
+            }
+        });
 
         return view;
     }

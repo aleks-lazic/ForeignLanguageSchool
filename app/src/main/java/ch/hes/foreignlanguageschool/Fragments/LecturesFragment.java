@@ -12,7 +12,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 import ch.hes.foreignlanguageschool.Activities.LecturesActivity;
+import ch.hes.foreignlanguageschool.DAO.Lecture;
+import ch.hes.foreignlanguageschool.DB.DBLecture;
+import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
 
 import static ch.hes.foreignlanguageschool.R.id.lectures_list;
@@ -40,9 +45,7 @@ public class LecturesFragment extends Fragment {
 
     private ListView mListView;
 
-    String[] lectures = new String[]{
-            "English", "IT", "Business", "Grammar"
-    };
+    private ArrayList<Lecture> lectures;
 
     public LecturesFragment() {
         // Required empty public constructor
@@ -84,8 +87,19 @@ public class LecturesFragment extends Fragment {
         // Set the list of lectures
         mListView = (ListView) view.findViewById(R.id.lectures_list);
 
+        DatabaseHelper db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
+        DBLecture dbLecture = new DBLecture(db);
+
+        lectures = dbLecture.getAllLectures();
+
+        String[] tabLectures = new String[lectures.size()];
+
+        for (int i = 0; i<tabLectures.length;i++){
+            tabLectures[i] = lectures.get(i).getName();
+        }
+
         mListView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(),
-                android.R.layout.simple_list_item_1 , lectures));
+                android.R.layout.simple_list_item_1 , tabLectures));
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
@@ -93,9 +107,7 @@ public class LecturesFragment extends Fragment {
 
                 Intent myIntent = new Intent(view.getContext(), LecturesActivity.class);
 
-                myIntent.putExtra("list",lectures[position]);
-
-//                parent.getAdapter().getItem(position);
+                myIntent.putExtra("list",lectures.get(position));
 
                 startActivity(myIntent);
             }

@@ -9,4 +9,6 @@
     <string name="StudentsNavigation">Studenten</string>
     <string name="TeachersNavigation">Lehrer</string>
     <string name="action_settings">Einstellungen</string>
+    <string name="TeacherTitle">Lehrer</string>
+    <string name="DescriptionTitle">Beschreibung</string>
 </resources>

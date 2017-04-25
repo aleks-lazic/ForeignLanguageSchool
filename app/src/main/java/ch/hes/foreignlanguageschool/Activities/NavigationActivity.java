@@ -87,6 +87,7 @@ public class NavigationActivity extends AppCompatActivity
         dbTeacher.insertValues("Jean-Claude", "Rey", "j-c.rey@hotmail.com");
         dbTeacher.insertValues("Michel", "Favre", "michel.favre@gmail.com");
         dbTeacher.insertValues("Predrag", "Ljubicic", "pedjo.ljubo@mail.srb");
+        dbTeacher.insertValues("Frédéric", "Bonvin", "fred.bonvin@mail.ch");
 
         //adding days
         dbDay = new DBDay(databaseHelper);
@@ -121,6 +122,7 @@ public class NavigationActivity extends AppCompatActivity
         //adding assignments
         dbAssignment = new DBAssignment(databaseHelper);
         dbAssignment.insertValues("Correction IT exams", null, currentDate, dbTeacher.getTeacherById(4).getId());
+        dbAssignment.insertValues("Prepare English course", "Organize the presentations", currentDate, dbTeacher.getTeacherById(1).getId());
 
         //adding students to lecture
         dbLecture.addStudentToLecture(1, 1);

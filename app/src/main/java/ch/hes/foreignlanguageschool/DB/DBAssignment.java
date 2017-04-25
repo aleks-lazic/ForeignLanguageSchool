@@ -34,11 +34,11 @@ public class DBAssignment {
         sql.close();
     }
 
-    public List<Assignment> getAllAssignments() {
+    public ArrayList<Assignment> getAllAssignments() {
 
         SQLiteDatabase sql = db.getWritableDatabase();
 
-        List<Assignment> assignmentsList = new ArrayList<Assignment>();
+        ArrayList<Assignment> assignmentsList = new ArrayList<Assignment>();
         String selectQuery = "SELECT * FROM " + db.getTableAssignement();
 
         Cursor cursor = sql.rawQuery(selectQuery, null);

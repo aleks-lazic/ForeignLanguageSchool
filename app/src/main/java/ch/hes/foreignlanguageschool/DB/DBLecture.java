@@ -45,10 +45,10 @@ public class DBLecture {
         sql.close();
     }
 
-    public List<Lecture> getAllLectures() {
+    public ArrayList<Lecture> getAllLectures() {
         SQLiteDatabase sql = db.getWritableDatabase();
 
-        List<Lecture> lecturesList = new ArrayList<Lecture>();
+        ArrayList<Lecture> lecturesList = new ArrayList<Lecture>();
         String selectQuery = "SELECT * FROM " + db.getTableLecture();
 
         Cursor cursor = sql.rawQuery(selectQuery, null);

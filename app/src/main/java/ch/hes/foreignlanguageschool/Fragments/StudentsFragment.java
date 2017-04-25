@@ -10,6 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
+import ch.hes.foreignlanguageschool.DAO.Student;
+import ch.hes.foreignlanguageschool.DB.DBLecture;
+import ch.hes.foreignlanguageschool.DB.DBStudent;
+import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
 
 /**
@@ -34,13 +40,7 @@ public class StudentsFragment extends Fragment {
 
     private ListView mListView;
 
-    String[] students = new String[]{
-            "Antoine", "Benoit", "Cyril", "David", "Eloise", "Florent",
-            "Gerard", "Hugo", "Ingrid", "Jonathan", "Kevin", "Logan",
-            "Mathieu", "Noemie", "Olivia", "Philippe", "Quentin", "Romain",
-            "Sophie", "Tristan", "Ulric", "Vincent", "Willy", "Xavier",
-            "Yann", "Zoé"
-    };
+    private ArrayList<Student> students;
 
     public StudentsFragment() {
         // Required empty public constructor
@@ -82,8 +82,19 @@ public class StudentsFragment extends Fragment {
         // Set the list of assignments
         mListView = (ListView) view.findViewById(R.id.students_list);
 
+        DatabaseHelper db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
+        DBStudent dbStudent = new DBStudent(db);
+
+        students = dbStudent.getAllStudents();
+
+        String[] tabStudents = new String[students.size()];
+
+        for (int i = 0; i<tabStudents.length;i++){
+            tabStudents[i] = students.get(i).getFirstName()+" "+students.get(i).getLastName();
+        }
+
         mListView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(),
-                android.R.layout.simple_list_item_1 , students));
+                android.R.layout.simple_list_item_1 , tabStudents));
 
         return view;
     }
