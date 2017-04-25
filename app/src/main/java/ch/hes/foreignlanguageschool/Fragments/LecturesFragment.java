@@ -1,16 +1,22 @@
 package ch.hes.foreignlanguageschool.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import ch.hes.foreignlanguageschool.Activities.LecturesActivity;
 import ch.hes.foreignlanguageschool.R;
+
+import static ch.hes.foreignlanguageschool.R.id.lectures_list;
+import static ch.hes.foreignlanguageschool.R.id.parent;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -80,6 +86,20 @@ public class LecturesFragment extends Fragment {
 
         mListView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(),
                 android.R.layout.simple_list_item_1 , lectures));
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+            int position, long id) {
+
+                Intent myIntent = new Intent(view.getContext(), LecturesActivity.class);
+
+                myIntent.putExtra("list",lectures[position]);
+
+//                parent.getAdapter().getItem(position);
+
+                startActivity(myIntent);
+            }
+        });
 
         return view;
     }
