@@ -100,7 +100,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + ASSIGNMENT_TITLE + " TEXT NOT NULL, "
             + ASSIGNMENT_DESCRIPTION + " TEXT, "
-            + ASSIGNMENT_DATE + " TEXT, "
+            + ASSIGNMENT_DATE + " TEXT NOT NULL, "
             + IMAGE_NAME + " TEXT NOT NULL, "
             + ASSIGNMENT_FKTEACHER + " TEXT NOT NULL, "
             + "FOREIGN KEY(" + ASSIGNMENT_FKTEACHER + ") REFERENCES " + TABLE_TEACHER + "(" + KEY_ID + "));";

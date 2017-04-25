@@ -58,6 +58,8 @@ public class AssignmentActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         finish();

@@ -43,7 +43,6 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         int id = context.getResources().getIdentifier("ch.hes.foreignlanguageschool:drawable/"+imageName[position], null, null);
         imgLecture.setImageResource(id);
 
-        Log.d("Aleks", "" + id);
         return rowView;
 
     }

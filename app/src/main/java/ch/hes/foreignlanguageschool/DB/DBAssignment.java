@@ -17,7 +17,9 @@ public class DBAssignment {
 
     private DatabaseHelper db;
 
-    public DBAssignment(DatabaseHelper db) {this.db =  db;}
+    public DBAssignment(DatabaseHelper db) {
+        this.db = db;
+    }
 
     public void insertValues(String title, String description, String date, int idTeacher) {
 
@@ -63,5 +65,38 @@ public class DBAssignment {
 
         // return assignments list
         return assignmentsList;
+    }
+
+    public ArrayList<Assignment> getAllAssignmentsForSpecialDate(String date) {
+        SQLiteDatabase sql = db.getWritableDatabase();
+
+        ArrayList<Assignment> assignmentsList = new ArrayList<Assignment>();
+        String selectQuery = "SELECT *"
+                + " FROM " + db.getTableAssignement()
+                + " WHERE " + db.getASSIGNMENT_DATE() + " = " + "'"+date+"'";
+
+        Cursor cursor = sql.rawQuery(selectQuery, null);
+
+        DBTeacher teacher = new DBTeacher(db);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Assignment assignment = new Assignment();
+                assignment.setId(Integer.parseInt(cursor.getString(0)));
+                assignment.setTitle(cursor.getString(1));
+                assignment.setDescription(cursor.getString(2));
+                assignment.setDate(cursor.getString(3));
+                assignment.setImageName(cursor.getString(4));
+                assignment.setTeacher(teacher.getTeacherById(Integer.parseInt(cursor.getString(5))));
+
+                // Adding assignment to list
+                assignmentsList.add(assignment);
+            } while (cursor.moveToNext());
+        }
+
+        // return assignments list
+        return assignmentsList;
+
     }
 }

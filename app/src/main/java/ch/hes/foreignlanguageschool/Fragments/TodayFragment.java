@@ -1,11 +1,10 @@
 package ch.hes.foreignlanguageschool.Fragments;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,23 +13,25 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
-import ch.hes.foreignlanguageschool.Activities.NavigationActivity;
+import ch.hes.foreignlanguageschool.DAO.Assignment;
+import ch.hes.foreignlanguageschool.DAO.Lecture;
+import ch.hes.foreignlanguageschool.DB.DBAssignment;
+import ch.hes.foreignlanguageschool.DB.DBLecture;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
-
-import static android.os.Build.VERSION_CODES.M;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link HomeFragment.OnFragmentInteractionListener} interface
+ * {@link TodayFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link HomeFragment#newInstance} factory method to
+ * Use the {@link TodayFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
+public class TodayFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -42,18 +43,22 @@ public class HomeFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private ListView mListView;
-    private ListView mListView2;
+    private ListView listViewLectures;
+    private ListView listViewAssignments;
 
-    String[] lectures = new String[]{
-            "English", "IT", "Business", "Grammar"
-    };
+    //the home will display all the lectures and assignments OF THE DAY
+    private ArrayList<Lecture> lectures;
+    private ArrayList<Assignment> assignments;
 
-    String[] assignments = new String[]{
-            "Android Project", "HTML Project", "Exam Security", "Cloud Extension Project"
-    };
+    //classes needed for the database
+    private DatabaseHelper db;
+    private DBLecture dbLecture;
+    private DBAssignment dbAssignment;
 
-    public HomeFragment() {
+    private String currentDate = new SimpleDateFormat("dd.MM.yyyy").format(new Date());
+
+
+    public TodayFragment() {
         // Required empty public constructor
     }
 
@@ -63,11 +68,11 @@ public class HomeFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
+     * @return A new instance of fragment TodayFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
+    public static TodayFragment newInstance(String param1, String param2) {
+        TodayFragment fragment = new TodayFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -91,22 +96,44 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        //Everything related to the database
+        db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
+        dbLecture = new DBLecture(db);
+        dbAssignment = new DBAssignment(db);
+
         // Set the Date of the Day
-        String date = new SimpleDateFormat("dd"+" "+"MM"+" " +"yyyy").format(new Date());
-        TextView textView = (TextView)view.findViewById(R.id.dateDay);
-        textView.setText(date);
+        TextView textView = (TextView) view.findViewById(R.id.title_home_lecture);
+
+        //SQL to get every lecture for current day
+        lectures = dbLecture.getLecturesForCurrentDateInHome(currentDate);
+
+        //SQL to get every lecture for current day
+        assignments = dbAssignment.getAllAssignmentsForSpecialDate(currentDate);
+
+
+        //get lecturesTitles and assignments Titles
+        String[] lecturesTitles = new String[lectures.size()];
+        String[] assignmentsTitles = new String[assignments.size()];
+
+        for (int i = 0; i < lecturesTitles.length; i++) {
+            lecturesTitles[i] = lectures.get(i).getName();
+        }
+
+        for (int i = 0; i < assignmentsTitles.length; i++) {
+            assignmentsTitles[i] = assignments.get(i).getTitle();
+        }
 
         // Set the list of lectures
-        mListView = (ListView) view.findViewById(R.id.home_lectures);
+        listViewLectures = (ListView) view.findViewById(R.id.home_lectures);
 
-        mListView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(),
-                android.R.layout.simple_list_item_1 , lectures));
+        listViewLectures.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(),
+                android.R.layout.simple_list_item_1, lecturesTitles));
 
         // Set the list of assignments
-        mListView2 = (ListView) view.findViewById(R.id.home_assignments);
+        listViewAssignments = (ListView) view.findViewById(R.id.home_assignments);
 
-        mListView2.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(),
-                android.R.layout.simple_list_item_1 , assignments));
+        listViewAssignments.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(),
+                android.R.layout.simple_list_item_1, assignmentsTitles));
 
         return view;
     }

@@ -28,7 +28,7 @@ import ch.hes.foreignlanguageschool.DB.DBTeacher;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.Fragments.AssignmentsFragment;
 import ch.hes.foreignlanguageschool.Fragments.CalendarFragment;
-import ch.hes.foreignlanguageschool.Fragments.HomeFragment;
+import ch.hes.foreignlanguageschool.Fragments.TodayFragment;
 import ch.hes.foreignlanguageschool.Fragments.LecturesFragment;
 import ch.hes.foreignlanguageschool.Fragments.SettingsFragment;
 import ch.hes.foreignlanguageschool.Fragments.StudentsFragment;
@@ -39,7 +39,7 @@ public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     //tags used to attach the fragments
-    private final String TAG_HOME = "Home";
+    private final String TAG_TODAY = "Today";
     private final String TAG_CALENDAR = "Calendar";
     private final String TAG_ASSIGNMENTS = "Assignments";
     private final String TAG_LECTURES = "Lectures";
@@ -48,7 +48,6 @@ public class NavigationActivity extends AppCompatActivity
     private final String TAG_SETTINGS = "Settings";
 
     private String CURRENT_TAG = "";
-
 
     //index to identify current nav menu item
     private int navItemIndex = 0;
@@ -130,6 +129,16 @@ public class NavigationActivity extends AppCompatActivity
         //adding lectures to a date
         dbLecture.addDayAndHoursToLecture(1, 1, "08:30", "10:00");
         dbLecture.addDayAndHoursToLecture(2, 2, "08:30", "10:00");
+
+
+        //Those are only for test
+        dbLecture.addDayAndHoursToLecture(1, 2, "08:30", "10:00");
+        dbLecture.addDayAndHoursToLecture(3, 2, "08:30", "10:00");
+        dbLecture.addDayAndHoursToLecture(4, 2, "08:30", "10:00");
+        dbLecture.addDayAndHoursToLecture(5, 2, "08:30", "10:00");
+        //End of test
+
+
         dbLecture.addDayAndHoursToLecture(3, 3, "08:30", "10:00");
         dbLecture.addDayAndHoursToLecture(4, 4, "08:30", "10:00");
         dbLecture.addDayAndHoursToLecture(5, 5, "08:30", "10:00");
@@ -168,7 +177,7 @@ public class NavigationActivity extends AppCompatActivity
 
         if (savedInstanceState == null) {
             navItemIndex = 0;
-            CURRENT_TAG = TAG_HOME;
+            CURRENT_TAG = TAG_TODAY;
             loadHomeFragment();
         }
     }
@@ -211,9 +220,9 @@ public class NavigationActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = menuItem.getItemId();
 
-        if (id == R.id.nav_home) {
+        if (id == R.id.nav_today) {
             navItemIndex = 0;
-            CURRENT_TAG = TAG_HOME;
+            CURRENT_TAG = TAG_TODAY;
         } else if (id == R.id.nav_calendar) {
             navItemIndex = 1;
             CURRENT_TAG = TAG_CALENDAR;
@@ -279,8 +288,6 @@ public class NavigationActivity extends AppCompatActivity
             mHandler.post(mPendingRunnable);
         }
 
-
-//        Log.d("Aleks", "Current tag "+CURRENT_TAG + fragment.getClass().getSimpleName());
         // show or hide the fab button
         toggleFab();
 
@@ -296,42 +303,35 @@ public class NavigationActivity extends AppCompatActivity
         switch (navItemIndex) {
             case 0:
                 // home
-                HomeFragment homeFragment = new HomeFragment();
-                Log.d("Aleks", "GetHomeFragment " + navItemIndex);
-                return homeFragment;
+                TodayFragment todayFragment = new TodayFragment();
+                return todayFragment;
             case 1:
                 // calendar
                 CalendarFragment calendarFragment = new CalendarFragment();
-                Log.d("Aleks", "GetHomeFragment " + navItemIndex);
                 return calendarFragment;
             case 2:
                 // assignments
                 AssignmentsFragment assignmentsFragment = new AssignmentsFragment();
-                Log.d("Aleks", "GetHomeFragment " + navItemIndex);
                 return assignmentsFragment;
             case 3:
                 // Lectures
                 LecturesFragment lecturesFragment = new LecturesFragment();
-                Log.d("Aleks", "GetHomeFragment " + navItemIndex);
                 return lecturesFragment;
 
             case 4:
                 // students
                 StudentsFragment studentsFragment = new StudentsFragment();
-                Log.d("Aleks", "GetHomeFragment " + navItemIndex);
                 return studentsFragment;
             case 5:
                 // teachers
                 TeachersFragment teachersFragment = new TeachersFragment();
-                Log.d("Aleks", "GetHomeFragment " + navItemIndex);
                 return teachersFragment;
             case 6:
                 // settings
                 SettingsFragment settingsFragment = new SettingsFragment();
-                Log.d("Aleks", "GetHomeFragment " + navItemIndex);
                 return settingsFragment;
             default:
-                return new HomeFragment();
+                return new TodayFragment();
         }
     }
 

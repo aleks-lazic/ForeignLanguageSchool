@@ -39,8 +39,6 @@ public class DBTeacher {
     }
 
     public Teacher getTeacherById(int idTeacher) {
-        Log.d("Aleks", "jE SUIS DANS LA METHODE FDP");
-
         SQLiteDatabase sql = db.getWritableDatabase();
 
         Teacher teacher = new Teacher();

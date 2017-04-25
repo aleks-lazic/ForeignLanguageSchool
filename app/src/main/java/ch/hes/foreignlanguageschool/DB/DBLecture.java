@@ -125,12 +125,9 @@ public class DBLecture {
             monthString = Integer.toString(month);
         }
 
-        String date = dayString + "/" + monthString + "/" + yearString;
-
         Calendar cal = new GregorianCalendar(year, Integer.parseInt(monthString), dayOfMonth);
         int result = cal.get(Calendar.DAY_OF_WEEK);
         int dayOfWeek = getIdOfDayWeek(result);
-        Log.d("Aleks", "Day : "+result);
 
         SQLiteDatabase sql = db.getWritableDatabase();
 
@@ -175,6 +172,65 @@ public class DBLecture {
         // return lectures list
         return lecturesList;
     }
+
+    public ArrayList<Lecture> getLecturesForCurrentDateInHome(String date) {
+
+        //25.04.2017
+
+        int day = Integer.parseInt(date.substring(0, 2));
+        int month = Integer.parseInt(date.substring(3, 5));
+        int year = Integer.parseInt(date.substring(6, 10));
+
+        Log.d("Aleks", ""+day+"."+month+"."+year);
+
+        Calendar cal = new GregorianCalendar(year, month, day);
+        int result = cal.get(Calendar.DAY_OF_WEEK);
+        int dayOfWeek = getIdOfDayWeek(result);
+
+        SQLiteDatabase sql = db.getWritableDatabase();
+
+        ArrayList<Lecture> lecturesList = new ArrayList<Lecture>();
+        String selectQuery = "SELECT "
+                + db.getKeyId() + ", "
+                + db.getLECTURE_NAME() + ", "
+                + db.getLECTURE_DESCRIPTION() + ", "
+                + db.getIMAGE_NAME() + ", "
+                + db.getLECTURE_FKTEACHER() + ", "
+                + db.getLECTUREDATE_FKDAY() + ", "
+                + db.getLECTUREDATE_STARTTIME() + ", "
+                + db.getLECTUREDATE_ENDTIME() + " "
+                + "FROM " + db.getTableLecture()
+                + " LEFT JOIN " + db.getTableLecturedate() + " ON " + db.getTableLecture() + "." + db.getKeyId() + " = " + db.getTableLecturedate() + "." + db.getLECTUREDATE_FKLECTURE()
+                + " WHERE " + db.getLECTUREDATE_FKDAY() + " = " + dayOfWeek;
+
+
+        Cursor cursor = sql.rawQuery(selectQuery, null);
+
+        DBTeacher teacher = new DBTeacher(db);
+        DBStudent student = new DBStudent(db);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Lecture lecture = new Lecture();
+                lecture.setId(Integer.parseInt(cursor.getString(0)));
+                lecture.setName(cursor.getString(1));
+                lecture.setDescription(cursor.getString(2));
+                lecture.setImageName(cursor.getString((3)));
+                lecture.setTeacher(teacher.getTeacherById(Integer.parseInt(cursor.getString(4))));
+                lecture.setIdDay(Integer.parseInt(cursor.getString(5)));
+                lecture.setStartTime(cursor.getString(6));
+                lecture.setStartTime(cursor.getString(7));
+
+                // Adding lecture to list
+                lecturesList.add(lecture);
+            } while (cursor.moveToNext());
+        }
+
+        // return lectures list
+        return lecturesList;
+    }
+
 
     private int getIdOfDayWeek(int day) {
         switch (day) {
