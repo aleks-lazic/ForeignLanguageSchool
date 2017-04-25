@@ -117,5 +117,8 @@
     <string name="TeacherTitle">Teacher</string>
     <string name="DescriptionTitle">Description</string>
     <string name="title_activity_assignment">AssignmentActivity</string>
+    <string name="DueDateTitle">Due Date</string>
+    <string name="title_activity_teacher">TeacherActivity</string>
+    <string name="title_activity_student">StudentActivity</string>
 
 </resources>

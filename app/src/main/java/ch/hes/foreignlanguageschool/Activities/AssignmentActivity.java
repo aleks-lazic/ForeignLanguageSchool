@@ -17,7 +17,7 @@ import ch.hes.foreignlanguageschool.DB.DBLecture;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
 
-public class AssignmentsActivity extends AppCompatActivity {
+public class AssignmentActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,10 @@ public class AssignmentsActivity extends AppCompatActivity {
         TextView description = (TextView)findViewById(R.id.assignment_description);
 
         description.setText(assignment.getDescription());
+
+        TextView date = (TextView)findViewById(R.id.assignment_date);
+
+        date.setText(assignment.getDate());
 
         TextView teacher = (TextView)findViewById(R.id.assignment_teacher);
 

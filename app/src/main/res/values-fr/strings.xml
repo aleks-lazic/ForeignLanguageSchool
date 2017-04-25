@@ -11,4 +11,5 @@
     <string name="action_settings">Options</string>
     <string name="TeacherTitle">Professeur</string>
     <string name="DescriptionTitle">Description</string>
+    <string name="DueDateTitle">Date d\'échéance</string>
 </resources>

@@ -22,7 +22,7 @@ import ch.hes.foreignlanguageschool.R;
 
 import static android.R.attr.key;
 
-public class LecturesActivity extends AppCompatActivity {
+public class LectureActivity extends AppCompatActivity {
 
     private ListView studentsLecture;
     private ArrayList<Student> students;

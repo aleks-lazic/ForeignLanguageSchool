@@ -20,15 +20,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.LecturesActivity"
+            android:name=".Activities.LectureActivity"
             android:label="@string/title_activity_lectures"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.AssignmentsActivity"
+            android:name=".Activities.AssignmentActivity"
             android:label="@string/title_activity_assignment"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.TeacherActivity"
+            android:label="@string/title_activity_teacher"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.StudentActivity"
+            android:label="@string/title_activity_student"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

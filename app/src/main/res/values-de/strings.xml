@@ -11,4 +11,5 @@
     <string name="action_settings">Einstellungen</string>
     <string name="TeacherTitle">Lehrer</string>
     <string name="DescriptionTitle">Beschreibung</string>
+    <string name="DueDateTitle">Geburtstermin</string>
 </resources>

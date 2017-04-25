@@ -14,14 +14,11 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import ch.hes.foreignlanguageschool.Activities.LecturesActivity;
+import ch.hes.foreignlanguageschool.Activities.LectureActivity;
 import ch.hes.foreignlanguageschool.DAO.Lecture;
 import ch.hes.foreignlanguageschool.DB.DBLecture;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
-
-import static ch.hes.foreignlanguageschool.R.id.lectures_list;
-import static ch.hes.foreignlanguageschool.R.id.parent;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -105,7 +102,7 @@ public class LecturesFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view,
             int position, long id) {
 
-                Intent myIntent = new Intent(view.getContext(), LecturesActivity.class);
+                Intent myIntent = new Intent(view.getContext(), LectureActivity.class);
 
                 myIntent.putExtra("list",lectures.get(position));
 

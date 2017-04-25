@@ -8,7 +8,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp">
+        android:layout_height="300dp">
 
         <TextView
             android:id="@+id/dateDay"
@@ -18,15 +18,15 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="50dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="5dp"
             android:textColor="#FF9800"
             android:textSize="24sp" />
 
         <ListView
             android:id="@+id/home_lectures"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="65dp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp" />
     </RelativeLayout>
 
 
@@ -42,7 +42,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="50dp"
-            android:layout_marginTop="275dp"
+            android:layout_marginTop="265dp"
             android:text="@string/AssignmentsNavigation"
             android:textColor="#FF9800"
             android:textSize="24sp" />
@@ -51,7 +51,7 @@
             android:id="@+id/home_assignments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="320dp"
+            android:layout_marginTop="295dp"
             android:layout_marginBottom="40dp"/>
     </RelativeLayout>
 

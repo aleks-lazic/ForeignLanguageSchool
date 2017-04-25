@@ -14,7 +14,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import ch.hes.foreignlanguageschool.Activities.AssignmentsActivity;
+import ch.hes.foreignlanguageschool.Activities.AssignmentActivity;
 import ch.hes.foreignlanguageschool.DAO.Assignment;
 import ch.hes.foreignlanguageschool.DB.DBAssignment;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
@@ -102,7 +102,7 @@ public class AssignmentsFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                Intent myIntent = new Intent(view.getContext(), AssignmentsActivity.class);
+                Intent myIntent = new Intent(view.getContext(), AssignmentActivity.class);
 
                 myIntent.putExtra("list",assignments.get(position));
 
