@@ -5,8 +5,6 @@
     android:orientation="vertical"
     tools:context="ch.hes.foreignlanguageschool.Fragments.CalendarFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <CalendarView
         android:id="@+id/calendar_calendarview"
         android:layout_width="match_parent"
@@ -21,21 +19,20 @@
         android:id="@+id/calendar_lectures_titles"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:padding="10dp"
         android:text="@string/LecturesNavigation"
         android:textColor="@color/colorAccent"
         android:textSize="24sp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
 
         <ListView
             android:id="@+id/calendar_listview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_height="wrap_content">
         </ListView>
 
 

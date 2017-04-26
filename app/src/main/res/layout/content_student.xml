@@ -11,6 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="25dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp">
 
@@ -18,7 +19,6 @@
             android:id="@+id/title_student_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
             android:text="@string/AddressTitle"
             android:textColor="@color/colorAccent"
             android:textSize="18sp" />
@@ -27,13 +27,15 @@
             android:id="@+id/student_address"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="55dp" />
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/title_student_address"/>
 
         <TextView
             android:id="@+id/title_student_country"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="95dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/student_address"
             android:text="@string/CountryTitle"
             android:textColor="@color/colorAccent"
             android:textSize="18sp" />
@@ -42,13 +44,15 @@
             android:id="@+id/student_country"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="125dp" />
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/title_student_country"/>
 
         <TextView
             android:id="@+id/title_student_mail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="165dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/student_country"
             android:text="@string/MailTitle"
             android:textColor="@color/colorAccent"
             android:textSize="18sp" />
@@ -57,13 +61,15 @@
             android:id="@+id/student_mail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="195dp" />
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/title_student_mail"/>
 
         <TextView
             android:id="@+id/title_startdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="235dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/student_mail"
             android:text="@string/StartDateTitle"
             android:textColor="@color/colorAccent"
             android:textSize="18sp" />
@@ -72,13 +78,15 @@
             android:id="@+id/student_startdate"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="265dp" />
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/title_startdate"/>
 
         <TextView
             android:id="@+id/title_enddate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="305dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/student_startdate"
             android:text="@string/EndDateTitle"
             android:textColor="@color/colorAccent"
             android:textSize="18sp" />
@@ -87,7 +95,8 @@
             android:id="@+id/student_enddate"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="335dp" />
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/title_enddate"/>
 
     </RelativeLayout>
 
