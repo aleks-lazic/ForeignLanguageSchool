@@ -31,7 +31,7 @@ public class AssignmentActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        Assignment assignment = (Assignment) intent.getSerializableExtra("list");
+        final Assignment assignment = (Assignment) intent.getSerializableExtra("list");
         setTitle(assignment.getTitle());
 
         TextView description = (TextView)findViewById(R.id.assignment_description);
@@ -45,14 +45,15 @@ public class AssignmentActivity extends AppCompatActivity {
         TextView teacher = (TextView)findViewById(R.id.assignment_teacher);
 
         teacher.setText(assignment.getTeacher().getFirstName()+ " " + assignment.getTeacher().getLastName());
-//        teacher.setOnClickListener();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_assignment);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                Intent intent = new Intent(getApplicationContext(), AssignmentEdit.class);
+                intent.putExtra("assignment", assignment);
+                startActivity(intent);
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

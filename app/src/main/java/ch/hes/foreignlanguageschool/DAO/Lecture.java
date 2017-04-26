@@ -1,6 +1,7 @@
 package ch.hes.foreignlanguageschool.DAO;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ public class Lecture implements Serializable{
     private String name;
     private String description;
     private Teacher teacher;
-    private List<Student> studentsList;
+    private ArrayList<Student> studentsList;
     private String imageName;
     private int idDay;
     private String startTime;
@@ -61,11 +62,11 @@ public class Lecture implements Serializable{
         this.teacher = teacher;
     }
 
-    public List<Student> getStudentsList() {
+    public ArrayList<Student> getStudentsList() {
         return studentsList;
     }
 
-    public void setStudentsList(List<Student> studentsList) {
+    public void setStudentsList(ArrayList<Student> studentsList) {
         this.studentsList = studentsList;
     }
 

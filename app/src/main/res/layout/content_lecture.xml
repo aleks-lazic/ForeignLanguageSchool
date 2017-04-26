@@ -2,70 +2,64 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_lecture_content_scrollview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="ch.hes.foreignlanguageschool.Activities.LectureActivity"
     tools:showIn="@layout/activity_lecture">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:weightSum="1">
 
         <TextView
-            android:id="@+id/title_description"
-            android:layout_width="wrap_content"
+            android:id="@+id/activity_lecture_title_description"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/DescriptionTitle"
             android:textColor="@color/colorAccent"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/lecture_description"
+            android:id="@+id/activity_lecture_description"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/title_description"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
 
         <TextView
-            android:id="@+id/title_teacher"
-            android:layout_width="wrap_content"
+            android:id="@+id/activity_lecture_title_teacher"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_below="@id/lecture_description"
             android:text="@string/TeacherTitle"
             android:textColor="@color/colorAccent"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/lecture_teacher"
+            android:id="@+id/activity_lecture_teacher"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/title_teacher"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
 
 
         <TextView
-            android:id="@+id/title_lectures_students"
-            android:layout_width="wrap_content"
+            android:id="@+id/activity_lecture_title_students"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_below="@id/lecture_teacher"
             android:text="@string/StudentsNavigation"
             android:textColor="@color/colorAccent"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
 
         <ListView
-            android:id="@+id/lectures_students"
-            android:layout_width="wrap_content"
+            android:id="@+id/activity_lecture_students"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/title_lectures_students"/>
+            android:layout_marginTop="10dp" />
 
-</RelativeLayout>
-
-
+    </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

@@ -125,6 +125,11 @@ public class NavigationActivity extends AppCompatActivity
 
         //adding students to lecture
         dbLecture.addStudentToLecture(1, 1);
+        dbLecture.addStudentToLecture(2, 1);
+        dbLecture.addStudentToLecture(3, 1);
+        dbLecture.addStudentToLecture(4, 1);
+        dbLecture.addStudentToLecture(5, 1);
+
 
         //adding lectures to a date
         dbLecture.addDayAndHoursToLecture(1, 1, "08:30", "10:00");
@@ -153,15 +158,15 @@ public class NavigationActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
 
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        fab = (FloatingActionButton) findViewById(R.id.fab);
+//
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.MenuItems);
@@ -268,7 +273,7 @@ public class NavigationActivity extends AppCompatActivity
             drawer.closeDrawers();
 
             // show or hide the fab button
-            toggleFab();
+//            toggleFab();
             return;
         }
 
@@ -289,7 +294,7 @@ public class NavigationActivity extends AppCompatActivity
         }
 
         // show or hide the fab button
-        toggleFab();
+//        toggleFab();
 
         //Closing drawer on item click
         drawer.closeDrawers();
@@ -343,12 +348,13 @@ public class NavigationActivity extends AppCompatActivity
         getSupportActionBar().setTitle(activityTitles[navItemIndex]);
     }
 
-    private void toggleFab() {
-        if (navItemIndex == 0) {
-            fab.show();
-        } else {
-            fab.hide();
-        }
-    }
+//    private void toggleFab() {
+//
+//        if (navItemIndex == 0 || navItemIndex == 6) {
+//            fab.hide();
+//        } else {
+//            fab.show();
+//        }
+//    }
 
 }

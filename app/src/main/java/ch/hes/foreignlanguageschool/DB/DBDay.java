@@ -51,6 +51,9 @@ public class DBDay {
             } while (cursor.moveToNext());
         }
 
+        sql.close();
+
+
         // return days list
         return daysList;
     }

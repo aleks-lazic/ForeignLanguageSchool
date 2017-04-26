@@ -56,7 +56,7 @@ public class StudentActivity extends AppCompatActivity {
 
         endDate.setText(student.getEndDate());
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_student);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

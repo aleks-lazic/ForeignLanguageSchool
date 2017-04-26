@@ -6,8 +6,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -19,9 +21,11 @@ import ch.hes.foreignlanguageschool.DB.DBLecture;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
 
+import static ch.hes.foreignlanguageschool.R.id.activity_lecture_fab;
+
 public class LectureActivity extends AppCompatActivity {
 
-    private ListView studentsLecture;
+    private ListView listView_students;
     private ArrayList<Student> students;
 
     @Override
@@ -31,28 +35,34 @@ public class LectureActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DatabaseHelper db = DatabaseHelper.getInstance(getApplicationContext());
-        DBLecture dbLecture = new DBLecture(db);
-
         Intent intent = getIntent();
 
-        Lecture lecture = (Lecture)intent.getSerializableExtra("list");
+        Lecture lecture = (Lecture) intent.getSerializableExtra("list");
         setTitle(lecture.getName());
 
-        TextView description = (TextView)findViewById(R.id.lecture_description);
+        TextView description = (TextView) findViewById(R.id.activity_lecture_description);
 
         description.setText(lecture.getDescription());
 
-        TextView teacher = (TextView)findViewById(R.id.lecture_teacher);
+        TextView teacher = (TextView) findViewById(R.id.activity_lecture_teacher);
 
-        teacher.setText(lecture.getTeacher().getFirstName()+ " " + lecture.getTeacher().getLastName());
-//        teacher.setOnClickListener();
+        teacher.setText(lecture.getTeacher().getFirstName() + " " + lecture.getTeacher().getLastName());
 
         // Set the list of students
-        studentsLecture = (ListView) findViewById(R.id.lectures_students);
+        listView_students = (ListView) findViewById(R.id.activity_lecture_students);
 
+        //set the students from the lecture
+        students = lecture.getStudentsList();
+        Log.d("Aleks", " "+ students.size());
+        String[] studentsName = new String[students.size()];
+        for (int i = 0; i < studentsName.length; i++) {
+            studentsName[i] = students.get(i).getFirstName() + " " + students.get(i).getLastName();
+            Log.d("Aleks", studentsName[i]);
+        }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        listView_students.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, studentsName));
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.activity_lecture_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

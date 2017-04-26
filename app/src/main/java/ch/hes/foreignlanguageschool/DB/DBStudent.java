@@ -3,6 +3,7 @@ package ch.hes.foreignlanguageschool.DB;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,30 +60,36 @@ public class DBStudent {
         student.setEndDate(cursor.getString(7));
         student.setImageName(cursor.getString(8));
 
+        sql.close();
+
+
         // return teacher
         return student;
     }
 
-    public List<Student> getStudentsListByLecture(int idLecture) {
+    public ArrayList<Student> getStudentsListByLecture(int idLecture) {
         SQLiteDatabase sql = db.getWritableDatabase();
 
-        List<Student> studentsList = new ArrayList<Student>();
+        ArrayList<Student> studentsList = new ArrayList<Student>();
 
-        String selectQuery = "SELECT * FROM " + db.getTableLecturestudent() + " WHERE " + db.getLECTURESTUDENT_FKLECTURE() + " = " + idLecture;
+        String selectQuery = "SELECT "+db.getLECTURESTUDENT_FKSTUDENT()+" FROM " + db.getTableLecturestudent() + " WHERE " + db.getLECTURESTUDENT_FKLECTURE() + " = " + idLecture;
 
         Cursor cursor = sql.rawQuery(selectQuery, null);
-
-        DBStudent studentDb = new DBStudent(db);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                Student student = studentDb.getStudentById(Integer.parseInt(cursor.getString(0)));
+                Log.d("Aleks", "Id Lecture : " + idLecture + " IdStudent : "+cursor.getString(0));
+                Student student = getStudentById(Integer.parseInt(cursor.getString(0)));
 
                 // Adding student to list
                 studentsList.add(student);
             } while (cursor.moveToNext());
         }
+
+        sql.close();
+
+
         // return teacher
         return studentsList;
     }
@@ -114,6 +121,9 @@ public class DBStudent {
                 studentsList.add(student);
             } while (cursor.moveToNext());
         }
+
+
+        sql.close();
 
         // return students list
         return studentsList;

@@ -40,4 +40,17 @@
     <string name="EndDateTitle">End Date</string>
     <string name="MailTitle">Mail</string>
 
+    <!--Hint ressources for the edit text-->
+    <string name="hintTitle">Title</string>
+    <string name="hintName">Name</string>
+    <string name="hintFirstName">FirstName</string>
+    <string name="hintLastName">LastName</string>
+    <string name="hintDescription">Description</string>
+    <string name="hintDueDate">Due Date</string>
+
+
+    <!--Buttons-->
+    <string name="buttonValidate">Validate</string>
+
+
 </resources>

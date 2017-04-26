@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import ch.hes.foreignlanguageschool.Activities.AssignmentActivity;
+import ch.hes.foreignlanguageschool.Activities.AssignmentEdit;
 import ch.hes.foreignlanguageschool.DAO.Assignment;
 import ch.hes.foreignlanguageschool.DB.DBAssignment;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
@@ -107,6 +109,16 @@ public class AssignmentsFragment extends Fragment {
                 myIntent.putExtra("list",assignments.get(position));
 
                 startActivity(myIntent);
+            }
+        });
+
+
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fragment_fab_assignments);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), AssignmentEdit.class);
+                startActivity(intent);
             }
         });
 

@@ -93,6 +93,9 @@ public class DBTeacher {
             } while (cursor.moveToNext());
         }
 
+        sql.close();
+
+
         // return teachers list
         return teachersList;
     }

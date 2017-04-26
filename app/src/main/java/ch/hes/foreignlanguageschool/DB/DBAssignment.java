@@ -63,6 +63,9 @@ public class DBAssignment {
             } while (cursor.moveToNext());
         }
 
+        sql.close();
+
+
         // return assignments list
         return assignmentsList;
     }
@@ -94,6 +97,9 @@ public class DBAssignment {
                 assignmentsList.add(assignment);
             } while (cursor.moveToNext());
         }
+
+        sql.close();
+
 
         // return assignments list
         return assignmentsList;

@@ -49,12 +49,13 @@ public class DBLecture {
         SQLiteDatabase sql = db.getWritableDatabase();
 
         ArrayList<Lecture> lecturesList = new ArrayList<Lecture>();
-        String selectQuery = "SELECT * FROM " + db.getTableLecture() + " ORDER BY " + db.getLECTURE_NAME();
+//        String selectQuery = "SELECT * FROM " + db.getTableLecture() + " ORDER BY " + db.getLECTURE_NAME();
+        String selectQuery = "SELECT * FROM " + db.getTableLecture();
 
         Cursor cursor = sql.rawQuery(selectQuery, null);
 
-        DBTeacher teacher = new DBTeacher(db);
-        DBStudent student = new DBStudent(db);
+        DBTeacher dbTeacher = new DBTeacher(db);
+        DBStudent dbStudent = new DBStudent(db);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
@@ -64,13 +65,16 @@ public class DBLecture {
                 lecture.setName(cursor.getString(1));
                 lecture.setDescription(cursor.getString(2));
                 lecture.setImageName(cursor.getString((3)));
-                lecture.setTeacher(teacher.getTeacherById(Integer.parseInt(cursor.getString(4))));
-//              lecture.setStudentsList(student.getStudentsListByLecture(Integer.parseInt(cursor.getString(5))));
+                lecture.setTeacher(dbTeacher.getTeacherById(Integer.parseInt(cursor.getString(4))));
+                lecture.setStudentsList(dbStudent.getStudentsListByLecture(Integer.parseInt(cursor.getString(0))));
 
                 // Adding lecture to list
                 lecturesList.add(lecture);
             } while (cursor.moveToNext());
         }
+
+        sql.close();
+
 
         // return lectures list
         return lecturesList;
@@ -115,8 +119,6 @@ public class DBLecture {
     public ArrayList<Lecture> getLecturesForSpecialDate(int year, int month, int dayOfMonth) {
 
         //adapt the current date to the sqlite format
-        String yearString = Integer.toString(year);
-        String dayString = Integer.toString(dayOfMonth);
         String monthString;
 
         if (month < 10)
@@ -169,6 +171,9 @@ public class DBLecture {
             } while (cursor.moveToNext());
         }
 
+        sql.close();
+
+
         // return lectures list
         return lecturesList;
     }
@@ -181,7 +186,7 @@ public class DBLecture {
         int month = Integer.parseInt(date.substring(3, 5));
         int year = Integer.parseInt(date.substring(6, 10));
 
-        Log.d("Aleks", ""+day+"."+month+"."+year);
+        Log.d("Aleks", "" + day + "." + month + "." + year);
 
         Calendar cal = new GregorianCalendar(year, month, day);
         int result = cal.get(Calendar.DAY_OF_WEEK);
@@ -226,6 +231,9 @@ public class DBLecture {
                 lecturesList.add(lecture);
             } while (cursor.moveToNext());
         }
+
+        sql.close();
+
 
         // return lectures list
         return lecturesList;
