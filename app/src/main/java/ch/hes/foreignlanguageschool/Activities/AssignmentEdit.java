@@ -63,6 +63,9 @@ public class AssignmentEdit extends AppCompatActivity {
 
         } else {
 
+
+
+
             btnValidate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -73,6 +76,12 @@ public class AssignmentEdit extends AppCompatActivity {
 
         }
 
+
+    }
+
+    private void loadSpinnerData(){
+        db = DatabaseHelper.getInstance(this);
+//        dbTeacher = new DBTeacher()
 
     }
 }

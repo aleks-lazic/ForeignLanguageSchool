@@ -21,6 +21,7 @@ import ch.hes.foreignlanguageschool.DB.DBLecture;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
 
+import static android.R.attr.description;
 import static ch.hes.foreignlanguageschool.R.id.activity_lecture_fab;
 
 public class LectureActivity extends AppCompatActivity {
@@ -39,6 +40,7 @@ public class LectureActivity extends AppCompatActivity {
 
         Lecture lecture = (Lecture) intent.getSerializableExtra("list");
         setTitle(lecture.getName());
+        Log.d("Aleks",lecture.getName());
 
         TextView description = (TextView) findViewById(R.id.activity_lecture_description);
 
@@ -53,6 +55,7 @@ public class LectureActivity extends AppCompatActivity {
 
         //set the students from the lecture
         students = lecture.getStudentsList();
+        Log.d("Aleks",""+lecture.getStudentsList().size());
         Log.d("Aleks", " "+ students.size());
         String[] studentsName = new String[students.size()];
         for (int i = 0; i < studentsName.length; i++) {

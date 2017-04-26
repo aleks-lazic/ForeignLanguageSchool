@@ -19,7 +19,9 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ch.hes.foreignlanguageschool.Adapters.CustomListAdapter;
@@ -49,6 +51,10 @@ public class CalendarFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+
+    private String currentDate = new SimpleDateFormat("dd.MM.yyyy").format(new Date());
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -95,6 +101,20 @@ public class CalendarFragment extends Fragment {
         //select everything for current date
         DatabaseHelper db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
         final DBLecture dbLecture = new DBLecture(db);
+
+        ArrayList<Lecture> lectures = dbLecture.getLecturesForCurrentDateInHome(currentDate);
+
+        ListView listview_lectures = (ListView) view.findViewById(R.id.calendar_listview);
+        String lecturesName[] = new String[lectures.size()];
+        String imageName[] = new String[lectures.size()];
+
+        for (int i = 0; i < lecturesName.length; i++) {
+            lecturesName[i] = lectures.get(i).getName();
+            imageName[i] = lectures.get(i).getImageName();
+        }
+
+        CustomListAdapter customAdapter = new CustomListAdapter(getActivity(), lecturesName, imageName);
+        listview_lectures.setAdapter(customAdapter);
 
         CalendarView cv = (CalendarView) view.findViewById(R.id.calendar_calendarview);
         cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {

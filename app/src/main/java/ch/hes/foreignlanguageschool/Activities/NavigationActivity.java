@@ -129,6 +129,13 @@ public class NavigationActivity extends AppCompatActivity
         dbLecture.addStudentToLecture(3, 1);
         dbLecture.addStudentToLecture(4, 1);
         dbLecture.addStudentToLecture(5, 1);
+        dbLecture.addStudentToLecture(1, 2);
+        dbLecture.addStudentToLecture(1, 3);
+        dbLecture.addStudentToLecture(1, 4);
+        dbLecture.addStudentToLecture(1, 5);
+        dbLecture.addStudentToLecture(1, 6);
+        dbLecture.addStudentToLecture(1, 7);
+        dbLecture.addStudentToLecture(1, 8);
 
 
         //adding lectures to a date
