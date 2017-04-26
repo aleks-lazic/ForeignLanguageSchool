@@ -19,4 +19,15 @@
     <string name="LastnameTitle">Nachname</string>
     <string name="MailTitle">Mail</string>
     <string name="TodayNavigation">Heute</string>
+
+
+    <string-array name="MenuItems">
+        <item>Heute</item>
+        <item>Kalender</item>
+        <item>Aufgaben</item>
+        <item>Kurse</item>
+        <item>Studenten</item>
+        <item>Lehrer</item>
+        <item>Einstellungen</item>
+    </string-array>
 </resources>
