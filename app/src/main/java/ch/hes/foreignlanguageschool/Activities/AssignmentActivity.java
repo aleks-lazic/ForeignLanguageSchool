@@ -19,6 +19,16 @@ import ch.hes.foreignlanguageschool.R;
 
 public class AssignmentActivity extends AppCompatActivity {
 
+    private Assignment assignment;
+
+    private TextView description;
+    private TextView date;
+    private TextView teacher;
+
+    private DatabaseHelper db;
+    private DBAssignment dbAssignment;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,25 +36,25 @@ public class AssignmentActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DatabaseHelper db = DatabaseHelper.getInstance(getApplicationContext());
-        DBAssignment dbAssignment = new DBAssignment(db);
+        db = DatabaseHelper.getInstance(getApplicationContext());
+        dbAssignment = new DBAssignment(db);
 
         Intent intent = getIntent();
 
-        final Assignment assignment = (Assignment) intent.getSerializableExtra("list");
+        assignment = (Assignment) intent.getSerializableExtra("assignment");
         setTitle(assignment.getTitle());
 
-        TextView description = (TextView)findViewById(R.id.assignment_description);
+        description = (TextView) findViewById(R.id.assignment_description);
 
         description.setText(assignment.getDescription());
 
-        TextView date = (TextView)findViewById(R.id.assignment_date);
+        date = (TextView) findViewById(R.id.assignment_date);
 
         date.setText(assignment.getDate());
 
-        TextView teacher = (TextView)findViewById(R.id.assignment_teacher);
+        teacher = (TextView) findViewById(R.id.assignment_teacher);
 
-        teacher.setText(assignment.getTeacher().getFirstName()+ " " + assignment.getTeacher().getLastName());
+        teacher.setText(assignment.getTeacher().getFirstName() + " " + assignment.getTeacher().getLastName());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_assignment);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -67,10 +77,10 @@ public class AssignmentActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRestart()
-    {
+    public void onRestart() {
         super.onRestart();
-        finish();
-        startActivity(getIntent());
+
+
+
     }
 }

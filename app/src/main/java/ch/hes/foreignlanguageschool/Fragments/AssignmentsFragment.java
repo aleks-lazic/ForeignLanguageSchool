@@ -36,6 +36,12 @@ public class AssignmentsFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private DatabaseHelper db;
+    private DBAssignment dbAssignment;
+
+    private String[] tabAssignments;
+
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -86,27 +92,23 @@ public class AssignmentsFragment extends Fragment {
         // Set the list of assignments
         mListView = (ListView) view.findViewById(R.id.assignments_list);
 
-        DatabaseHelper db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
-        DBAssignment dbAssignment = new DBAssignment(db);
+        db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
+        dbAssignment = new DBAssignment(db);
 
         assignments = dbAssignment.getAllAssignments();
 
-        String[] tabAssignments = new String[assignments.size()];
-
-        for (int i = 0; i<tabAssignments.length;i++){
-            tabAssignments[i] = assignments.get(i).getTitle();
-        }
-
-        mListView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(),
-                android.R.layout.simple_list_item_1 , tabAssignments));
+        mListView.setAdapter(new ArrayAdapter<Assignment>(getActivity().getApplicationContext(),
+                android.R.layout.simple_list_item_1, assignments));
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
+                Assignment assignment = (Assignment) parent.getSelectedItem();
+
                 Intent myIntent = new Intent(view.getContext(), AssignmentActivity.class);
 
-                myIntent.putExtra("list",assignments.get(position));
+                myIntent.putExtra("assignment", assignment);
 
                 startActivity(myIntent);
             }

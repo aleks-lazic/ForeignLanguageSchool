@@ -23,7 +23,8 @@ public class Assignment implements Serializable {
         this.teacher = teacher;
     }
 
-    public Assignment(){}
+    public Assignment() {
+    }
 
     public int getId() {
         return id;
@@ -71,5 +72,9 @@ public class Assignment implements Serializable {
 
     public void setImageName(String imageName) {
         this.imageName = imageName;
+    }
+
+    public String toString() {
+        return title;
     }
 }
