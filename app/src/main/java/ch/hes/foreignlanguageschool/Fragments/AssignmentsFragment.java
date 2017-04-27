@@ -104,7 +104,7 @@ public class AssignmentsFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                Assignment assignment = (Assignment) parent.getSelectedItem();
+                Assignment assignment = (Assignment) parent.getItemAtPosition(position);
 
                 Intent myIntent = new Intent(view.getContext(), AssignmentActivity.class);
 

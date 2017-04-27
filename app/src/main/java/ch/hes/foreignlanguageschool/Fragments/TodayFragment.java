@@ -140,7 +140,7 @@ public class TodayFragment extends Fragment {
                 Intent myIntent = new Intent(view.getContext(), LectureActivity.class);
                 DBStudent dbStudent = new DBStudent(db);
                 lectures.get(position).setStudentsList(dbStudent.getStudentsListByLecture(lectures.get(position).getId()));
-                myIntent.putExtra("list", lectures.get(position));
+                myIntent.putExtra("lecture", lectures.get(position));
 
                 startActivity(myIntent);
             }
@@ -157,7 +157,7 @@ public class TodayFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent myIntent = new Intent(view.getContext(), AssignmentActivity.class);
 
-                myIntent.putExtra("list", assignments.get(position));
+                myIntent.putExtra("assignment", assignments.get(position));
 
                 startActivity(myIntent);
             }

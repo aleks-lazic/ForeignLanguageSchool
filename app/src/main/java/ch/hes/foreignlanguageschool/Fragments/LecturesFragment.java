@@ -112,7 +112,7 @@ public class LecturesFragment extends Fragment {
 
                 Intent myIntent = new Intent(view.getContext(), LectureActivity.class);
 
-                myIntent.putExtra("list", lectures.get(position));
+                myIntent.putExtra("lecture", lectures.get(position));
 
                 startActivity(myIntent);
             }

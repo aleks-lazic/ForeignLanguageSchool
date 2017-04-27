@@ -39,7 +39,7 @@ public class LectureActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        Lecture lecture = (Lecture) intent.getSerializableExtra("list");
+        Lecture lecture = (Lecture) intent.getSerializableExtra("lecture");
         setTitle(lecture.getName());
 
         TextView description = (TextView) findViewById(R.id.activity_lecture_description);
