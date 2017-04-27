@@ -1,6 +1,5 @@
 package ch.hes.foreignlanguageschool.Activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -77,6 +76,7 @@ public class NavigationActivity extends AppCompatActivity
 
         addToDatabase();
 
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -86,8 +86,10 @@ public class NavigationActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
 
+
         // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.MenuItems);
+
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -114,12 +116,8 @@ public class NavigationActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.navigation, menu);
-        return true;
-    }
+
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -162,6 +160,9 @@ public class NavigationActivity extends AppCompatActivity
     }
 
     public void loadHomeFragment() {
+
+        // selecting appropriate nav menu item
+        selectNavMenu();
 
         // set toolbar title
         setToolbarTitle();
@@ -247,7 +248,7 @@ public class NavigationActivity extends AppCompatActivity
         getSupportActionBar().setTitle(activityTitles[navItemIndex]);
     }
 
-    public void addToDatabase() {
+    public void addToDatabase(){
         //Don't delete for the moment
         this.deleteDatabase("DBForeignSchool");
 
@@ -329,4 +330,6 @@ public class NavigationActivity extends AppCompatActivity
         dbLecture.addDayAndHoursToLecture(4, 4, "08:30", "10:00");
         dbLecture.addDayAndHoursToLecture(5, 5, "08:30", "10:00");
     }
+
+
 }

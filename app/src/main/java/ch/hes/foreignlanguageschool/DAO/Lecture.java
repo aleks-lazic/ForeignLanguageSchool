@@ -8,7 +8,7 @@ import java.util.List;
  * Created by patrickclivaz on 11.04.17.
  */
 
-public class Lecture implements Serializable{
+public class Lecture implements Serializable {
 
     private int id;
     private String name;
@@ -101,5 +101,9 @@ public class Lecture implements Serializable{
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public String toString() {
+        return name;
     }
 }
