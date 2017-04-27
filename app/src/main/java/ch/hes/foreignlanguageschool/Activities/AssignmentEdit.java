@@ -51,6 +51,7 @@ public class AssignmentEdit extends AppCompatActivity {
             txtViewDueDate.setText(assignment.getDate());
             spinnerTeachers.setVisibility(View.GONE);
 
+
             btnValidate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
