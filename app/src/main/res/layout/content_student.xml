@@ -8,96 +8,89 @@
     tools:context="ch.hes.foreignlanguageschool.Activities.StudentActivity"
     tools:showIn="@layout/activity_student">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_marginTop="25dp"
         android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp">
+        android:layout_marginRight="50dp"
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/title_student_address"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/AddressTitle"
             android:textColor="@color/colorAccent"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/student_address"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/title_student_address"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
 
         <TextView
             android:id="@+id/title_student_country"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_below="@id/student_address"
             android:text="@string/CountryTitle"
             android:textColor="@color/colorAccent"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/student_country"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/title_student_country"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
 
         <TextView
             android:id="@+id/title_student_mail"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_below="@id/student_country"
             android:text="@string/MailTitle"
             android:textColor="@color/colorAccent"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/student_mail"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/title_student_mail"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
 
         <TextView
             android:id="@+id/title_startdate"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_below="@id/student_mail"
             android:text="@string/StartDateTitle"
             android:textColor="@color/colorAccent"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/student_startdate"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/title_startdate"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
 
         <TextView
             android:id="@+id/title_enddate"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_below="@id/student_startdate"
             android:text="@string/EndDateTitle"
             android:textColor="@color/colorAccent"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/student_enddate"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/title_enddate"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

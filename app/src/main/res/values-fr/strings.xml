@@ -30,4 +30,7 @@
         <item>Professeurs</item>
         <item>Options</item>
     </string-array>
+    <string name="EndTimeTitle">Heure de fin</string>
+    <string name="StartTimeTitle">Heure de début</string>
+    <string name="DayTitle">Jour</string>
 </resources>

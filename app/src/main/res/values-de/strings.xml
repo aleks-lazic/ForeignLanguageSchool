@@ -30,4 +30,7 @@
         <item>Lehrer</item>
         <item>Einstellungen</item>
     </string-array>
+    <string name="EndTimeTitle">EndZeit</string>
+    <string name="StartTimeTitle">StartZeit</string>
+    <string name="DayTitle">Tag</string>
 </resources>

@@ -24,10 +24,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import ch.hes.foreignlanguageschool.Activities.LectureActivity;
 import ch.hes.foreignlanguageschool.Adapters.CustomListAdapter;
 import ch.hes.foreignlanguageschool.DAO.Lecture;
 import ch.hes.foreignlanguageschool.DAO.Teacher;
 import ch.hes.foreignlanguageschool.DB.DBLecture;
+import ch.hes.foreignlanguageschool.DB.DBStudent;
 import ch.hes.foreignlanguageschool.DB.DBTeacher;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
@@ -99,12 +101,11 @@ public class CalendarFragment extends Fragment {
         ListView lecturesListView = (ListView) view.findViewById(R.id.calendar_listview);
 
         //select everything for current date
-        DatabaseHelper db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
+        final DatabaseHelper db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
         final DBLecture dbLecture = new DBLecture(db);
 
-        ArrayList<Lecture> lectures = dbLecture.getLecturesForCurrentDateInHome(currentDate);
+        final ArrayList<Lecture> lectures = dbLecture.getLecturesForCurrentDateInHome(currentDate);
 
-        ListView listview_lectures = (ListView) view.findViewById(R.id.calendar_listview);
         String lecturesName[] = new String[lectures.size()];
         String imageName[] = new String[lectures.size()];
 
@@ -114,7 +115,21 @@ public class CalendarFragment extends Fragment {
         }
 
         CustomListAdapter customAdapter = new CustomListAdapter(getActivity(), lecturesName, imageName);
-        listview_lectures.setAdapter(customAdapter);
+        lecturesListView.setAdapter(customAdapter);
+
+        lecturesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent myIntent = new Intent(view.getContext(), LectureActivity.class);
+                DBStudent dbStudent = new DBStudent(db);
+                Log.d("Patou", "        " + lectures.get(position).toString());
+                lectures.get(position).setStudentsList(dbStudent.getStudentsListByLecture(lectures.get(position).getId()));
+                myIntent.putExtra("list", lectures.get(position));
+
+                startActivity(myIntent);
+            }
+        });
 
         CalendarView cv = (CalendarView) view.findViewById(R.id.calendar_calendarview);
         cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -122,7 +137,7 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView viewCalendar, int year, int month, int dayOfMonth) {
 
-                ArrayList<Lecture> lectures = dbLecture.getLecturesForSpecialDate(year, month, dayOfMonth);
+                final ArrayList<Lecture> lectures = dbLecture.getLecturesForSpecialDate(year, month, dayOfMonth);
 
                 ListView listview_lectures = (ListView) view.findViewById(R.id.calendar_listview);
                 String lecturesName[] = new String[lectures.size()];
@@ -136,19 +151,22 @@ public class CalendarFragment extends Fragment {
                 CustomListAdapter customAdapter = new CustomListAdapter(getActivity(), lecturesName, imageName);
                 listview_lectures.setAdapter(customAdapter);
 
+                listview_lectures.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        Intent myIntent = new Intent(view.getContext(), LectureActivity.class);
+                        DBStudent dbStudent = new DBStudent(db);
+                        Log.d("Patou", "        " + lectures.get(position).toString());
+                        lectures.get(position).setStudentsList(dbStudent.getStudentsListByLecture(lectures.get(position).getId()));
+                        myIntent.putExtra("list", lectures.get(position));
+
+                        startActivity(myIntent);
+                    }
+                });
+
             }
         });
-
-        lecturesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-//                Intent intent = new Intent(getActivity());
-//                intent.putExtra("myLecture", lectures.get(position));
-
-            }
-        });
-
 
         return view;
     }
