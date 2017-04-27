@@ -65,4 +65,12 @@ public class AssignmentActivity extends AppCompatActivity {
         finish();
         return true;
     }
+
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
 }

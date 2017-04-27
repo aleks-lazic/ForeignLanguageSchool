@@ -40,7 +40,7 @@ public class LectureActivity extends AppCompatActivity {
 
         Lecture lecture = (Lecture) intent.getSerializableExtra("list");
         setTitle(lecture.getName());
-        Log.d("Aleks",lecture.getName());
+        Log.d("Aleks", lecture.getName());
 
         TextView description = (TextView) findViewById(R.id.activity_lecture_description);
 
@@ -55,8 +55,8 @@ public class LectureActivity extends AppCompatActivity {
 
         //set the students from the lecture
         students = lecture.getStudentsList();
-        Log.d("Aleks",""+lecture.getStudentsList().size());
-        Log.d("Aleks", " "+ students.size());
+        Log.d("Aleks", "" + lecture.getStudentsList().size());
+        Log.d("Aleks", " " + students.size());
         String[] studentsName = new String[students.size()];
         for (int i = 0; i < studentsName.length; i++) {
             studentsName[i] = students.get(i).getFirstName() + " " + students.get(i).getLastName();
@@ -69,8 +69,7 @@ public class LectureActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
