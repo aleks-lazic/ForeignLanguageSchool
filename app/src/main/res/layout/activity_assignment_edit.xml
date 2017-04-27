@@ -40,36 +40,17 @@
             android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/activity_assignment_edit_dueDate"
+            android:id="@+id/datePicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
+            android:layout_weight="0.33"
             android:hint="@string/hintDueDate"
-            android:inputType="date" />
-
-
-        <Spinner
-            android:id="@+id/activity_assignment_spinner_teachers"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:spinnerMode="dialog"
-            android:textSize="18sp" />
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/activity_assingment_btnValidate"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:background="@color/colorAccent"
-        android:text="@string/buttonValidate"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"></Button>
 
 </android.support.constraint.ConstraintLayout>
