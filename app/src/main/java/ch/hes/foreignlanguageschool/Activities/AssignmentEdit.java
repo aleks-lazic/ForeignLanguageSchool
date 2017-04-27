@@ -36,7 +36,6 @@ public class AssignmentEdit extends AppCompatActivity {
     private TextView txtViewTitle;
     private TextView txtViewDescription;
     private TextView txtViewDueDate;
-    private Spinner spinnerTeachers;
 
     private Assignment assignment;
 
