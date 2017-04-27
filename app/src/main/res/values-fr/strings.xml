@@ -14,7 +14,6 @@
     <string name="AddressTitle">Adresse</string>
     <string name="CountryTitle">Pays</string>
     <string name="FistnameTitle">Prénom</string>
-    <string name="StartDateTitle">Date de début</string>
     <string name="EndDateTitle">Date de fin</string>
     <string name="LastnameTitle">Nom</string>
     <string name="MailTitle">Mail</string>
@@ -30,7 +29,13 @@
         <item>Professeurs</item>
         <item>Options</item>
     </string-array>
-    <string name="EndTimeTitle">Heure de fin</string>
-    <string name="StartTimeTitle">Heure de début</string>
     <string name="DayTitle">Jour</string>
+    <string name="titleDate">Date</string>
+    <string name="from">De</string>
+    <string name="to">à</string>
+    <string name="Assignment">Tâche</string>
+    <string name="Lecture">Cours</string>
+    <string name="hintTitle">Titre</string>
+    <string name="hintName">Nom</string>
+    <string name="StartDateTitle">Date de début</string>
 </resources>

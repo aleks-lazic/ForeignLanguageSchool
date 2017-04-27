@@ -1,8 +1,6 @@
 package ch.hes.foreignlanguageschool.Activities;
 
-import android.app.Activity;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,7 +16,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -31,10 +28,6 @@ import ch.hes.foreignlanguageschool.DB.DBStudent;
 import ch.hes.foreignlanguageschool.DB.DBTeacher;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
-
-import static android.R.attr.checked;
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
-import static ch.hes.foreignlanguageschool.R.string.day;
 
 public class LectureEdit extends AppCompatActivity {
 
@@ -57,7 +50,9 @@ public class LectureEdit extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lecture_edit);
 
-        setTitle("New Lecture");
+        String title = getResources().getString(R.string.Lecture);
+
+        setTitle(title);
 
         //fill layout objects
         txtTitle = (EditText) findViewById(R.id.editTxtName);
@@ -146,6 +141,7 @@ public class LectureEdit extends AppCompatActivity {
 
         listViewStudents.setAdapter(adapter);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
@@ -236,6 +232,7 @@ public class LectureEdit extends AppCompatActivity {
             finish();
 
         }
+        finish();
         return super.onOptionsItemSelected(item);
 
 
