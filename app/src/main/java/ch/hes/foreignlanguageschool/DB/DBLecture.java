@@ -40,7 +40,7 @@ public class DBLecture {
         ContentValues values = new ContentValues();
         values.put(db.getLECTURE_NAME(), name);
         values.put(db.getLECTURE_DESCRIPTION(), description);
-        values.put(db.getIMAGE_NAME(), "ic_lecture_icon");
+        values.put(db.getIMAGE_NAME(), "lecture_icon");
         values.put(db.getLECTURE_FKTEACHER(), idTeacher);
 
         sql.insert(db.getTableLecture(), null, values);
@@ -279,6 +279,42 @@ public class DBLecture {
 
         // return lectures list
         return lecturesList;
+    }
+
+    public void deleteLecture(int idLecture) {
+        deleteLectureById(idLecture);
+        deleteStudentsFromLecture(idLecture);
+        deleteDayFromLecture(idLecture);
+    }
+
+
+    private void deleteLectureById(int idLecture) {
+
+        SQLiteDatabase sql = db.getWritableDatabase();
+
+        sql.delete(db.getTableLecture(), db.getKeyId() + " = ?",
+                new String[]{String.valueOf(idLecture)});
+        sql.close();
+
+        deleteStudentsFromLecture(idLecture);
+    }
+
+    private void deleteStudentsFromLecture(int idLecture) {
+        SQLiteDatabase sql = db.getWritableDatabase();
+
+        sql.delete(db.getTableLecturestudent(), db.getLECTURESTUDENT_FKLECTURE() + " = ?",
+                new String[]{String.valueOf(idLecture)});
+        sql.close();
+
+
+    }
+
+    private void deleteDayFromLecture(int idLecture) {
+        SQLiteDatabase sql = db.getWritableDatabase();
+
+        sql.delete(db.getTableLecturedate(), db.getLECTUREDATE_FKLECTURE() + " = ?",
+                new String[]{String.valueOf(idLecture)});
+        sql.close();
     }
 
 

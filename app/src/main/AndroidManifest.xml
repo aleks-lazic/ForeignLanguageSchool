@@ -26,6 +26,7 @@
         <activity
             android:name=".Activities.AssignmentActivity"
             android:label="@string/title_activity_assignment"
+            android:parentActivityName=""
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.TeacherActivity"

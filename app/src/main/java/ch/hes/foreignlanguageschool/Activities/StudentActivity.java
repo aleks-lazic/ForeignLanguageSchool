@@ -33,7 +33,7 @@ public class StudentActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        Student student = (Student) intent.getSerializableExtra("list");
+        Student student = (Student) intent.getSerializableExtra("student");
         setTitle(student.getFirstName()+" "+student.getLastName());
 
         TextView address = (TextView)findViewById(R.id.student_address);

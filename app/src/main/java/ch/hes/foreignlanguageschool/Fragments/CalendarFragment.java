@@ -4,10 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,28 +13,19 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import ch.hes.foreignlanguageschool.Activities.LectureActivity;
-import ch.hes.foreignlanguageschool.Adapters.CustomListAdapter;
+import ch.hes.foreignlanguageschool.Adapters.CustomAdapterLecture;
 import ch.hes.foreignlanguageschool.DAO.Lecture;
 import ch.hes.foreignlanguageschool.DAO.Student;
-import ch.hes.foreignlanguageschool.DAO.Teacher;
 import ch.hes.foreignlanguageschool.DB.DBLecture;
 import ch.hes.foreignlanguageschool.DB.DBStudent;
-import ch.hes.foreignlanguageschool.DB.DBTeacher;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
-
-import static android.R.attr.id;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,8 +45,17 @@ public class CalendarFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    //database
+    private DatabaseHelper db;
+    private DBLecture dbLecture;
+
+    ArrayList<Lecture> lectures;
+
+    private ListView listView_lectures;
 
     private String currentDate = new SimpleDateFormat("dd.MM.yyyy").format(new Date());
+
+    private CustomAdapterLecture adapterLecture;
 
 
     private OnFragmentInteractionListener mListener;
@@ -100,28 +98,30 @@ public class CalendarFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_calendar, container, false);
 
         //add everything linked to the lectures
-        ListView lecturesListView = (ListView) view.findViewById(R.id.calendar_listview);
+        listView_lectures = (ListView) view.findViewById(R.id.calendar_listview);
 
         //select everything for current date
-        final DatabaseHelper db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
-        final DBLecture dbLecture = new DBLecture(db);
+        db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
+        dbLecture = new DBLecture(db);
 
-        final ArrayList<Lecture> lectures = dbLecture.getLecturesForCurrentDateInHome(currentDate);
+        lectures = dbLecture.getLecturesForCurrentDateInHome(currentDate);
 
-        ArrayAdapter<Lecture> adapter = new ArrayAdapter<Lecture>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, lectures);
-        lecturesListView.setAdapter(adapter);
-//                CustomListAdapter customAdapter = new CustomListAdapter(getActivity(), lecturesName, imageName);
-//                listview_lectures.setAdapter(customAdapter);
+        adapterLecture = new CustomAdapterLecture(getActivity(), lectures);
+
+        listView_lectures.setAdapter(adapterLecture);
 
 
-        lecturesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView_lectures.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent myIntent = new Intent(view.getContext(), LectureActivity.class);
                 Lecture lecture = (Lecture) parent.getItemAtPosition(position);
+
                 DBStudent dbStudent = new DBStudent(db);
+
                 ArrayList<Student> students = dbStudent.getStudentsListByLecture(lecture.getId());
+
                 lecture.setStudentsList(students);
                 myIntent.putExtra("lecture", lecture);
 
@@ -135,25 +135,25 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView viewCalendar, int year, int month, int dayOfMonth) {
 
-                final ArrayList<Lecture> lectures = dbLecture.getLecturesForSpecialDate(year, month, dayOfMonth);
+                lectures = dbLecture.getLecturesForSpecialDate(year, month, dayOfMonth);
 
-                ListView listview_lectures = (ListView) view.findViewById(R.id.calendar_listview);
+                adapterLecture = new CustomAdapterLecture(getActivity(), lectures);
 
+                listView_lectures.setAdapter(adapterLecture);
 
-                ArrayAdapter<Lecture> adapter = new ArrayAdapter<Lecture>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, lectures);
-                listview_lectures.setAdapter(adapter);
-//                CustomListAdapter customAdapter = new CustomListAdapter(getActivity(), lecturesName, imageName);
-//                listview_lectures.setAdapter(customAdapter);
-
-                listview_lectures.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                listView_lectures.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                         Intent myIntent = new Intent(view.getContext(), LectureActivity.class);
                         Lecture lecture = (Lecture) parent.getItemAtPosition(position);
+
                         DBStudent dbStudent = new DBStudent(db);
+
                         ArrayList<Student> students = dbStudent.getStudentsListByLecture(lecture.getId());
+
                         lecture.setStudentsList(students);
+
                         myIntent.putExtra("lecture", lecture);
 
                         startActivity(myIntent);

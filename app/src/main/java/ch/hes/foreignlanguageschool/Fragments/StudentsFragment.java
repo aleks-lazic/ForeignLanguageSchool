@@ -16,6 +16,8 @@ import java.util.ArrayList;
 
 import ch.hes.foreignlanguageschool.Activities.AssignmentActivity;
 import ch.hes.foreignlanguageschool.Activities.StudentActivity;
+import ch.hes.foreignlanguageschool.Adapters.CustomAdapterAssignment;
+import ch.hes.foreignlanguageschool.Adapters.CustomAdapterStudent;
 import ch.hes.foreignlanguageschool.DAO.Student;
 import ch.hes.foreignlanguageschool.DB.DBLecture;
 import ch.hes.foreignlanguageschool.DB.DBStudent;
@@ -45,6 +47,11 @@ public class StudentsFragment extends Fragment {
     private ListView mListView;
 
     private ArrayList<Student> students;
+
+    private DatabaseHelper db;
+    private DBStudent dbStudent;
+
+    private CustomAdapterStudent adapterStudent;
 
     public StudentsFragment() {
         // Required empty public constructor
@@ -86,19 +93,15 @@ public class StudentsFragment extends Fragment {
         // Set the list of assignments
         mListView = (ListView) view.findViewById(R.id.students_list);
 
-        DatabaseHelper db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
-        DBStudent dbStudent = new DBStudent(db);
+        db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
+        dbStudent = new DBStudent(db);
 
         students = dbStudent.getAllStudents();
 
-        String[] tabStudents = new String[students.size()];
+        adapterStudent = new CustomAdapterStudent(getActivity(), students);
 
-        for (int i = 0; i<tabStudents.length;i++){
-            tabStudents[i] = students.get(i).getFirstName()+" "+students.get(i).getLastName();
-        }
+        mListView.setAdapter(adapterStudent);
 
-        mListView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(),
-                android.R.layout.simple_list_item_1 , tabStudents));
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
@@ -106,7 +109,9 @@ public class StudentsFragment extends Fragment {
 
                 Intent myIntent = new Intent(view.getContext(), StudentActivity.class);
 
-                myIntent.putExtra("list",students.get(position));
+                Student student = (Student)parent.getItemAtPosition(position);
+
+                myIntent.putExtra("student", student);
 
                 startActivity(myIntent);
             }
@@ -152,5 +157,20 @@ public class StudentsFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateDisplay();
+    }
+
+    public void updateDisplay() {
+        students = dbStudent.getAllStudents();
+
+        adapterStudent = new CustomAdapterStudent(getActivity(), students);
+
+        mListView.setAdapter(adapterStudent);
+
     }
 }

@@ -20,6 +20,9 @@ import java.util.Date;
 
 import ch.hes.foreignlanguageschool.Activities.AssignmentActivity;
 import ch.hes.foreignlanguageschool.Activities.LectureActivity;
+import ch.hes.foreignlanguageschool.Adapters.CustomAdapterAssignment;
+import ch.hes.foreignlanguageschool.Adapters.CustomAdapterLecture;
+import ch.hes.foreignlanguageschool.Adapters.CustomAdapterTeacher;
 import ch.hes.foreignlanguageschool.DAO.Assignment;
 import ch.hes.foreignlanguageschool.DAO.Lecture;
 import ch.hes.foreignlanguageschool.DB.DBAssignment;
@@ -59,6 +62,10 @@ public class TodayFragment extends Fragment {
     private DatabaseHelper db;
     private DBLecture dbLecture;
     private DBAssignment dbAssignment;
+
+    //create adapters
+    private CustomAdapterLecture adapterLecture;
+    private CustomAdapterAssignment adapterAssignment;
 
     private String currentDate = new SimpleDateFormat("dd.MM.yyyy").format(new Date());
 
@@ -101,6 +108,10 @@ public class TodayFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_today, container, false);
 
+        //get listViews
+        listViewLectures = (ListView) view.findViewById(R.id.home_lectures);
+        listViewAssignments = (ListView) view.findViewById(R.id.home_assignments);
+
         //Everything related to the database
         db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
         dbLecture = new DBLecture(db);
@@ -113,11 +124,13 @@ public class TodayFragment extends Fragment {
         assignments = dbAssignment.getAllAssignmentsForSpecialDate(currentDate);
 
         // Set the list of lectures
-        listViewLectures = (ListView) view.findViewById(R.id.home_lectures);
+        adapterLecture = new CustomAdapterLecture(getActivity(),
+                lectures);
 
-        listViewLectures.setAdapter(new ArrayAdapter<Lecture>(getActivity().getApplicationContext(),
-                android.R.layout.simple_list_item_1, lectures));
+        listViewLectures.setAdapter(adapterLecture);
 
+
+        //set itemclicklistener
         listViewLectures.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -133,10 +146,10 @@ public class TodayFragment extends Fragment {
         });
 
         // Set the list of assignments
-        listViewAssignments = (ListView) view.findViewById(R.id.home_assignments);
+        adapterAssignment = new CustomAdapterAssignment(getActivity(),
+                assignments);
 
-        listViewAssignments.setAdapter(new ArrayAdapter<Assignment>(getActivity().getApplicationContext(),
-                android.R.layout.simple_list_item_1, assignments));
+        listViewAssignments.setAdapter(adapterAssignment);
 
         listViewAssignments.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -195,17 +208,20 @@ public class TodayFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        updateDisplay();
+    }
+
+    public void updateDisplay() {
 
         lectures = dbLecture.getLecturesForCurrentDateInHome(currentDate);
-
-        listViewLectures.setAdapter(new ArrayAdapter<Lecture>(getActivity().getApplicationContext(),
-                android.R.layout.simple_list_item_1, lectures));
-
         assignments = dbAssignment.getAllAssignmentsForSpecialDate(currentDate);
 
-        listViewAssignments.setAdapter(new ArrayAdapter<Assignment>(getActivity().getApplicationContext(),
-                android.R.layout.simple_list_item_1, assignments));
-
+        adapterLecture = new CustomAdapterLecture(getActivity(),
+                lectures);
+        listViewLectures.setAdapter(adapterLecture);
+        adapterAssignment = new CustomAdapterAssignment(getActivity(),
+                assignments);
+        listViewAssignments.setAdapter(adapterAssignment);
 
     }
 }

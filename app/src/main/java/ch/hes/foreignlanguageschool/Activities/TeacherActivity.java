@@ -29,7 +29,7 @@ public class TeacherActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        Teacher teacher = (Teacher) intent.getSerializableExtra("list");
+        Teacher teacher = (Teacher) intent.getSerializableExtra("teacher");
         setTitle(teacher.getFirstName()+" "+teacher.getLastName());
 
         TextView mail = (TextView)findViewById(R.id.teacher_mail);

@@ -16,8 +16,11 @@ import java.util.ArrayList;
 
 import ch.hes.foreignlanguageschool.Activities.StudentActivity;
 import ch.hes.foreignlanguageschool.Activities.TeacherActivity;
+import ch.hes.foreignlanguageschool.Adapters.CustomAdapterStudent;
+import ch.hes.foreignlanguageschool.Adapters.CustomAdapterTeacher;
 import ch.hes.foreignlanguageschool.DAO.Teacher;
 import ch.hes.foreignlanguageschool.DB.DBLecture;
+import ch.hes.foreignlanguageschool.DB.DBStudent;
 import ch.hes.foreignlanguageschool.DB.DBTeacher;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
@@ -45,6 +48,11 @@ public class TeachersFragment extends Fragment {
     private ListView mListView;
 
     private ArrayList<Teacher> teachers;
+
+    private DatabaseHelper db;
+    private DBTeacher dbTeacher;
+
+    private CustomAdapterTeacher adapterTeacher;
 
     public TeachersFragment() {
         // Required empty public constructor
@@ -86,19 +94,15 @@ public class TeachersFragment extends Fragment {
         // Set the list of assignments
         mListView = (ListView) view.findViewById(R.id.teachers_list);
 
-        DatabaseHelper db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
-        DBTeacher dbTeacher = new DBTeacher(db);
+        db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
+        dbTeacher = new DBTeacher(db);
 
         teachers = dbTeacher.getAllTeachers();
 
-        String[] tabTeachers = new String[teachers.size()];
+        adapterTeacher = new CustomAdapterTeacher(getActivity(), teachers);
 
-        for (int i = 0; i<tabTeachers.length;i++){
-            tabTeachers[i] = teachers.get(i).getFirstName()+" "+teachers.get(i).getLastName();
-        }
+        mListView.setAdapter(adapterTeacher);
 
-        mListView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(),
-                android.R.layout.simple_list_item_1 , tabTeachers));
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
@@ -106,7 +110,8 @@ public class TeachersFragment extends Fragment {
 
                 Intent myIntent = new Intent(view.getContext(), TeacherActivity.class);
 
-                myIntent.putExtra("list",teachers.get(position));
+                Teacher teacher = (Teacher) parent.getItemAtPosition(position);
+                myIntent.putExtra("teacher", teacher);
 
                 startActivity(myIntent);
             }
@@ -152,5 +157,20 @@ public class TeachersFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateDisplay();
+    }
+
+    public void updateDisplay() {
+        teachers = dbTeacher.getAllTeachers();
+
+        adapterTeacher = new CustomAdapterTeacher(getActivity(), teachers);
+
+        mListView.setAdapter(adapterTeacher);
+
     }
 }

@@ -15,6 +15,9 @@
     <string name="TeachersNavigation">Teachers</string>
     <string name="SettingsNavigation">Settings</string>
 
+    <string name="more">More</string>
+    <string name="delete">Delete</string>
+
     <string-array name="MenuItems">
         <item>Today</item>
         <item>Calendar</item>

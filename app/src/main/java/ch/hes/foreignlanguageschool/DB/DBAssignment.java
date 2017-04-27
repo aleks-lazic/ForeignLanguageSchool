@@ -29,7 +29,7 @@ public class DBAssignment {
         values.put(db.getASSIGNMENT_TITLE(), title);
         values.put(db.getASSIGNMENT_DESCRIPTION(), description);
         values.put(db.getASSIGNMENT_DATE(), date);
-        values.put(db.getIMAGE_NAME(), "assignment-icon");
+        values.put(db.getIMAGE_NAME(), "assignment_icon");
         values.put(db.getASSIGNMENT_FKTEACHER(), idTeacher);
 
         sql.insert(db.getTableAssignement(), null, values);

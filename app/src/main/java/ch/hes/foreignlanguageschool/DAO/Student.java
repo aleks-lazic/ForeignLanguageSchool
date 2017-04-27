@@ -112,4 +112,8 @@ public class Student implements Serializable{
     public void setImageName(String imageName) {
         this.imageName = imageName;
     }
+
+    public String toString(){
+        return firstName + " " + lastName;
+    }
 }

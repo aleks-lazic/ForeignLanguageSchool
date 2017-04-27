@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import ch.hes.foreignlanguageschool.Activities.AssignmentEdit;
 import ch.hes.foreignlanguageschool.Activities.LectureActivity;
 import ch.hes.foreignlanguageschool.Activities.LectureEdit;
+import ch.hes.foreignlanguageschool.Adapters.CustomAdapterLecture;
 import ch.hes.foreignlanguageschool.DAO.Lecture;
 import ch.hes.foreignlanguageschool.DB.DBLecture;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
@@ -44,6 +45,7 @@ public class LecturesFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private ListView mListView;
+    private CustomAdapterLecture adapterLecture;
 
     private ArrayList<Lecture> lectures;
 
@@ -97,14 +99,10 @@ public class LecturesFragment extends Fragment {
 
         lectures = dbLecture.getAllLectures();
 
-        tabLectures = new String[lectures.size()];
+        adapterLecture = new CustomAdapterLecture(getActivity(),
+                lectures);
 
-        for (int i = 0; i < tabLectures.length; i++) {
-            tabLectures[i] = lectures.get(i).getName();
-        }
-
-        mListView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(),
-                android.R.layout.simple_list_item_1, tabLectures));
+        mListView.setAdapter(adapterLecture);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
@@ -180,13 +178,9 @@ public class LecturesFragment extends Fragment {
     public void updateDisplay() {
         lectures = dbLecture.getAllLectures();
 
-        tabLectures = new String[lectures.size()];
+        adapterLecture = new CustomAdapterLecture(getActivity(),
+                lectures);
 
-        for (int i = 0; i < tabLectures.length; i++) {
-            tabLectures[i] = lectures.get(i).getName();
-        }
-
-        mListView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(),
-                android.R.layout.simple_list_item_1, tabLectures));
+        mListView.setAdapter(adapterLecture);
     }
 }

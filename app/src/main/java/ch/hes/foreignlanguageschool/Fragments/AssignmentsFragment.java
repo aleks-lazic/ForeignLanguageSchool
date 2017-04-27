@@ -17,6 +17,8 @@ import java.util.ArrayList;
 
 import ch.hes.foreignlanguageschool.Activities.AssignmentActivity;
 import ch.hes.foreignlanguageschool.Activities.AssignmentEdit;
+import ch.hes.foreignlanguageschool.Adapters.CustomAdapterAssignment;
+import ch.hes.foreignlanguageschool.Adapters.CustomAdapterLecture;
 import ch.hes.foreignlanguageschool.DAO.Assignment;
 import ch.hes.foreignlanguageschool.DB.DBAssignment;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
@@ -39,8 +41,7 @@ public class AssignmentsFragment extends Fragment {
     private DatabaseHelper db;
     private DBAssignment dbAssignment;
 
-    private String[] tabAssignments;
-
+    private CustomAdapterAssignment adapterAssignment;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -97,8 +98,10 @@ public class AssignmentsFragment extends Fragment {
 
         assignments = dbAssignment.getAllAssignments();
 
-        mListView.setAdapter(new ArrayAdapter<Assignment>(getActivity().getApplicationContext(),
-                android.R.layout.simple_list_item_1, assignments));
+        adapterAssignment = new CustomAdapterAssignment(getActivity(),
+                assignments);
+
+        mListView.setAdapter(adapterAssignment);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
@@ -164,5 +167,21 @@ public class AssignmentsFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateDisplay();
+    }
+
+    public void updateDisplay() {
+        assignments = dbAssignment.getAllAssignments();
+
+        adapterAssignment = new CustomAdapterAssignment(getActivity(),
+                assignments);
+
+        mListView.setAdapter(adapterAssignment);
+
     }
 }
