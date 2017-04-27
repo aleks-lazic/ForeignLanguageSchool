@@ -79,7 +79,6 @@ public class DBStudent {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                Log.d("Aleks", "Id Lecture : " + idLecture + " IdStudent : "+cursor.getString(0));
                 Student student = getStudentById(Integer.parseInt(cursor.getString(0)));
 
                 // Adding student to list

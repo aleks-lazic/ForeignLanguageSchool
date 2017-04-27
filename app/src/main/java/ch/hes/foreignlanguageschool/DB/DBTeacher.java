@@ -43,16 +43,16 @@ public class DBTeacher {
 
         Teacher teacher = new Teacher();
         String selectQuery = "SELECT "
-                +db.getKeyId()+", "
-                +db.getTEACHER_FIRSTNAME()+", "
-                +db.getTEACHER_LASTNAME()+", "
-                +db.getTEACHER_MAIL()+", "
-                +db.getIMAGE_NAME()+
+                + db.getKeyId() + ", "
+                + db.getTEACHER_FIRSTNAME() + ", "
+                + db.getTEACHER_LASTNAME() + ", "
+                + db.getTEACHER_MAIL() + ", "
+                + db.getIMAGE_NAME() +
                 " FROM " + db.getTableTeacher() + " WHERE " + db.getKeyId() + " = " + idTeacher;
 
         Cursor cursor = sql.rawQuery(selectQuery, null);
 
-        if(cursor != null){
+        if (cursor != null) {
             cursor.moveToFirst();
         }
 
@@ -74,28 +74,27 @@ public class DBTeacher {
         String firstname = "";
         String lastname = "";
 
-        if(name.contains(" ")){
+        if (name.contains(" ")) {
             firstname = name.substring(0, name.indexOf(" "));
-            lastname = name.substring((name.indexOf(" ")+1), name.length());
-            Log.d("Aleks", firstname + " "+ lastname);
+            lastname = name.substring((name.indexOf(" ") + 1), name.length());
         }
 
         SQLiteDatabase sql = db.getWritableDatabase();
 
         Teacher teacher = new Teacher();
         String selectQuery = "SELECT "
-                +db.getKeyId()+", "
-                +db.getTEACHER_FIRSTNAME()+", "
-                +db.getTEACHER_LASTNAME()+", "
-                +db.getTEACHER_MAIL()+", "
-                +db.getIMAGE_NAME()+
+                + db.getKeyId() + ", "
+                + db.getTEACHER_FIRSTNAME() + ", "
+                + db.getTEACHER_LASTNAME() + ", "
+                + db.getTEACHER_MAIL() + ", "
+                + db.getIMAGE_NAME() +
                 " FROM " + db.getTableTeacher() +
-                " WHERE " + db.getTEACHER_FIRSTNAME() + " = " + firstname +
-                " AND " + db.getSTUDENT_LASTNAME() + " = " + lastname ;
+                " WHERE " + db.getTEACHER_FIRSTNAME() + " = " + "'" + firstname + "'" +
+                " AND " + db.getSTUDENT_LASTNAME() + " = " + "'" + lastname + "'";
 
         Cursor cursor = sql.rawQuery(selectQuery, null);
 
-        if(cursor != null){
+        if (cursor != null) {
             cursor.moveToFirst();
         }
 
@@ -111,12 +110,13 @@ public class DBTeacher {
         // return teacher
         return teacher;
     }
+
     public ArrayList<Teacher> getAllTeachers() {
 
         SQLiteDatabase sql = db.getWritableDatabase();
 
         ArrayList<Teacher> teachersList = new ArrayList<Teacher>();
-        String selectQuery = "SELECT * FROM " + db.getTableTeacher()+ " ORDER BY " + db.getTEACHER_FIRSTNAME() + ", "+ db.getTEACHER_LASTNAME();
+        String selectQuery = "SELECT * FROM " + db.getTableTeacher() + " ORDER BY " + db.getTEACHER_FIRSTNAME() + ", " + db.getTEACHER_LASTNAME();
 
         Cursor cursor = sql.rawQuery(selectQuery, null);
 

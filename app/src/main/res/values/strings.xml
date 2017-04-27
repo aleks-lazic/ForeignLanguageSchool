@@ -52,5 +52,23 @@
     <!--Buttons-->
     <string name="buttonValidate">Validate</string>
 
+    <!--Title Date-->
+
+    <string name="titleDate">Date</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="day">Day</string>
+
+
+    <!--Days of week-->
+    <string-array name="DaysOfWeekUntilSaturday">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+    </string-array>
+
 
 </resources>

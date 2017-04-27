@@ -2,6 +2,7 @@ package ch.hes.foreignlanguageschool.DB;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -17,6 +18,7 @@ import ch.hes.foreignlanguageschool.DAO.Lecture;
 import ch.hes.foreignlanguageschool.DAO.Student;
 
 import static android.R.attr.description;
+import static android.R.attr.end;
 import static android.R.attr.name;
 
 /**
@@ -94,7 +96,7 @@ public class DBLecture {
 
     }
 
-    public void addStudentsToLecture(Student[] students, int idLecture) {
+    public void addStudentsToLecture(ArrayList<Student> students, int idLecture) {
 
         for (Student s : students
                 ) {
@@ -178,6 +180,47 @@ public class DBLecture {
         return lecturesList;
     }
 
+    public int getMaxId() {
+        SQLiteDatabase sql = db.getWritableDatabase();
+
+        int id = 0;
+        String query = "SELECT MAX(" + db.getKeyId() + ") FROM " + db.getTableLecture();
+
+        Cursor cursor = sql.rawQuery(query, null);
+
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            id = cursor.getInt(0);
+        }
+
+        sql.close();
+
+        return id;
+    }
+
+    public void insertLectureWithTeacherDayAndHoursAndStudents(String title, String description, int idTeacher, int idDay, String beginTime, String endTime, ArrayList<Student> students) {
+
+        insertValues(title, description, idTeacher);
+
+        int id = getMaxId();
+
+        addDayAndHoursToLecture(id, idDay, beginTime, endTime);
+
+        addStudentsToLecture(students, id);
+
+    }
+
+    public long getNumberOfRowsInTableLecture() {
+
+        SQLiteDatabase sql = db.getReadableDatabase();
+
+        String query = "SELECT Count(*) FROM " + db.getTableLecture();
+
+
+        long nbRows = DatabaseUtils.queryNumEntries(sql, db.getTableLecture());
+        return nbRows;
+    }
+
     public ArrayList<Lecture> getLecturesForCurrentDateInHome(String date) {
 
         //25.04.2017
@@ -186,7 +229,6 @@ public class DBLecture {
         int month = Integer.parseInt(date.substring(3, 5));
         int year = Integer.parseInt(date.substring(6, 10));
 
-        Log.d("Aleks", "" + day + "." + month + "." + year);
 
         Calendar cal = new GregorianCalendar(year, month, day);
         int result = cal.get(Calendar.DAY_OF_WEEK);

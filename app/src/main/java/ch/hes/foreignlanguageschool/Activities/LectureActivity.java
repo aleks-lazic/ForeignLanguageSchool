@@ -29,6 +29,7 @@ public class LectureActivity extends AppCompatActivity {
     private ListView listView_students;
     private ArrayList<Student> students;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +41,6 @@ public class LectureActivity extends AppCompatActivity {
 
         Lecture lecture = (Lecture) intent.getSerializableExtra("list");
         setTitle(lecture.getName());
-        Log.d("Aleks", lecture.getName());
 
         TextView description = (TextView) findViewById(R.id.activity_lecture_description);
 
@@ -55,12 +55,9 @@ public class LectureActivity extends AppCompatActivity {
 
         //set the students from the lecture
         students = lecture.getStudentsList();
-        Log.d("Aleks", "" + lecture.getStudentsList().size());
-        Log.d("Aleks", " " + students.size());
         String[] studentsName = new String[students.size()];
         for (int i = 0; i < studentsName.length; i++) {
             studentsName[i] = students.get(i).getFirstName() + " " + students.get(i).getLastName();
-            Log.d("Aleks", studentsName[i]);
         }
 
         listView_students.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, studentsName));

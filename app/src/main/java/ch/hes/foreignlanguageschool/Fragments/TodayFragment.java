@@ -139,7 +139,6 @@ public class TodayFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent myIntent = new Intent(view.getContext(), LectureActivity.class);
                 DBStudent dbStudent = new DBStudent(db);
-                Log.d("Aleks", "        " + lectures.get(position));
                 lectures.get(position).setStudentsList(dbStudent.getStudentsListByLecture(lectures.get(position).getId()));
                 myIntent.putExtra("list", lectures.get(position));
 

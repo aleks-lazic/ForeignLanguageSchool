@@ -47,6 +47,11 @@ public class LecturesFragment extends Fragment {
 
     private ArrayList<Lecture> lectures;
 
+    private DatabaseHelper db;
+    private DBLecture dbLecture;
+
+    String[] tabLectures;
+
     public LecturesFragment() {
         // Required empty public constructor
     }
@@ -87,32 +92,31 @@ public class LecturesFragment extends Fragment {
         // Set the list of lectures
         mListView = (ListView) view.findViewById(R.id.lectures_list);
 
-        DatabaseHelper db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
-        DBLecture dbLecture = new DBLecture(db);
+        db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
+        dbLecture = new DBLecture(db);
 
         lectures = dbLecture.getAllLectures();
 
-        String[] tabLectures = new String[lectures.size()];
+        tabLectures = new String[lectures.size()];
 
-        for (int i = 0; i<tabLectures.length;i++){
+        for (int i = 0; i < tabLectures.length; i++) {
             tabLectures[i] = lectures.get(i).getName();
         }
 
         mListView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(),
-                android.R.layout.simple_list_item_1 , tabLectures));
+                android.R.layout.simple_list_item_1, tabLectures));
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
-            int position, long id) {
+                                    int position, long id) {
 
                 Intent myIntent = new Intent(view.getContext(), LectureActivity.class);
 
-                myIntent.putExtra("list",lectures.get(position));
+                myIntent.putExtra("list", lectures.get(position));
 
                 startActivity(myIntent);
             }
         });
-
 
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fragment_fab_lecture);
@@ -165,5 +169,24 @@ public class LecturesFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateDisplay();
+    }
+
+    public void updateDisplay() {
+        lectures = dbLecture.getAllLectures();
+
+        tabLectures = new String[lectures.size()];
+
+        for (int i = 0; i < tabLectures.length; i++) {
+            tabLectures[i] = lectures.get(i).getName();
+        }
+
+        mListView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(),
+                android.R.layout.simple_list_item_1, tabLectures));
     }
 }

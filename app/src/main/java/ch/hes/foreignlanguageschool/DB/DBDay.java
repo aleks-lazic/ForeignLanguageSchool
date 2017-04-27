@@ -17,7 +17,9 @@ public class DBDay {
 
     private DatabaseHelper db;
 
-    public DBDay(DatabaseHelper db) {this.db = db;}
+    public DBDay(DatabaseHelper db) {
+        this.db = db;
+    }
 
     public void insertValues(String name) {
 
@@ -30,11 +32,11 @@ public class DBDay {
         sql.close();
     }
 
-    public List<Day> getAllDays() {
+    public ArrayList<Day> getAllDays() {
 
         SQLiteDatabase sql = db.getWritableDatabase();
 
-        List<Day> daysList = new ArrayList<Day>();
+        ArrayList<Day> daysList = new ArrayList<Day>();
         String selectQuery = "SELECT * FROM " + db.getTableDay();
 
         Cursor cursor = sql.rawQuery(selectQuery, null);

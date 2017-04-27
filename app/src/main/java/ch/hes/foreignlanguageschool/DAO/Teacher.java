@@ -23,7 +23,8 @@ public class Teacher implements Serializable {
         this.mail = mail;
     }
 
-    public Teacher(){}
+    public Teacher() {
+    }
 
 
     public int getId() {
@@ -72,5 +73,9 @@ public class Teacher implements Serializable {
 
     public void setImageName(String imageName) {
         this.imageName = imageName;
+    }
+
+    public String toString() {
+        return firstName + " " + lastName;
     }
 }

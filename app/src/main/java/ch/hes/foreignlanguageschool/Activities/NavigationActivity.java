@@ -1,5 +1,6 @@
 package ch.hes.foreignlanguageschool.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -39,18 +40,18 @@ public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     //tags used to attach the fragments
-    private final String TAG_TODAY = "Today";
-    private final String TAG_CALENDAR = "Calendar";
-    private final String TAG_ASSIGNMENTS = "Assignments";
-    private final String TAG_LECTURES = "Lectures";
-    private final String TAG_STUDENTS = "Students";
-    private final String TAG_TEACHERS = "Teachers";
-    private final String TAG_SETTINGS = "Settings";
+    public final String TAG_TODAY = "Today";
+    public final String TAG_CALENDAR = "Calendar";
+    public final String TAG_ASSIGNMENTS = "Assignments";
+    public final String TAG_LECTURES = "Lectures";
+    public final String TAG_STUDENTS = "Students";
+    public final String TAG_TEACHERS = "Teachers";
+    public final String TAG_SETTINGS = "Settings";
 
-    private String CURRENT_TAG = "";
+    public String CURRENT_TAG = "";
 
     //index to identify current nav menu item
-    private int navItemIndex = 0;
+    public int navItemIndex = 0;
 
     //toolbar titles respected to selected nav menu item
     private String[] activityTitles;
@@ -74,6 +75,179 @@ public class NavigationActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
 
+        addToDatabase();
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        mHandler = new Handler();
+
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        // load toolbar titles from string resources
+        activityTitles = getResources().getStringArray(R.array.MenuItems);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+
+        navigationView.setNavigationItemSelectedListener(this);
+
+        if (savedInstanceState == null) {
+            navItemIndex = 0;
+            CURRENT_TAG = TAG_TODAY;
+            loadHomeFragment();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.navigation, menu);
+        return true;
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
+        // Handle navigation view item clicks here.
+        int id = menuItem.getItemId();
+
+        if (id == R.id.nav_today) {
+            navItemIndex = 0;
+            CURRENT_TAG = TAG_TODAY;
+        } else if (id == R.id.nav_calendar) {
+            navItemIndex = 1;
+            CURRENT_TAG = TAG_CALENDAR;
+        } else if (id == R.id.nav_assignments) {
+            navItemIndex = 2;
+            CURRENT_TAG = TAG_ASSIGNMENTS;
+        } else if (id == R.id.nav_lectures) {
+            navItemIndex = 3;
+            CURRENT_TAG = TAG_LECTURES;
+        } else if (id == R.id.nav_students) {
+            navItemIndex = 4;
+            CURRENT_TAG = TAG_STUDENTS;
+        } else if (id == R.id.nav_teachers) {
+            navItemIndex = 5;
+            CURRENT_TAG = TAG_TEACHERS;
+        } else if (id == R.id.nav_settings) {
+            CURRENT_TAG = TAG_SETTINGS;
+            navItemIndex = 6;
+        }
+        //Checking if the item in in checked state or not, if not make it checked
+        if (menuItem.isChecked()) {
+            menuItem.setChecked(false);
+        } else {
+            menuItem.setChecked(true);
+        }
+
+        menuItem.setChecked(true);
+        loadHomeFragment();
+        return true;
+    }
+
+    public void loadHomeFragment() {
+
+        // set toolbar title
+        setToolbarTitle();
+
+        // if user select the current navigation menu again, don't do anything
+        // just close the navigation drawer
+        if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
+            drawer.closeDrawers();
+
+            // show or hide the fab button
+//            toggleFab();
+            return;
+        }
+
+        Runnable mPendingRunnable = new Runnable() {
+            @Override
+            public void run() {
+                //to replace the current fragment with another one
+                Fragment fragment = getHomeFragment();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+                fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
+                fragmentTransaction.commitAllowingStateLoss();
+            }
+        };
+
+        if (mPendingRunnable != null) {
+            mHandler.post(mPendingRunnable);
+        }
+
+        // show or hide the fab button
+//        toggleFab();
+
+        //Closing drawer on item click
+        drawer.closeDrawers();
+
+        // refresh toolbar menu
+        invalidateOptionsMenu();
+
+    }
+
+    public Fragment getHomeFragment() {
+        switch (navItemIndex) {
+            case 0:
+                // home
+                TodayFragment todayFragment = new TodayFragment();
+                return todayFragment;
+            case 1:
+                // calendar
+                CalendarFragment calendarFragment = new CalendarFragment();
+                return calendarFragment;
+            case 2:
+                // assignments
+                AssignmentsFragment assignmentsFragment = new AssignmentsFragment();
+                return assignmentsFragment;
+            case 3:
+                // Lectures
+                LecturesFragment lecturesFragment = new LecturesFragment();
+                return lecturesFragment;
+
+            case 4:
+                // students
+                StudentsFragment studentsFragment = new StudentsFragment();
+                return studentsFragment;
+            case 5:
+                // teachers
+                TeachersFragment teachersFragment = new TeachersFragment();
+                return teachersFragment;
+            case 6:
+                // settings
+                SettingsFragment settingsFragment = new SettingsFragment();
+                return settingsFragment;
+            default:
+                return new TodayFragment();
+        }
+    }
+
+    public void selectNavMenu() {
+        navigationView.getMenu().getItem(navItemIndex).setChecked(true);
+    }
+
+    public void setToolbarTitle() {
+        getSupportActionBar().setTitle(activityTitles[navItemIndex]);
+    }
+
+    public void addToDatabase() {
         //Don't delete for the moment
         this.deleteDatabase("DBForeignSchool");
 
@@ -154,214 +328,5 @@ public class NavigationActivity extends AppCompatActivity
         dbLecture.addDayAndHoursToLecture(3, 3, "08:30", "10:00");
         dbLecture.addDayAndHoursToLecture(4, 4, "08:30", "10:00");
         dbLecture.addDayAndHoursToLecture(5, 5, "08:30", "10:00");
-
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        mHandler = new Handler();
-
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-
-//        fab = (FloatingActionButton) findViewById(R.id.fab);
-//
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
-        // load toolbar titles from string resources
-        activityTitles = getResources().getStringArray(R.array.MenuItems);
-
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-
-        navigationView.setNavigationItemSelectedListener(this);
-
-        if (savedInstanceState == null) {
-            navItemIndex = 0;
-            CURRENT_TAG = TAG_TODAY;
-            loadHomeFragment();
-        }
     }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.navigation, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem menuItem) {
-        // Handle navigation view item clicks here.
-        int id = menuItem.getItemId();
-
-        if (id == R.id.nav_today) {
-            navItemIndex = 0;
-            CURRENT_TAG = TAG_TODAY;
-        } else if (id == R.id.nav_calendar) {
-            navItemIndex = 1;
-            CURRENT_TAG = TAG_CALENDAR;
-        } else if (id == R.id.nav_assignments) {
-            navItemIndex = 2;
-            CURRENT_TAG = TAG_ASSIGNMENTS;
-        } else if (id == R.id.nav_lectures) {
-            navItemIndex = 3;
-            CURRENT_TAG = TAG_LECTURES;
-        } else if (id == R.id.nav_students) {
-            navItemIndex = 4;
-            CURRENT_TAG = TAG_STUDENTS;
-        } else if (id == R.id.nav_teachers) {
-            navItemIndex = 5;
-            CURRENT_TAG = TAG_TEACHERS;
-        } else if (id == R.id.nav_settings) {
-            CURRENT_TAG = TAG_SETTINGS;
-            navItemIndex = 6;
-        }
-        //Checking if the item in in checked state or not, if not make it checked
-        if (menuItem.isChecked()) {
-            menuItem.setChecked(false);
-        } else {
-            menuItem.setChecked(true);
-        }
-
-        menuItem.setChecked(true);
-        loadHomeFragment();
-        return true;
-    }
-
-    private void loadHomeFragment() {
-
-        // selecting appropriate nav menu item
-        selectNavMenu();
-
-        // set toolbar title
-        setToolbarTitle();
-
-        // if user select the current navigation menu again, don't do anything
-        // just close the navigation drawer
-        if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
-            drawer.closeDrawers();
-
-            // show or hide the fab button
-//            toggleFab();
-            return;
-        }
-
-        Runnable mPendingRunnable = new Runnable() {
-            @Override
-            public void run() {
-                //to replace the current fragment with another one
-                Fragment fragment = getHomeFragment();
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-                fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
-                fragmentTransaction.commitAllowingStateLoss();
-            }
-        };
-
-        if (mPendingRunnable != null) {
-            mHandler.post(mPendingRunnable);
-        }
-
-        // show or hide the fab button
-//        toggleFab();
-
-        //Closing drawer on item click
-        drawer.closeDrawers();
-
-        // refresh toolbar menu
-        invalidateOptionsMenu();
-
-    }
-
-    private Fragment getHomeFragment() {
-        switch (navItemIndex) {
-            case 0:
-                // home
-                TodayFragment todayFragment = new TodayFragment();
-                return todayFragment;
-            case 1:
-                // calendar
-                CalendarFragment calendarFragment = new CalendarFragment();
-                return calendarFragment;
-            case 2:
-                // assignments
-                AssignmentsFragment assignmentsFragment = new AssignmentsFragment();
-                return assignmentsFragment;
-            case 3:
-                // Lectures
-                LecturesFragment lecturesFragment = new LecturesFragment();
-                return lecturesFragment;
-
-            case 4:
-                // students
-                StudentsFragment studentsFragment = new StudentsFragment();
-                return studentsFragment;
-            case 5:
-                // teachers
-                TeachersFragment teachersFragment = new TeachersFragment();
-                return teachersFragment;
-            case 6:
-                // settings
-                SettingsFragment settingsFragment = new SettingsFragment();
-                return settingsFragment;
-            default:
-                return new TodayFragment();
-        }
-    }
-
-    private void selectNavMenu() {
-        navigationView.getMenu().getItem(navItemIndex).setChecked(true);
-    }
-
-    private void setToolbarTitle() {
-        getSupportActionBar().setTitle(activityTitles[navItemIndex]);
-    }
-
-//    private void toggleFab() {
-//
-//        if (navItemIndex == 0 || navItemIndex == 6) {
-//            fab.hide();
-//        } else {
-//            fab.show();
-//        }
-//    }
-
 }
