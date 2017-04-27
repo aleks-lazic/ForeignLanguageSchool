@@ -34,13 +34,14 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
             android:ems="10"
-            android:hint="@string/hintDescription"
+            android:hint="@string/DescriptionTitle"
             android:inputType="textPersonName" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="56dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal"
             android:weightSum="1">
 
@@ -48,7 +49,7 @@
                 android:id="@+id/titleDate"
                 android:layout_width="67dp"
                 android:layout_height="wrap_content"
-                android:text="@string/day"
+                android:text="@string/DayTitle"
                 android:textColor="@color/colorAccent"
                 android:textSize="24sp" />
 
@@ -72,7 +73,7 @@
             android:weightSum="1">
 
             <TextView
-                android:id="@+id/titleDay"
+                android:id="@+id/titleFrom"
                 android:layout_width="69dp"
                 android:layout_height="wrap_content"
                 android:text="@string/from"
@@ -91,7 +92,7 @@
 
 
             <TextView
-                android:id="@+id/titleDate"
+                android:id="@+id/titleTo"
                 android:layout_width="48dp"
                 android:layout_height="wrap_content"
                 android:text="@string/to"
@@ -109,11 +110,6 @@
 
 
         </LinearLayout>
-
-
-        <!--<TimePicker-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"></TimePicker>-->
 
 
         <TextView

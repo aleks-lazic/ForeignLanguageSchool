@@ -1,35 +1,21 @@
 package ch.hes.foreignlanguageschool.Activities;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import ch.hes.foreignlanguageschool.DAO.Assignment;
-import ch.hes.foreignlanguageschool.DAO.Student;
-import ch.hes.foreignlanguageschool.DAO.Teacher;
 import ch.hes.foreignlanguageschool.DB.DBTeacher;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
-
-import static ch.hes.foreignlanguageschool.R.id.listViewStudents;
-import static ch.hes.foreignlanguageschool.R.id.spinnerTeacher;
-import static ch.hes.foreignlanguageschool.R.string.hintDueDate;
 
 public class AssignmentEdit extends AppCompatActivity {
 
@@ -47,7 +33,9 @@ public class AssignmentEdit extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assignment_edit);
 
-        setTitle("Assignment");
+        String title = getResources().getString(R.string.Assignment);
+
+        setTitle(title);
 
         final Intent intent = getIntent();
 

@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="@string/StartTimeTitle"
+                android:text="@string/from"
                 android:textColor="@color/colorAccent" />
 
             <TextView
@@ -86,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="@string/EndTimeTitle"
+                android:text="@string/to"
                 android:textColor="@color/colorAccent" />
 
             <TextView

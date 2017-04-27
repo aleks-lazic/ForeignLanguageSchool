@@ -36,23 +36,15 @@
     <string name="LastnameTitle">Lastname</string>
     <string name="AddressTitle">Address</string>
     <string name="CountryTitle">Country</string>
-    <string name="StartDateTitle">Start Date</string>
     <string name="EndDateTitle">End Date</string>
     <string name="MailTitle">Mail</string>
 
     <!--Hint ressources for the edit text-->
     <string name="hintTitle">Title</string>
-    <string name="hintName">Name</string>
-    <string name="hintFirstName">FirstName</string>
-    <string name="hintLastName">LastName</string>
-    <string name="hintDescription">Description</string>
-    <string name="hintDueDate">Due Date</string>
 
 
     <!--Buttons-->
     <string name="buttonValidate" translatable="false">Validate</string>
-    <string name="EndTimeTitle">End Time</string>
-    <string name="StartTimeTitle">Start Time</string>
     <string name="DayTitle">Day</string>
 
     <!--Title Date-->
@@ -60,7 +52,6 @@
     <string name="titleDate">Date</string>
     <string name="from">From</string>
     <string name="to">To</string>
-    <string name="day">Day</string>
 
 
     <!--Days of week-->
@@ -72,6 +63,10 @@
         <item>Friday</item>
         <item>Saturday</item>
     </string-array>
+    <string name="Assignment">Assignment</string>
+    <string name="Lecture">Lecture</string>
+    <string name="hintName">Name</string>
+    <string name="StartDateTitle">Start Date</string>
 
 
 </resources>
