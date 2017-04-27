@@ -35,11 +35,9 @@
             android:name=".Activities.StudentActivity"
             android:label="@string/title_activity_student"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.AssignmentEdit"/>
-            <!--android:parentActivityName=".Activities.AssignmentActivity"/>-->
-        <activity android:name=".Activities.LectureEdit">
-
-        </activity>
+        <activity android:name=".Activities.AssignmentEdit" />
+        <!-- android:parentActivityName=".Activities.AssignmentActivity"/> -->
+        <activity android:name=".Activities.LectureEdit"></activity>
     </application>
 
 </manifest>

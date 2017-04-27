@@ -3,10 +3,10 @@ package ch.hes.foreignlanguageschool.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -17,12 +17,7 @@ import java.util.ArrayList;
 
 import ch.hes.foreignlanguageschool.DAO.Lecture;
 import ch.hes.foreignlanguageschool.DAO.Student;
-import ch.hes.foreignlanguageschool.DB.DBLecture;
-import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
-
-import static android.R.attr.description;
-import static ch.hes.foreignlanguageschool.R.id.activity_lecture_fab;
 
 public class LectureActivity extends AppCompatActivity {
 
@@ -83,6 +78,15 @@ public class LectureActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         finish();
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.more_menu, menu);
+
+        // return true so that the menu pop up is opened
         return true;
     }
 }
