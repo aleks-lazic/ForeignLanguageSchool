@@ -50,6 +50,14 @@ public class LectureActivity extends AppCompatActivity {
 
         teacher.setText(lecture.getTeacher().getFirstName() + " " + lecture.getTeacher().getLastName());
 
+        TextView startTime = (TextView) findViewById(R.id.activity_lecture_starttime);
+
+        startTime.setText(lecture.getStartTime());
+
+        TextView endTime = (TextView) findViewById(R.id.activity_lecture_endtime);
+
+        endTime.setText(lecture.getEndTime());
+
         // Set the list of students
         listView_students = (ListView) findViewById(R.id.activity_lecture_students);
 

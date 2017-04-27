@@ -50,7 +50,10 @@
 
 
     <!--Buttons-->
-    <string name="buttonValidate">Validate</string>
+    <string name="buttonValidate" translatable="false">Validate</string>
+    <string name="EndTimeTitle">End Time</string>
+    <string name="StartTimeTitle">Start Time</string>
+    <string name="DayTitle">Day</string>
 
     <!--Title Date-->
 
