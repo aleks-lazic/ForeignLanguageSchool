@@ -35,6 +35,8 @@
             android:id="@+id/activity_assignment_edit_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
             android:ems="10"
             android:hint="@string/DescriptionTitle"
             android:inputType="textPersonName" />
@@ -43,12 +45,30 @@
             android:id="@+id/datePicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.33"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
             android:hint="@string/DueDateTitle"
             android:clickable="false"
             android:cursorVisible="false"
             android:focusable="false"
             android:focusableInTouchMode="false" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:text="@string/TeachersNavigation"
+            android:textColor="@color/colorAccent"
+            android:textSize="24sp" />
+
+        <ListView
+            android:id="@+id/listViewTeachers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp" />
 
     </LinearLayout>
 

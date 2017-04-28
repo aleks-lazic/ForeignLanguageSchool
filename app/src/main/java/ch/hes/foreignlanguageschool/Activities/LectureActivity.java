@@ -40,7 +40,6 @@ public class LectureActivity extends AppCompatActivity {
     private ArrayList<Student> students;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

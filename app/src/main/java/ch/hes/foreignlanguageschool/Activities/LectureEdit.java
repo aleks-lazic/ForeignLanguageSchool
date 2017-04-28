@@ -40,6 +40,12 @@ public class LectureEdit extends AppCompatActivity {
     private EditText editTxtTimePickerFrom;
     private EditText editTxtTimePickerTo;
 
+    private ArrayList<Student> students;
+    private ArrayAdapter<Student> adapter;
+
+    private ArrayList<Teacher> teachers;
+    private ArrayAdapter<Teacher> adapterTeacher;
+
     private DatabaseHelper db;
     private DBStudent dbStudent;
     private DBTeacher dbTeacher;
@@ -122,21 +128,16 @@ public class LectureEdit extends AppCompatActivity {
         dbLecture = new DBLecture(db);
 
         //Fill in spinner with all teachers
-        ArrayList<Teacher> teachers = dbTeacher.getAllTeachers();
-        ArrayAdapter<Teacher> adapterTeacher = new ArrayAdapter<Teacher>(this, android.R.layout.simple_spinner_dropdown_item, teachers);
+        teachers = dbTeacher.getAllTeachers();
+        adapterTeacher = new ArrayAdapter<Teacher>(this, android.R.layout.simple_spinner_dropdown_item, teachers);
         spinnerTeacher.setAdapter(adapterTeacher);
 
 
         //getallstudents
-        ArrayList<Student> students = dbStudent.getAllStudentsOrderById();
-        String[] studentsName = new String[students.size()];
-
-        for (int i = 0; i < studentsName.length; i++) {
-            studentsName[i] = students.get(i).getFirstName() + " " + students.get(i).getLastName();
-        }
+        students = dbStudent.getAllStudents();
 
         //Fill in the listview
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, studentsName);
+        adapter = new ArrayAdapter<Student>(this, android.R.layout.simple_list_item_multiple_choice, students);
 
         listViewStudents.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 

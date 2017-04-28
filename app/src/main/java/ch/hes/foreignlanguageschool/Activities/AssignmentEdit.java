@@ -7,23 +7,36 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import ch.hes.foreignlanguageschool.DAO.Assignment;
+import ch.hes.foreignlanguageschool.DAO.Student;
+import ch.hes.foreignlanguageschool.DAO.Teacher;
+import ch.hes.foreignlanguageschool.DB.DBLecture;
+import ch.hes.foreignlanguageschool.DB.DBStudent;
 import ch.hes.foreignlanguageschool.DB.DBTeacher;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
+
+import static ch.hes.foreignlanguageschool.R.id.listViewStudents;
 
 public class AssignmentEdit extends AppCompatActivity {
 
     private TextView txtViewTitle;
     private TextView txtViewDescription;
     private TextView txtViewDueDate;
+    private ListView listViewTeachers;
 
     private Assignment assignment;
+
+    private ArrayList<Teacher> teachers;
+    private ArrayAdapter<Teacher> adapter;
 
     private DatabaseHelper db;
     private DBTeacher dbTeacher;
@@ -42,6 +55,7 @@ public class AssignmentEdit extends AppCompatActivity {
         txtViewTitle = (TextView) findViewById(R.id.activity_assignment_edit_title);
         txtViewDescription = (TextView) findViewById(R.id.activity_assignment_edit_description);
         txtViewDueDate = (TextView) findViewById(R.id.datePicker);
+        listViewTeachers = (ListView) findViewById(R.id.listViewTeachers);
 
         if (intent.getSerializableExtra("assignment") != null) {
             assignment = (Assignment) intent.getSerializableExtra("assignment");
@@ -96,6 +110,20 @@ public class AssignmentEdit extends AppCompatActivity {
                     mDatePicker.show();
                 }
             });
+
+            //create database objects
+            db = DatabaseHelper.getInstance(this);
+            dbTeacher = new DBTeacher(db);
+
+            //getallteachers
+            teachers = dbTeacher.getAllTeachers();
+            adapter = new ArrayAdapter<Teacher>(this, android.R.layout.simple_list_item_multiple_choice, teachers);
+
+            listViewTeachers.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
+            listViewTeachers.setAdapter(adapter);
+
+
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
