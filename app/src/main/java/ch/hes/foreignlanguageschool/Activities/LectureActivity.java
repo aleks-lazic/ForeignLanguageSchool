@@ -18,8 +18,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import ch.hes.foreignlanguageschool.Adapters.CustomAdapterStudent;
+import ch.hes.foreignlanguageschool.DAO.Day;
 import ch.hes.foreignlanguageschool.DAO.Lecture;
 import ch.hes.foreignlanguageschool.DAO.Student;
+import ch.hes.foreignlanguageschool.DB.DBDay;
 import ch.hes.foreignlanguageschool.DB.DBLecture;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
@@ -33,11 +36,16 @@ public class LectureActivity extends AppCompatActivity {
     private TextView teacher;
     private TextView startTime;
     private TextView endTime;
+    private TextView day;
+
+    private Day dayLecture;
 
     private DatabaseHelper db;
     private DBLecture dbLecture;
+    private DBDay dbDay;
 
     private ArrayList<Student> students;
+    private CustomAdapterStudent studentsAdapter;
 
 
     @Override
@@ -54,8 +62,13 @@ public class LectureActivity extends AppCompatActivity {
         teacher = (TextView) findViewById(R.id.activity_lecture_teacher);
         startTime = (TextView) findViewById(R.id.activity_lecture_starttime);
         endTime = (TextView) findViewById(R.id.activity_lecture_endtime);
+        day = (TextView) findViewById(R.id.activity_lecture_day);
         listView_students = (ListView) findViewById(R.id.activity_lecture_students);
 
+        //database
+        db = DatabaseHelper.getInstance(this);
+        dbLecture = new DBLecture(db);
+        dbDay = new DBDay(db);
 
         //set textviews
         setTitle(lecture.getName());
@@ -63,22 +76,16 @@ public class LectureActivity extends AppCompatActivity {
         teacher.setText(lecture.getTeacher().getFirstName() + " " + lecture.getTeacher().getLastName());
         startTime.setText(lecture.getStartTime());
         endTime.setText(lecture.getEndTime());
-
-        //database
-        db = DatabaseHelper.getInstance(this);
-        dbLecture = new DBLecture(db);
+        day.setText(dbDay.getDayById(lecture.getIdDay()).toString());
 
         // Set the list of students
 
         //set the students from the lecture
         students = lecture.getStudentsList();
-        String[] studentsName = new String[students.size()];
-        for (int i = 0; i < studentsName.length; i++) {
-            studentsName[i] = students.get(i).getFirstName() + " " + students.get(i).getLastName();
-        }
+        studentsAdapter = new CustomAdapterStudent(this, students);
 
 //        ArrayAdapter adapter = new ArrayAdapter(this, android.R)
-        listView_students.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, studentsName));
+        listView_students.setAdapter(studentsAdapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.activity_lecture_fab);
         fab.setOnClickListener(new View.OnClickListener() {

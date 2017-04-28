@@ -162,10 +162,8 @@ public class LectureEdit extends AppCompatActivity {
             listViewStudents.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
             listViewStudents.setAdapter(adapterStudent);
 
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         }
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 

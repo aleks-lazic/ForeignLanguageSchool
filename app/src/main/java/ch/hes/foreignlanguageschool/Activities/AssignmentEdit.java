@@ -13,12 +13,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import ch.hes.foreignlanguageschool.DAO.Assignment;
 import ch.hes.foreignlanguageschool.DAO.Teacher;
 import ch.hes.foreignlanguageschool.DB.DBAssignment;
+import ch.hes.foreignlanguageschool.DB.DBDay;
+import ch.hes.foreignlanguageschool.DB.DBLecture;
+import ch.hes.foreignlanguageschool.DB.DBStudent;
 import ch.hes.foreignlanguageschool.DB.DBTeacher;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
@@ -36,6 +41,7 @@ public class AssignmentEdit extends AppCompatActivity {
 
     private ArrayList<Teacher> teachers;
     private ArrayAdapter<Teacher> adapter;
+    private Teacher teacher;
 
     private DatabaseHelper db;
     private DBTeacher dbTeacher;
@@ -50,12 +56,19 @@ public class AssignmentEdit extends AppCompatActivity {
 
         setTitle(title);
 
-        final Intent intent = getIntent();
-
         txtViewTitle = (TextView) findViewById(R.id.activity_assignment_edit_title);
         txtViewDescription = (TextView) findViewById(R.id.activity_assignment_edit_description);
         txtViewDueDate = (TextView) findViewById(R.id.datePicker);
         spinnerTeachers = (Spinner) findViewById(spinnerTeacher);
+
+        txtViewDueDate.setText("");
+
+        //create database objects
+        db = DatabaseHelper.getInstance(this);
+        dbTeacher = new DBTeacher(db);
+        dbAssignment = new DBAssignment(db);
+
+        Intent intent = getIntent();
 
         if (intent.getSerializableExtra("assignment") != null) {
             assignment = (Assignment) intent.getSerializableExtra("assignment");
@@ -63,53 +76,20 @@ public class AssignmentEdit extends AppCompatActivity {
             txtViewDescription.setText(assignment.getDescription());
             txtViewDueDate.setText(assignment.getDate());
 
-            txtViewDueDate.setOnClickListener(new View.OnClickListener() {
+            createDatePicker();
 
-                @Override
-                public void onClick(View v) {
-                    //To show current date in the datepicker
-                    Calendar mcurrentDate = Calendar.getInstance();
-                    int mYear = mcurrentDate.get(Calendar.YEAR);
-                    int mMonth = mcurrentDate.get(Calendar.MONTH);
-                    int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+            //create spinnerTeacher and set default position
+            teachers = dbTeacher.getAllTeachers();
+            adapter = new ArrayAdapter<Teacher>(this, android.R.layout.simple_spinner_dropdown_item, teachers);
+            spinnerTeachers.setAdapter(adapter);
 
-                    DatePickerDialog mDatePicker;
-                    mDatePicker = new DatePickerDialog(AssignmentEdit.this, new DatePickerDialog.OnDateSetListener() {
-                        public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
-                    /*      get date   */
-                            selectedmonth = selectedmonth + 1;
-                            txtViewDueDate.setText("" + selectedday + "." + selectedmonth + "." + selectedyear);
-                        }
-                    }, mYear, mMonth, mDay);
-                    mDatePicker.setTitle(getResources().getString(R.string.SelectDate));
-                    mDatePicker.show();
-                }
-            });
+            teacher = assignment.getTeacher();
+            setDefaultValueSpinner(spinnerTeachers, teacher.getId());
 
 
         } else {
-            txtViewDueDate.setOnClickListener(new View.OnClickListener() {
 
-                @Override
-                public void onClick(View v) {
-                    //To show current date in the datepicker
-                    Calendar mcurrentDate = Calendar.getInstance();
-                    int mYear = mcurrentDate.get(Calendar.YEAR);
-                    int mMonth = mcurrentDate.get(Calendar.MONTH);
-                    int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
-
-                    DatePickerDialog mDatePicker;
-                    mDatePicker = new DatePickerDialog(AssignmentEdit.this, new DatePickerDialog.OnDateSetListener() {
-                        public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
-                    /*      get date   */
-                            selectedmonth = selectedmonth + 1;
-                            txtViewDueDate.setText("" + selectedday + "." + selectedmonth + "." + selectedyear);
-                        }
-                    }, mYear, mMonth, mDay);
-                    mDatePicker.setTitle(getResources().getString(R.string.SelectDate));
-                    mDatePicker.show();
-                }
-            });
+            createDatePicker();
 
             //create database objects
             db = DatabaseHelper.getInstance(this);
@@ -148,17 +128,16 @@ public class AssignmentEdit extends AppCompatActivity {
             }
 
             //get the teacher from spinner
-            Teacher selectedTeacher = (Teacher) spinnerTeachers.getSelectedItem();
+            teacher = (Teacher) spinnerTeachers.getSelectedItem();
 
             //get the teacher from DB
             String title = txtViewTitle.getText().toString();
             String description = txtViewDescription.getText().toString();
             String date = txtViewDueDate.getText().toString();
-            int idTeacher = selectedTeacher.getId();
+            int idTeacher = teacher.getId();
 
 
             //insert everything in DB
-
             dbAssignment.insertValues(title, description, date, idTeacher);
 
             finish();
@@ -168,5 +147,39 @@ public class AssignmentEdit extends AppCompatActivity {
         finish();
         return super.onOptionsItemSelected(item);
 
+    }
+
+    public void createDatePicker() {
+        txtViewDueDate.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //To show current date in the datepicker
+                Calendar mcurrentDate = Calendar.getInstance();
+                int mYear = mcurrentDate.get(Calendar.YEAR);
+                int mMonth = mcurrentDate.get(Calendar.MONTH);
+                int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog mDatePicker;
+                mDatePicker = new DatePickerDialog(AssignmentEdit.this, new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                    /*      get date   */
+                        selectedmonth = selectedmonth + 1;
+                        txtViewDueDate.setText("" + selectedday + "." + selectedmonth + "." + selectedyear);
+                    }
+                }, mYear, mMonth, mDay);
+                mDatePicker.setTitle(getResources().getString(R.string.SelectDate));
+                mDatePicker.getDatePicker().setMinDate(new Date().getTime());
+                mDatePicker.show();
+            }
+        });
+    }
+
+    public void setDefaultValueSpinner(final Spinner spinner, final int id){
+        spinner.post(new Runnable() {
+            public void run() {
+                spinner.setSelection(id-1);
+            }
+        });
     }
 }

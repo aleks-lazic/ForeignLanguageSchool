@@ -27,7 +27,6 @@
             android:id="@+id/activity_assignment_edit_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:hint="@string/hintTitle"
             android:inputType="textPersonName" />
 
@@ -36,9 +35,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:ems="10"
             android:hint="@string/DescriptionTitle"
-            android:inputType="textPersonName" />
+            android:inputType="textMultiLine"
+            android:lines="3" />
 
         <EditText
             android:id="@+id/datePicker"
@@ -55,7 +54,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:ems="10"
             android:text="@string/TeachersNavigation"
             android:textColor="@color/colorAccent"
             android:textSize="20sp" />
@@ -64,7 +62,7 @@
             android:id="@+id/spinnerTeacher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:spinnerMode="dialog"
             android:textSize="18sp" />
 

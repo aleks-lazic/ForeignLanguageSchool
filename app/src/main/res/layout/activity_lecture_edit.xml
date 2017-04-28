@@ -21,7 +21,6 @@
         android:id="@+id/editTxtName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
         android:hint="@string/hintName"
         android:inputType="textPersonName" />
 
@@ -30,9 +29,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:ems="10"
+        android:lines="3"
         android:hint="@string/DescriptionTitle"
-        android:inputType="textPersonName" />
+        android:inputType="textMultiLine" />
 
 
     <LinearLayout
@@ -110,7 +109,6 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="16dp"
         android:layout_marginTop="20dp"
-        android:ems="10"
         android:text="@string/TeacherTitle"
         android:textColor="@color/colorAccent"
         android:textSize="20sp" />
@@ -127,7 +125,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:ems="10"
         android:text="@string/StudentsNavigation"
         android:textColor="@color/colorAccent"
         android:textSize="20sp" />
