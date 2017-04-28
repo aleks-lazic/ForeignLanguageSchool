@@ -25,7 +25,7 @@
             android:padding="10dp"
             android:text="@string/LecturesNavigation"
             android:textColor="@color/colorAccent"
-            android:textSize="24sp" />
+            android:textSize="20sp" />
 
 
         <ListView
