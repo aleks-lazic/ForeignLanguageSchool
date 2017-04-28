@@ -76,7 +76,7 @@ public class DBAssignment {
         ArrayList<Assignment> assignmentsList = new ArrayList<Assignment>();
         String selectQuery = "SELECT *"
                 + " FROM " + db.getTableAssignement()
-                + " WHERE " + db.getASSIGNMENT_DATE() + " = " + "'"+date+"'";
+                + " WHERE " + db.getASSIGNMENT_DATE() + " = " + "'" + date + "'";
 
         Cursor cursor = sql.rawQuery(selectQuery, null);
 
@@ -103,6 +103,16 @@ public class DBAssignment {
 
         // return assignments list
         return assignmentsList;
+
+    }
+
+    public void deleteAssignmentById(int idAssignment) {
+
+        SQLiteDatabase sql = db.getWritableDatabase();
+
+        sql.delete(db.getTableAssignement(), db.getKeyId() + " = ?",
+                new String[]{String.valueOf(idAssignment)});
+        sql.close();
 
     }
 }

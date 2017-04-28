@@ -18,7 +18,9 @@ public class DBStudent {
 
     private DatabaseHelper db;
 
-    public DBStudent(DatabaseHelper db) {this.db = db;}
+    public DBStudent(DatabaseHelper db) {
+        this.db = db;
+    }
 
     public void insertValues(String firstName, String lastName, String address, String country, String mail, String startDate, String endDate) {
 
@@ -46,7 +48,7 @@ public class DBStudent {
 
         Cursor cursor = sql.rawQuery(selectQuery, null);
 
-        if(cursor != null){
+        if (cursor != null) {
             cursor.moveToFirst();
         }
 
@@ -72,7 +74,7 @@ public class DBStudent {
 
         ArrayList<Student> studentsList = new ArrayList<Student>();
 
-        String selectQuery = "SELECT "+db.getLECTURESTUDENT_FKSTUDENT()+" FROM " + db.getTableLecturestudent() + " WHERE " + db.getLECTURESTUDENT_FKLECTURE() + " = " + idLecture;
+        String selectQuery = "SELECT " + db.getLECTURESTUDENT_FKSTUDENT() + " FROM " + db.getTableLecturestudent() + " WHERE " + db.getLECTURESTUDENT_FKLECTURE() + " = " + idLecture;
 
         Cursor cursor = sql.rawQuery(selectQuery, null);
 
@@ -100,7 +102,7 @@ public class DBStudent {
         SQLiteDatabase sql = db.getWritableDatabase();
 
         ArrayList<Student> studentsList = new ArrayList<Student>();
-        String selectQuery = "SELECT * FROM " + db.getTableStudent()+ " ORDER BY " +db.getKeyId();
+        String selectQuery = "SELECT * FROM " + db.getTableStudent() + " ORDER BY " + db.getKeyId();
 
         Cursor cursor = sql.rawQuery(selectQuery, null);
 
@@ -135,7 +137,7 @@ public class DBStudent {
         SQLiteDatabase sql = db.getWritableDatabase();
 
         ArrayList<Student> studentsList = new ArrayList<Student>();
-        String selectQuery = "SELECT * FROM " + db.getTableStudent()+ " ORDER BY " + db.getSTUDENT_FIRSTNAME() + ", "+ db.getSTUDENT_LASTNAME();
+        String selectQuery = "SELECT * FROM " + db.getTableStudent() + " ORDER BY " + db.getSTUDENT_FIRSTNAME() + ", " + db.getSTUDENT_LASTNAME();
 
         Cursor cursor = sql.rawQuery(selectQuery, null);
 
@@ -163,6 +165,30 @@ public class DBStudent {
 
         // return students list
         return studentsList;
+    }
+
+    public void deleteStudent(int idStudent) {
+        deleteStudentById(idStudent);
+        deleteStudentFromLectures(idStudent);
+    }
+
+    private void deleteStudentById(int idStudent) {
+        SQLiteDatabase sql = db.getWritableDatabase();
+
+        sql.delete(db.getTableStudent(), db.getKeyId() + " = ?",
+                new String[]{String.valueOf(idStudent)});
+        sql.close();
+
+    }
+
+    private void deleteStudentFromLectures(int idStudent) {
+
+
+        SQLiteDatabase sql = db.getWritableDatabase();
+
+        sql.delete(db.getTableLecturestudent(), db.getLECTURESTUDENT_FKSTUDENT() + " = ?",
+                new String[]{String.valueOf(idStudent)});
+        sql.close();
     }
 
 
