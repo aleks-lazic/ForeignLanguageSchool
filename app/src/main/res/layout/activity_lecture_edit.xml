@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:text="@string/DayTitle"
             android:textColor="@color/colorAccent"
-            android:textSize="24sp" />
+            android:textSize="20sp" />
 
         <Spinner
             android:id="@+id/spinnerDay"
@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:text="@string/from"
             android:textColor="@color/colorAccent"
-            android:textSize="24sp" />
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/timePickerFrom"
@@ -91,7 +91,7 @@
             android:layout_height="wrap_content"
             android:text="@string/to"
             android:textColor="@color/colorAccent"
-            android:textSize="24sp" />
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/timePickerTo"
@@ -113,7 +113,7 @@
         android:ems="10"
         android:text="@string/TeacherTitle"
         android:textColor="@color/colorAccent"
-        android:textSize="24sp" />
+        android:textSize="20sp" />
 
     <Spinner
         android:id="@+id/spinnerTeacher"
@@ -130,7 +130,7 @@
         android:ems="10"
         android:text="@string/StudentsNavigation"
         android:textColor="@color/colorAccent"
-        android:textSize="24sp" />
+        android:textSize="20sp" />
 
     <ListView
         android:id="@+id/listViewStudents"

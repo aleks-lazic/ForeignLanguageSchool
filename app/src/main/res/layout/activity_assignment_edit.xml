@@ -58,7 +58,7 @@
             android:ems="10"
             android:text="@string/TeachersNavigation"
             android:textColor="@color/colorAccent"
-            android:textSize="24sp" />
+            android:textSize="20sp" />
 
         <Spinner
             android:id="@+id/spinnerTeacher"
