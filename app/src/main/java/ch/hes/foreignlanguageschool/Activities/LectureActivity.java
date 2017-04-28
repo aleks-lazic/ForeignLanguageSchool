@@ -100,7 +100,7 @@ public class LectureActivity extends AppCompatActivity {
         if (id == R.id.action_delete) {
             dbLecture.deleteLecture(lecture.getId());
             finish();
-            Toast toast = Toast.makeText(this, lecture.toString() + " lecture deleted successfully", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, lecture.toString() + " " + getResources().getString(R.string.Lecture) + " " + getResources().getString(R.string.DeletedSuccess), Toast.LENGTH_SHORT);
             toast.show();
         } else{
             finish();
@@ -111,13 +111,6 @@ public class LectureActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        Log.d("Aleks", "Je ne rentre jamais la dedans");
-        super.onBackPressed();
-        finish();
-        return;
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -126,5 +119,10 @@ public class LectureActivity extends AppCompatActivity {
 
         // return true so that the menu pop up is opened
         return true;
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
     }
 }

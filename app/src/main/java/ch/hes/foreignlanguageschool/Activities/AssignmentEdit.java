@@ -2,36 +2,35 @@ package ch.hes.foreignlanguageschool.Activities;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
-import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import ch.hes.foreignlanguageschool.DAO.Assignment;
-import ch.hes.foreignlanguageschool.DAO.Student;
 import ch.hes.foreignlanguageschool.DAO.Teacher;
-import ch.hes.foreignlanguageschool.DB.DBLecture;
-import ch.hes.foreignlanguageschool.DB.DBStudent;
+import ch.hes.foreignlanguageschool.DB.DBAssignment;
 import ch.hes.foreignlanguageschool.DB.DBTeacher;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
 
-import static ch.hes.foreignlanguageschool.R.id.listViewStudents;
+import static ch.hes.foreignlanguageschool.R.id.spinnerTeacher;
 
 public class AssignmentEdit extends AppCompatActivity {
 
     private TextView txtViewTitle;
     private TextView txtViewDescription;
     private TextView txtViewDueDate;
-    private ListView listViewTeachers;
+    private Spinner spinnerTeachers;
 
     private Assignment assignment;
 
@@ -40,6 +39,7 @@ public class AssignmentEdit extends AppCompatActivity {
 
     private DatabaseHelper db;
     private DBTeacher dbTeacher;
+    private DBAssignment dbAssignment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class AssignmentEdit extends AppCompatActivity {
         txtViewTitle = (TextView) findViewById(R.id.activity_assignment_edit_title);
         txtViewDescription = (TextView) findViewById(R.id.activity_assignment_edit_description);
         txtViewDueDate = (TextView) findViewById(R.id.datePicker);
-        listViewTeachers = (ListView) findViewById(R.id.listViewTeachers);
+        spinnerTeachers = (Spinner) findViewById(spinnerTeacher);
 
         if (intent.getSerializableExtra("assignment") != null) {
             assignment = (Assignment) intent.getSerializableExtra("assignment");
@@ -81,7 +81,7 @@ public class AssignmentEdit extends AppCompatActivity {
                             txtViewDueDate.setText("" + selectedday + "." + selectedmonth + "." + selectedyear);
                         }
                     }, mYear, mMonth, mDay);
-                    mDatePicker.setTitle("Select Date");
+                    mDatePicker.setTitle(getResources().getString(R.string.SelectDate));
                     mDatePicker.show();
                 }
             });
@@ -106,7 +106,7 @@ public class AssignmentEdit extends AppCompatActivity {
                             txtViewDueDate.setText("" + selectedday + "." + selectedmonth + "." + selectedyear);
                         }
                     }, mYear, mMonth, mDay);
-                    mDatePicker.setTitle("Select Date");
+                    mDatePicker.setTitle(getResources().getString(R.string.SelectDate));
                     mDatePicker.show();
                 }
             });
@@ -114,14 +114,13 @@ public class AssignmentEdit extends AppCompatActivity {
             //create database objects
             db = DatabaseHelper.getInstance(this);
             dbTeacher = new DBTeacher(db);
+            dbAssignment = new DBAssignment(db);
 
             //getallteachers
             teachers = dbTeacher.getAllTeachers();
-            adapter = new ArrayAdapter<Teacher>(this, android.R.layout.simple_list_item_multiple_choice, teachers);
+            adapter = new ArrayAdapter<Teacher>(this, android.R.layout.simple_spinner_dropdown_item, teachers);
 
-            listViewTeachers.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-
-            listViewTeachers.setAdapter(adapter);
+            spinnerTeachers.setAdapter(adapter);
 
 
         }
@@ -144,32 +143,25 @@ public class AssignmentEdit extends AppCompatActivity {
 
             //check if the title is filled
             if (txtViewTitle.getText().toString().trim().equals("")) {
-                txtViewTitle.setError("Title is required!");
+                txtViewTitle.setError(getResources().getString(R.string.TitleAlert));
                 return super.onOptionsItemSelected(item);
             }
 
-//
-//            //get students from selected list
-//            ArrayList<Student> students = new ArrayList<Student>();
-//            Student student = null;
-//
-//            for (int i = 0; i < checked.size(); i++) {
-//                // Item position in adapter
-//                int position = checked.keyAt(i);
-//                // Add sport if it is checked i.e.) == TRUE!
-//                if (checked.valueAt(i))
-//                    student = dbStudent.getStudentById(position+1);
-//                students.add(student);
-//            }
-//
-//
-//            //get the teacher from DB
-//            String selectedTeacher = spinnerTeacher.getSelectedItem().toString();
-//            Teacher teacher = dbTeacher.getTeacherByName(selectedTeacher);
-//
-//
-//            //insert everything in DB
-//            dbLecture.insertValues(txtTitle.getText().toString(), txtDescription.getText().toString(), teacher.getId());
+            //get the teacher from spinner
+            Teacher selectedTeacher = (Teacher) spinnerTeachers.getSelectedItem();
+
+            //get the teacher from DB
+            String title = txtViewTitle.getText().toString();
+            String description = txtViewDescription.getText().toString();
+            String date = txtViewDueDate.getText().toString();
+            int idTeacher = selectedTeacher.getId();
+
+
+            //insert everything in DB
+
+            dbAssignment.insertValues(title, description, date, idTeacher);
+
+            finish();
 
         }
 

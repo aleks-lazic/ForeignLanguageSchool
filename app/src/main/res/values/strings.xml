@@ -70,8 +70,8 @@
     <string name="Lecture">Lecture</string>
     <string name="hintName">Name</string>
     <string name="StartDateTitle">Start Date</string>
-    <string name="title_activity_scrolling">ScrollingActivity</string>
-    <string name="large_text">
+    <string name="title_activity_scrolling" translatable="false">ScrollingActivity</string>
+    <string name="large_text" translatable="false">
         "Material is the metaphor.\n\n"
 
         "A material metaphor is the unifying theory of a rationalized space and a system of motion."
@@ -160,6 +160,13 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="DeletedSuccess">deleted successfully</string>
+    <string name="HourAlert">Please fill hours</string>
+    <string name="TimeAlert">End Time must be after Start Time</string>
+    <string name="StudentAlert">Please select minimum a Student</string>
+    <string name="SelectTime">Select Time</string>
+    <string name="SelectDate">Select Date</string>
+    <string name="TitleAlert">Title is required</string>
 
 
 </resources>
