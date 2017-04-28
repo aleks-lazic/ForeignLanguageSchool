@@ -273,13 +273,7 @@ public class NavigationActivity extends AppCompatActivity
         //adding lectures
         dbLecture = new DBLecture(databaseHelper);
         dbLecture.insertValues("English", "English advanced course", dbTeacher.getTeacherById(1).getId());
-        dbLecture.insertValues("Written Communication", "Written communication course for beginners", dbTeacher.getTeacherById(1).getId());
-        dbLecture.insertValues("IT", "IT course for beginners", dbTeacher.getTeacherById(2).getId());
-        dbLecture.insertValues("Grammary", "English grammary course", dbTeacher.getTeacherById(2).getId());
-        dbLecture.insertValues("Speaking", "Speaking course", dbTeacher.getTeacherById(3).getId());
-        dbLecture.insertValues("Listening", "Listening course", dbTeacher.getTeacherById(3).getId());
-        dbLecture.insertValues("Business", "Business course", dbTeacher.getTeacherById(4).getId());
-        dbLecture.insertValues("Project Management", "This course will teach you how to handle a project", dbTeacher.getTeacherById(4).getId());
+        dbLecture.insertValues("Written Communication", "Written communication course for beginners", dbTeacher.getTeacherById(2).getId());
 
         //adding students
         dbStudent = new DBStudent(databaseHelper);
@@ -304,30 +298,13 @@ public class NavigationActivity extends AppCompatActivity
         dbLecture.addStudentToLecture(4, 1);
         dbLecture.addStudentToLecture(5, 1);
         dbLecture.addStudentToLecture(1, 2);
-        dbLecture.addStudentToLecture(1, 3);
-        dbLecture.addStudentToLecture(1, 4);
-        dbLecture.addStudentToLecture(1, 5);
-        dbLecture.addStudentToLecture(1, 6);
-        dbLecture.addStudentToLecture(1, 7);
-        dbLecture.addStudentToLecture(1, 8);
+
 
 
         //adding lectures to a date
         dbLecture.addDayAndHoursToLecture(1, 1, "08:30", "10:00");
         dbLecture.addDayAndHoursToLecture(2, 2, "08:30", "10:00");
 
-
-        //Those are only for test
-        dbLecture.addDayAndHoursToLecture(1, 2, "08:30", "10:00");
-        dbLecture.addDayAndHoursToLecture(3, 2, "08:30", "10:00");
-        dbLecture.addDayAndHoursToLecture(4, 2, "08:30", "10:00");
-        dbLecture.addDayAndHoursToLecture(5, 2, "08:30", "10:00");
-        //End of test
-
-
-        dbLecture.addDayAndHoursToLecture(3, 3, "08:30", "10:00");
-        dbLecture.addDayAndHoursToLecture(4, 4, "08:30", "10:00");
-        dbLecture.addDayAndHoursToLecture(5, 5, "08:30", "10:00");
     }
 
 

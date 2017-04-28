@@ -21,6 +21,7 @@ import ch.hes.foreignlanguageschool.Activities.LectureEdit;
 import ch.hes.foreignlanguageschool.Adapters.CustomAdapterLecture;
 import ch.hes.foreignlanguageschool.DAO.Lecture;
 import ch.hes.foreignlanguageschool.DB.DBLecture;
+import ch.hes.foreignlanguageschool.DB.DBStudent;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
 
@@ -51,6 +52,7 @@ public class LecturesFragment extends Fragment {
 
     private DatabaseHelper db;
     private DBLecture dbLecture;
+    private DBStudent dbStudent;
 
     String[] tabLectures;
 
@@ -96,6 +98,7 @@ public class LecturesFragment extends Fragment {
 
         db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
         dbLecture = new DBLecture(db);
+        dbStudent = new DBStudent(db);
 
         lectures = dbLecture.getAllLectures();
 
@@ -109,6 +112,9 @@ public class LecturesFragment extends Fragment {
                                     int position, long id) {
 
                 Intent myIntent = new Intent(view.getContext(), LectureActivity.class);
+
+                Lecture lecture = (Lecture) parent.getItemAtPosition(position);
+                lecture.setStudentsList(dbStudent.getStudentsListByLecture(lecture.getId()));
 
                 myIntent.putExtra("lecture", lectures.get(position));
 

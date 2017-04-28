@@ -48,16 +48,68 @@ public class DBLecture {
     }
 
     public ArrayList<Lecture> getAllLectures() {
+//        SQLiteDatabase sql = db.getWritableDatabase();
+//
+//        ArrayList<Lecture> lecturesList = new ArrayList<Lecture>();
+////        String selectQuery = "SELECT * FROM " + db.getTableLecture() + " ORDER BY " + db.getLECTURE_NAME();
+//        String selectQuery = "SELECT * FROM " + db.getTableLecture();
+//
+//        Cursor cursor = sql.rawQuery(selectQuery, null);
+//
+//        DBTeacher dbTeacher = new DBTeacher(db);
+//        DBStudent dbStudent = new DBStudent(db);
+//
+//        // looping through all rows and adding to list
+//        if (cursor.moveToFirst()) {
+//            do {
+//                Lecture lecture = new Lecture();
+//                lecture.setId(Integer.parseInt(cursor.getString(0)));
+//                lecture.setName(cursor.getString(1));
+//                lecture.setDescription(cursor.getString(2));
+//                lecture.setImageName(cursor.getString((3)));
+//                lecture.setTeacher(dbTeacher.getTeacherById(Integer.parseInt(cursor.getString(4))));
+//                lecture.setStudentsList(dbStudent.getStudentsListByLecture(Integer.parseInt(cursor.getString(0))));
+//
+//                // Adding lecture to list
+//                lecturesList.add(lecture);
+//            } while (cursor.moveToNext());
+//        }
+//
+//        sql.close();
+//
+//
+//        // return lectures list
+//        return lecturesList;
+
+
+
+
+
+
+
+
+
+
         SQLiteDatabase sql = db.getWritableDatabase();
 
         ArrayList<Lecture> lecturesList = new ArrayList<Lecture>();
-//        String selectQuery = "SELECT * FROM " + db.getTableLecture() + " ORDER BY " + db.getLECTURE_NAME();
-        String selectQuery = "SELECT * FROM " + db.getTableLecture();
+        String selectQuery = "SELECT "
+                + db.getKeyId() + ", "
+                + db.getLECTURE_NAME() + ", "
+                + db.getLECTURE_DESCRIPTION() + ", "
+                + db.getIMAGE_NAME() + ", "
+                + db.getLECTURE_FKTEACHER() + ", "
+                + db.getLECTUREDATE_FKDAY() + ", "
+                + db.getLECTUREDATE_STARTTIME() + ", "
+                + db.getLECTUREDATE_ENDTIME() + " "
+                + "FROM " + db.getTableLecture()
+                + " LEFT JOIN " + db.getTableLecturedate() + " ON " + db.getTableLecture() + "." + db.getKeyId() + " = " + db.getTableLecturedate() + "." + db.getLECTUREDATE_FKLECTURE();
+
 
         Cursor cursor = sql.rawQuery(selectQuery, null);
 
-        DBTeacher dbTeacher = new DBTeacher(db);
-        DBStudent dbStudent = new DBStudent(db);
+        DBTeacher teacher = new DBTeacher(db);
+        DBStudent student = new DBStudent(db);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
@@ -67,8 +119,10 @@ public class DBLecture {
                 lecture.setName(cursor.getString(1));
                 lecture.setDescription(cursor.getString(2));
                 lecture.setImageName(cursor.getString((3)));
-                lecture.setTeacher(dbTeacher.getTeacherById(Integer.parseInt(cursor.getString(4))));
-                lecture.setStudentsList(dbStudent.getStudentsListByLecture(Integer.parseInt(cursor.getString(0))));
+                lecture.setTeacher(teacher.getTeacherById(Integer.parseInt(cursor.getString(4))));
+                lecture.setIdDay(Integer.parseInt(cursor.getString(5)));
+                lecture.setStartTime(cursor.getString(6));
+                lecture.setStartTime(cursor.getString(7));
 
                 // Adding lecture to list
                 lecturesList.add(lecture);
@@ -209,6 +263,7 @@ public class DBLecture {
         addStudentsToLecture(students, id);
 
     }
+
 
     public long getNumberOfRowsInTableLecture() {
 

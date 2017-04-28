@@ -59,4 +59,28 @@ public class DBDay {
         // return days list
         return daysList;
     }
+
+    public Day getDayById(int idDay) {
+
+        SQLiteDatabase sql = db.getReadableDatabase();
+
+        Day day = new Day();
+
+        String selectQuery = "SELECT * FROM " + db.getTableDay() +
+                " WHERE " + db.getKeyId() + " = " + idDay;
+
+        Cursor cursor = sql.rawQuery(selectQuery, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        day.setId(Integer.parseInt(cursor.getString(0)));
+        day.setName(cursor.getString(1));
+
+        sql.close();
+
+        // return teacher
+        return day;
+    }
 }

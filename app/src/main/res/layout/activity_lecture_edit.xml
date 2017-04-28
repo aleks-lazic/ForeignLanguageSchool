@@ -1,153 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearlayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="16dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="32dp"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:clickable="true"
+    android:orientation="vertical"
     tools:context="ch.hes.foreignlanguageschool.Activities.LectureEdit">
 
 
-    <LinearLayout
-        android:id="@+id/linearlayout"
-        android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/editTxtName"
+        android:layout_width="343dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:orientation="vertical">
+        android:ems="10"
+        android:hint="@string/hintName"
+        android:inputType="textPersonName" />
 
-        <EditText
-            android:id="@+id/editTxtName"
-            android:layout_width="343dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/hintName"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/editTxtDescription"
-            android:layout_width="344dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:ems="10"
-            android:hint="@string/DescriptionTitle"
-            android:inputType="textPersonName" />
+    <EditText
+        android:id="@+id/editTxtDescription"
+        android:layout_width="344dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="@string/DescriptionTitle"
+        android:inputType="textPersonName" />
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <TextView
-                android:id="@+id/titleDate"
-                android:layout_width="67dp"
-                android:layout_height="wrap_content"
-                android:text="@string/DayTitle"
-                android:textColor="@color/colorAccent"
-                android:textSize="24sp" />
-
-            <Spinner
-                android:id="@+id/spinnerDay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:spinnerMode="dialog"
-                android:textSize="18sp" />
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <TextView
-                android:id="@+id/titleFrom"
-                android:layout_width="69dp"
-                android:layout_height="wrap_content"
-                android:text="@string/from"
-                android:textColor="@color/colorAccent"
-                android:textSize="24sp" />
-
-            <EditText
-                android:id="@+id/timePickerFrom"
-                android:layout_width="111dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.33"
-                android:clickable="false"
-                android:cursorVisible="false"
-                android:focusable="false"
-                android:focusableInTouchMode="false" />
-
-
-            <TextView
-                android:id="@+id/titleTo"
-                android:layout_width="48dp"
-                android:layout_height="wrap_content"
-                android:text="@string/to"
-                android:textColor="@color/colorAccent"
-                android:textSize="24sp" />
-
-            <EditText
-                android:id="@+id/timePickerTo"
-                android:layout_width="104dp"
-                android:layout_height="wrap_content"
-                android:clickable="false"
-                android:cursorVisible="false"
-                android:focusable="false"
-                android:focusableInTouchMode="false" />
-
-
-        </LinearLayout>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:weightSum="1">
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/titleDate"
+            android:layout_width="67dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:ems="10"
-            android:text="@string/TeacherTitle"
+            android:text="@string/DayTitle"
             android:textColor="@color/colorAccent"
             android:textSize="24sp" />
 
         <Spinner
-            android:id="@+id/spinnerTeacher"
+            android:id="@+id/spinnerDay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
             android:spinnerMode="dialog"
             android:textSize="18sp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:weightSum="1">
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/titleFrom"
+            android:layout_width="69dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:ems="10"
-            android:text="@string/StudentsNavigation"
+            android:text="@string/from"
             android:textColor="@color/colorAccent"
             android:textSize="24sp" />
 
-        <ListView
-            android:id="@+id/listViewStudents"
-            android:layout_width="match_parent"
+        <EditText
+            android:id="@+id/timePickerFrom"
+            android:layout_width="111dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp" />
+            android:layout_weight="0.33"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+
+        <TextView
+            android:id="@+id/titleTo"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:text="@string/to"
+            android:textColor="@color/colorAccent"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/timePickerTo"
+            android:layout_width="104dp"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
 
     </LinearLayout>
 
-</android.support.v4.widget.NestedScrollView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:text="@string/TeacherTitle"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp" />
+
+    <Spinner
+        android:id="@+id/spinnerTeacher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:spinnerMode="dialog"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+
+        android:ems="10"
+        android:text="@string/StudentsNavigation"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp" />
+
+    <ListView
+        android:id="@+id/listViewStudents"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp" />
+
+
+</LinearLayout>

@@ -96,6 +96,33 @@ public class DBStudent {
 
     }
 
+    public ArrayList<Student> getStudentsListNotInLecture(int idLecture) {
+        SQLiteDatabase sql = db.getWritableDatabase();
+
+        ArrayList<Student> studentsList = new ArrayList<Student>();
+
+        String selectQuery = "SELECT " + db.getLECTURESTUDENT_FKSTUDENT() + " FROM " + db.getTableLecturestudent() + " WHERE " + db.getLECTURESTUDENT_FKLECTURE() + " != " + idLecture;
+
+        Cursor cursor = sql.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Student student = getStudentById(Integer.parseInt(cursor.getString(0)));
+
+                // Adding student to list
+                studentsList.add(student);
+            } while (cursor.moveToNext());
+        }
+
+        sql.close();
+
+
+        // return teacher
+        return studentsList;
+
+    }
+
     public ArrayList<Student> getAllStudents() {
 
         SQLiteDatabase sql = db.getWritableDatabase();
