@@ -19,7 +19,7 @@
 
     <EditText
         android:id="@+id/editTxtName"
-        android:layout_width="343dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/hintName"
@@ -27,9 +27,8 @@
 
     <EditText
         android:id="@+id/editTxtDescription"
-        android:layout_width="344dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="@string/DescriptionTitle"
@@ -55,7 +54,6 @@
             android:id="@+id/spinnerDay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
             android:spinnerMode="dialog"
             android:textSize="18sp" />
     </LinearLayout>
@@ -65,6 +63,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginRight="16dp"
         android:orientation="horizontal"
         android:weightSum="1">
 
@@ -109,7 +108,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="20dp"
         android:ems="10"
         android:text="@string/TeacherTitle"
@@ -120,15 +119,12 @@
         android:id="@+id/spinnerTeacher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
         android:spinnerMode="dialog"
         android:textSize="18sp" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
 
         android:ems="10"
@@ -140,7 +136,6 @@
         android:id="@+id/listViewStudents"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
         android:layout_marginTop="20dp" />
 
 

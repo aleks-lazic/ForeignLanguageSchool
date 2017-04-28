@@ -27,6 +27,7 @@
             android:id="@+id/activity_assignment_edit_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
             android:ems="10"
             android:hint="@string/hintTitle"
             android:inputType="textPersonName" />
@@ -35,7 +36,7 @@
             android:id="@+id/activity_assignment_edit_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="20dp"
             android:ems="10"
             android:hint="@string/DescriptionTitle"
@@ -45,7 +46,7 @@
             android:id="@+id/datePicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="20dp"
             android:hint="@string/DueDateTitle"
             android:clickable="false"
@@ -56,7 +57,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="20dp"
             android:ems="10"
             android:text="@string/TeachersNavigation"
@@ -67,7 +68,7 @@
             android:id="@+id/spinnerTeacher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="20dp"
             android:spinnerMode="dialog"
             android:textSize="18sp" />
