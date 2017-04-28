@@ -10,6 +10,8 @@ import java.util.List;
 
 import ch.hes.foreignlanguageschool.DAO.Student;
 
+import static android.R.attr.id;
+
 /**
  * Created by patrickclivaz on 11.04.17.
  */
@@ -97,21 +99,27 @@ public class DBStudent {
     }
 
     public ArrayList<Student> getStudentsListNotInLecture(int idLecture) {
+
+
+        ArrayList<Student> studentsList = new ArrayList<>();
+
         SQLiteDatabase sql = db.getWritableDatabase();
 
-        ArrayList<Student> studentsList = new ArrayList<Student>();
-
-        String selectQuery = "SELECT " + db.getLECTURESTUDENT_FKSTUDENT() + " FROM " + db.getTableLecturestudent() + " WHERE " + db.getLECTURESTUDENT_FKLECTURE() + " != " + idLecture;
+        String selectQuery = "SELECT " + db.getLECTURESTUDENT_FKSTUDENT() + " FROM " + db.getTableLecturestudent() +
+                " WHERE " + db.getLECTURESTUDENT_FKSTUDENT() + " NOT IN" +
+                " (SELECT " + db.getLECTURESTUDENT_FKSTUDENT() +
+                " FROM " + db.getTableLecturestudent() +
+                " WHERE " + db.getLECTURESTUDENT_FKLECTURE() + " = " + idLecture+")";
 
         Cursor cursor = sql.rawQuery(selectQuery, null);
+
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
                 Student student = getStudentById(Integer.parseInt(cursor.getString(0)));
-
-                // Adding student to list
                 studentsList.add(student);
+                // Adding student to list
             } while (cursor.moveToNext());
         }
 
@@ -144,7 +152,7 @@ public class DBStudent {
                 student.setMail(cursor.getString(5));
                 student.setStartDate(cursor.getString(6));
                 student.setEndDate(cursor.getString(7));
-                student.setImageName(cursor.getString((8)));
+                student.setImageName(cursor.getString(8));
 
                 // Adding student to list
                 studentsList.add(student);

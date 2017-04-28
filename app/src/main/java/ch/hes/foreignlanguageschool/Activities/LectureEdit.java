@@ -119,7 +119,6 @@ public class LectureEdit extends AppCompatActivity {
             teachers = dbTeacher.getAllTeachers();
             adapterTeacher = new ArrayAdapter<Teacher>(this, android.R.layout.simple_spinner_dropdown_item, teachers);
             spinnerTeacher.setAdapter(adapterTeacher);
-
             teacher = lecture.getTeacher();
             setDefaultValueSpinner(spinnerTeacher, teacher.getId());
 
@@ -128,7 +127,6 @@ public class LectureEdit extends AppCompatActivity {
             days = dbDay.getAllDays();
             adapterDay = new ArrayAdapter<Day>(this, android.R.layout.simple_spinner_dropdown_item, days);
             spinnerDays.setAdapter(adapterDay);
-
             day = dbDay.getDayById(lecture.getIdDay());
             setDefaultValueSpinner(spinnerDays, day.getId());
 
@@ -137,32 +135,37 @@ public class LectureEdit extends AppCompatActivity {
             adapterStudent = new ArrayAdapter<Student>(this, android.R.layout.simple_list_item_multiple_choice, students);
             listViewStudents.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
             listViewStudents.setAdapter(adapterStudent);
+        } else {
+
+
+            //set days spinner
+            days = dbDay.getAllDays();
+            adapterDay = new ArrayAdapter<Day>(this, android.R.layout.simple_spinner_dropdown_item, days);
+            spinnerDays.setAdapter(adapterDay);
+
+
+            onFocusListenerForTitleAndDescription();
+
+            createTimePicker();
+
+
+            //Fill in spinner with all teachers
+            teachers = dbTeacher.getAllTeachers();
+            adapterTeacher = new ArrayAdapter<Teacher>(this, android.R.layout.simple_spinner_dropdown_item, teachers);
+            spinnerTeacher.setAdapter(adapterTeacher);
+
+
+            //Fill in the listview with all students
+            students = dbStudent.getAllStudents();
+
+            adapterStudent = new ArrayAdapter<Student>(this, android.R.layout.simple_list_item_multiple_choice, students);
+            listViewStudents.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+            listViewStudents.setAdapter(adapterStudent);
+
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         }
 
-        //set days spinner
-        days = dbDay.getAllDays();
-        adapterDay = new ArrayAdapter<Day>(this, android.R.layout.simple_spinner_dropdown_item, days);
-        spinnerDays.setAdapter(adapterDay);
-
-
-        onFocusListenerForTitleAndDescription();
-
-        createTimePicker();
-
-
-        //Fill in spinner with all teachers
-        teachers = dbTeacher.getAllTeachers();
-        adapterTeacher = new ArrayAdapter<Teacher>(this, android.R.layout.simple_spinner_dropdown_item, teachers);
-        spinnerTeacher.setAdapter(adapterTeacher);
-
-
-        //Fill in the listview with all students
-        students = dbStudent.getAllStudents();
-        adapterStudent = new ArrayAdapter<Student>(this, android.R.layout.simple_list_item_multiple_choice, students);
-        listViewStudents.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        listViewStudents.setAdapter(adapterStudent);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
@@ -366,10 +369,10 @@ public class LectureEdit extends AppCompatActivity {
         });
     }
 
-    public void setDefaultValueSpinner(final Spinner spinner, final int id){
+    public void setDefaultValueSpinner(final Spinner spinner, final int id) {
         spinner.post(new Runnable() {
             public void run() {
-                spinner.setSelection(id-1);
+                spinner.setSelection(id - 1);
             }
         });
     }
