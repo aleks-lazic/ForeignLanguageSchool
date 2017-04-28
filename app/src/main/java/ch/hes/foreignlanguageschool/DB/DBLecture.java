@@ -283,7 +283,7 @@ public class DBLecture {
 
     public void deleteLecture(int idLecture) {
         deleteLectureById(idLecture);
-        deleteStudentsFromLecture(idLecture);
+        deleteLectureFromLectureStudent(idLecture);
         deleteDayFromLecture(idLecture);
     }
 
@@ -296,10 +296,9 @@ public class DBLecture {
                 new String[]{String.valueOf(idLecture)});
         sql.close();
 
-        deleteStudentsFromLecture(idLecture);
     }
 
-    private void deleteStudentsFromLecture(int idLecture) {
+    private void deleteLectureFromLectureStudent(int idLecture) {
         SQLiteDatabase sql = db.getWritableDatabase();
 
         sql.delete(db.getTableLecturestudent(), db.getLECTURESTUDENT_FKLECTURE() + " = ?",

@@ -141,4 +141,29 @@ public class DBTeacher {
         // return teachers list
         return teachersList;
     }
+
+
+    //we don't want to delete a teacher
+
+//    public void deleteTeacher(int idTeacher) {
+//        deleteTeacherById(idTeacher);
+//        deleteAllAssignmentsByIdTeacher(idTeacher);
+//    }
+//
+//    private void deleteTeacherById(int idTeacher) {
+//        SQLiteDatabase sql = db.getWritableDatabase();
+//
+//        sql.delete(db.getTableTeacher(), db.getKeyId() + " = ?",
+//                new String[]{String.valueOf(idTeacher)});
+//        sql.close();
+//    }
+//
+//    private void deleteAllAssignmentsByIdTeacher(int idTeacher) {
+//
+//        SQLiteDatabase sql = db.getWritableDatabase();
+//
+//        sql.delete(db.getTableAssignement(), db.getASSIGNMENT_FKTEACHER() + " = ?",
+//                new String[]{String.valueOf(idTeacher)});
+//        sql.close();
+//    }
 }

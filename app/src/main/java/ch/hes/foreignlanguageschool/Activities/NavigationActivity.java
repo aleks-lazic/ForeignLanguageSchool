@@ -117,8 +117,6 @@ public class NavigationActivity extends AppCompatActivity
     }
 
 
-
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -248,7 +246,7 @@ public class NavigationActivity extends AppCompatActivity
         getSupportActionBar().setTitle(activityTitles[navItemIndex]);
     }
 
-    public void addToDatabase(){
+    public void addToDatabase() {
         //Don't delete for the moment
         this.deleteDatabase("DBForeignSchool");
 
@@ -297,6 +295,7 @@ public class NavigationActivity extends AppCompatActivity
         dbAssignment = new DBAssignment(databaseHelper);
         dbAssignment.insertValues("Correction IT exams", null, currentDate, dbTeacher.getTeacherById(4).getId());
         dbAssignment.insertValues("Prepare English course", "Organize the presentations", currentDate, dbTeacher.getTeacherById(1).getId());
+
 
         //adding students to lecture
         dbLecture.addStudentToLecture(1, 1);
