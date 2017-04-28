@@ -63,12 +63,14 @@
             android:textColor="@color/colorAccent"
             android:textSize="24sp" />
 
-        <ListView
-            android:id="@+id/listViewTeachers"
+        <Spinner
+            android:id="@+id/spinnerTeacher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="20dp"
+            android:spinnerMode="dialog"
+            android:textSize="18sp" />
 
     </LinearLayout>
 

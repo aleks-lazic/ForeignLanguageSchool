@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ch.hes.foreignlanguageschool.DAO.Assignment;
 import ch.hes.foreignlanguageschool.DAO.Lecture;
@@ -75,7 +76,17 @@ public class AssignmentActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        finish();
+        int id = item.getItemId();
+
+        if (id == R.id.action_delete) {
+            dbAssignment.deleteAssignmentById(assignment.getId());
+            finish();
+            Toast toast = Toast.makeText(this, assignment.toString() + " " + getResources().getString(R.string.Assignment) + " " + getResources().getString(R.string.DeletedSuccess), Toast.LENGTH_SHORT);
+            toast.show();
+        } else{
+            finish();
+            return true;
+        }
         return true;
     }
 
@@ -91,8 +102,5 @@ public class AssignmentActivity extends AppCompatActivity {
     @Override
     public void onRestart() {
         super.onRestart();
-
-
-
     }
 }

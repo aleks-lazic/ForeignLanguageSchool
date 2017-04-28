@@ -5,7 +5,7 @@
     <string name="CalendarNavigation">Calendrier</string>
     <string name="LecturesNavigation">Cours</string>
     <string name="SettingsNavigation">Options</string>
-    <string name="StudentsNavigation">Elèves</string>
+    <string name="StudentsNavigation">Etudiants</string>
     <string name="TeachersNavigation">Professeurs</string>
     <string name="action_settings">Options</string>
     <string name="TeacherTitle">Professeur</string>
@@ -38,4 +38,13 @@
     <string name="hintTitle">Titre</string>
     <string name="hintName">Nom</string>
     <string name="StartDateTitle">Date de début</string>
+    <string name="delete">Supprimer</string>
+    <string name="more">Plus</string>
+    <string name="DeletedSuccess">correctement supprimé</string>
+    <string name="HourAlert">Veuillez remplir les heures</string>
+    <string name="TimeAlert">L\'heure de fin doit être après l\'heure de début</string>
+    <string name="StudentAlert">Sélectionnez au moins un étudiant</string>
+    <string name="SelectTime">Sélectionnez une heure</string>
+    <string name="SelectDate">Sélectionnez une date</string>
+    <string name="TitleAlert">Un titre est requis</string>
 </resources>
