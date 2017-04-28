@@ -74,7 +74,7 @@ public class DBTeacher {
         SQLiteDatabase sql = db.getReadableDatabase();
 
         ArrayList<Teacher> teachersList = new ArrayList<Teacher>();
-        String selectQuery = "SELECT * FROM " + db.getTableTeacher() + " ORDER BY " + db.getTEACHER_FIRSTNAME() + ", " + db.getTEACHER_LASTNAME();
+        String selectQuery = "SELECT * FROM " + db.getTableTeacher();
 
         Cursor cursor = sql.rawQuery(selectQuery, null);
 

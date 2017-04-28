@@ -122,7 +122,7 @@ public class DBLecture {
                 lecture.setTeacher(teacher.getTeacherById(Integer.parseInt(cursor.getString(4))));
                 lecture.setIdDay(Integer.parseInt(cursor.getString(5)));
                 lecture.setStartTime(cursor.getString(6));
-                lecture.setStartTime(cursor.getString(7));
+                lecture.setEndTime(cursor.getString(7));
 
                 // Adding lecture to list
                 lecturesList.add(lecture);
@@ -220,7 +220,7 @@ public class DBLecture {
                 lecture.setTeacher(teacher.getTeacherById(Integer.parseInt(cursor.getString(4))));
                 lecture.setIdDay(Integer.parseInt(cursor.getString(5)));
                 lecture.setStartTime(cursor.getString(6));
-                lecture.setStartTime(cursor.getString(7));
+                lecture.setEndTime(cursor.getString(7));
 
                 // Adding lecture to list
                 lecturesList.add(lecture);
@@ -322,7 +322,7 @@ public class DBLecture {
                 lecture.setTeacher(teacher.getTeacherById(Integer.parseInt(cursor.getString(4))));
                 lecture.setIdDay(Integer.parseInt(cursor.getString(5)));
                 lecture.setStartTime(cursor.getString(6));
-                lecture.setStartTime(cursor.getString(7));
+                lecture.setEndTime(cursor.getString(7));
 
                 // Adding lecture to list
                 lecturesList.add(lecture);

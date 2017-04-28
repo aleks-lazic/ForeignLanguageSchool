@@ -109,7 +109,6 @@ public class LectureEdit extends AppCompatActivity {
             editTxtTimePickerFrom.setText(lecture.getStartTime());
             editTxtTimePickerTo.setText(lecture.getEndTime());
 
-
             //onFocus for title and description
             onFocusListenerForTitleAndDescription();
 
@@ -122,8 +121,7 @@ public class LectureEdit extends AppCompatActivity {
             spinnerTeacher.setAdapter(adapterTeacher);
 
             teacher = lecture.getTeacher();
-            int position = adapterTeacher.getPosition(teacher);
-            spinnerTeacher.setSelection(position);
+            setDefaultValueSpinner(spinnerTeacher, teacher.getId());
 
 
             //create spinnerDay and set default position
@@ -132,8 +130,7 @@ public class LectureEdit extends AppCompatActivity {
             spinnerDays.setAdapter(adapterDay);
 
             day = dbDay.getDayById(lecture.getIdDay());
-            position = adapterDay.getPosition(day);
-            spinnerDays.setSelection(position);
+            setDefaultValueSpinner(spinnerDays, day.getId());
 
             //set listview
             students = dbStudent.getStudentsListNotInLecture(lecture.getId());
@@ -363,6 +360,14 @@ public class LectureEdit extends AppCompatActivity {
                 if (!hasFocus) {
                     hideKeyBoard(v);
                 }
+            }
+        });
+    }
+
+    public void setDefaultValueSpinner(final Spinner spinner, final int id){
+        spinner.post(new Runnable() {
+            public void run() {
+                spinner.setSelection(id-1);
             }
         });
     }
