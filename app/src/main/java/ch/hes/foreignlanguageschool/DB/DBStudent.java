@@ -96,42 +96,6 @@ public class DBStudent {
 
     }
 
-
-    public ArrayList<Student> getAllStudentsOrderById() {
-
-        SQLiteDatabase sql = db.getWritableDatabase();
-
-        ArrayList<Student> studentsList = new ArrayList<Student>();
-        String selectQuery = "SELECT * FROM " + db.getTableStudent() + " ORDER BY " + db.getKeyId();
-
-        Cursor cursor = sql.rawQuery(selectQuery, null);
-
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                Student student = new Student();
-                student.setId(Integer.parseInt(cursor.getString(0)));
-                student.setFirstName(cursor.getString(1));
-                student.setLastName(cursor.getString(2));
-                student.setAddress(cursor.getString(3));
-                student.setCountry(cursor.getString(4));
-                student.setMail(cursor.getString(5));
-                student.setStartDate(cursor.getString(6));
-                student.setEndDate(cursor.getString(7));
-                student.setImageName(cursor.getString((8)));
-
-                // Adding student to list
-                studentsList.add(student);
-            } while (cursor.moveToNext());
-        }
-
-
-        sql.close();
-
-        // return students list
-        return studentsList;
-    }
-
     public ArrayList<Student> getAllStudents() {
 
         SQLiteDatabase sql = db.getWritableDatabase();

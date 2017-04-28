@@ -39,7 +39,7 @@ public class DBTeacher {
     }
 
     public Teacher getTeacherById(int idTeacher) {
-        SQLiteDatabase sql = db.getWritableDatabase();
+        SQLiteDatabase sql = db.getReadableDatabase();
 
         Teacher teacher = new Teacher();
         String selectQuery = "SELECT "
@@ -69,51 +69,9 @@ public class DBTeacher {
         return teacher;
     }
 
-    public Teacher getTeacherByName(String name) {
-
-        String firstname = "";
-        String lastname = "";
-
-        if (name.contains(" ")) {
-            firstname = name.substring(0, name.indexOf(" "));
-            lastname = name.substring((name.indexOf(" ") + 1), name.length());
-        }
-
-        SQLiteDatabase sql = db.getWritableDatabase();
-
-        Teacher teacher = new Teacher();
-        String selectQuery = "SELECT "
-                + db.getKeyId() + ", "
-                + db.getTEACHER_FIRSTNAME() + ", "
-                + db.getTEACHER_LASTNAME() + ", "
-                + db.getTEACHER_MAIL() + ", "
-                + db.getIMAGE_NAME() +
-                " FROM " + db.getTableTeacher() +
-                " WHERE " + db.getTEACHER_FIRSTNAME() + " = " + "'" + firstname + "'" +
-                " AND " + db.getSTUDENT_LASTNAME() + " = " + "'" + lastname + "'";
-
-        Cursor cursor = sql.rawQuery(selectQuery, null);
-
-        if (cursor != null) {
-            cursor.moveToFirst();
-        }
-
-
-        teacher.setId(Integer.parseInt(cursor.getString(0)));
-        teacher.setFirstName(cursor.getString(1));
-        teacher.setLastName(cursor.getString(2));
-        teacher.setMail(cursor.getString(3));
-        teacher.setImageName(cursor.getString(4));
-
-        sql.close();
-
-        // return teacher
-        return teacher;
-    }
-
     public ArrayList<Teacher> getAllTeachers() {
 
-        SQLiteDatabase sql = db.getWritableDatabase();
+        SQLiteDatabase sql = db.getReadableDatabase();
 
         ArrayList<Teacher> teachersList = new ArrayList<Teacher>();
         String selectQuery = "SELECT * FROM " + db.getTableTeacher() + " ORDER BY " + db.getTEACHER_FIRSTNAME() + ", " + db.getTEACHER_LASTNAME();
