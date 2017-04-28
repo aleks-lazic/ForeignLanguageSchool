@@ -182,6 +182,7 @@ public class LectureEdit extends AppCompatActivity {
         if (id == R.id.save_lecture) {
 
             if (!checkEverythingOnSaveClick()) {
+
                 return super.onOptionsItemSelected(item);
             }
 
@@ -230,7 +231,7 @@ public class LectureEdit extends AppCompatActivity {
 
     public boolean checkEndTimeAfterStartTime(int fromTime, int endTime) {
         if (fromTime > endTime) {
-            Toast toast = Toast.makeText(this, "End Time must be after Start Time", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, " " + getResources().getString(R.string.TimeAlert), Toast.LENGTH_SHORT);
             toast.show();
             return false;
         }
@@ -240,7 +241,7 @@ public class LectureEdit extends AppCompatActivity {
 
     public boolean checkTitleFilled(String title) {
         if (title.trim().equals("")) {
-            txtTitle.setError("Title is required!");
+            txtTitle.setError(getResources().getString(R.string.TitleAlert));
             return false;
         }
         return true;
@@ -248,12 +249,12 @@ public class LectureEdit extends AppCompatActivity {
 
     public boolean checkFromTimeAndEndTimeFilled(String fromTime, String endTime) {
         if (fromTime.trim().equals("")) {
-            editTxtTimePickerFrom.setError("Title is required!");
+            editTxtTimePickerFrom.setError(getResources().getString(R.string.HourAlert));
             return false;
         }
 
         if (endTime.trim().equals("")) {
-            editTxtTimePickerTo.setError("Title is required!");
+            editTxtTimePickerTo.setError(getResources().getString(R.string.HourAlert));
             return false;
         }
 
@@ -262,7 +263,7 @@ public class LectureEdit extends AppCompatActivity {
 
     public boolean checkSizeSelectedStudents(int size) {
         if (size == 0) {
-            Toast toast = Toast.makeText(this, "Please select minimum 1 student", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, " " + getResources().getString(R.string.StudentAlert), Toast.LENGTH_SHORT);
             toast.show();
             return false;
         }
@@ -286,7 +287,7 @@ public class LectureEdit extends AppCompatActivity {
                         editTxtTimePickerFrom.setText(selectedHour + ":" + selectedMinute);
                     }
                 }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
+                mTimePicker.setTitle(getResources().getString(R.string.SelectTime));
                 mTimePicker.show();
             }
         });
@@ -306,7 +307,7 @@ public class LectureEdit extends AppCompatActivity {
                         editTxtTimePickerTo.setText(selectedHour + ":" + selectedMinute);
                     }
                 }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
+                mTimePicker.setTitle(getResources().getString(R.string.SelectTime));
                 mTimePicker.show();
             }
         });
@@ -319,6 +320,7 @@ public class LectureEdit extends AppCompatActivity {
         }
 
         if (!checkFromTimeAndEndTimeFilled(editTxtTimePickerFrom.getText().toString(), editTxtTimePickerTo.getText().toString())) {
+
             return false;
 
         }
