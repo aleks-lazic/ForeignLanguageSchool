@@ -2,20 +2,28 @@ package ch.hes.foreignlanguageschool.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
+import ch.hes.foreignlanguageschool.Adapters.CustomAdapterLecture;
 import ch.hes.foreignlanguageschool.DAO.Student;
 import ch.hes.foreignlanguageschool.DB.DBStudent;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
+
+import static android.R.attr.description;
 
 
 public class StudentActivity extends AppCompatActivity {
@@ -28,12 +36,19 @@ public class StudentActivity extends AppCompatActivity {
     private TextView mail;
     private TextView startDate;
     private TextView endDate;
+    private ListView listView_lectures;
+
+    private CustomAdapterLecture adapterLecture;
+
+    private Toolbar toolbar;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
@@ -43,29 +58,34 @@ public class StudentActivity extends AppCompatActivity {
         dbStudent = new DBStudent(db);
 
         student = (Student) intent.getSerializableExtra("student");
-        setTitle(student.getFirstName()+" "+student.getLastName());
+        setTitle(student.getMail());
 
-        address = (TextView)findViewById(R.id.student_address);
+        address = (TextView) findViewById(R.id.student_address);
 
         address.setText(student.getAddress());
 
-        country = (TextView)findViewById(R.id.student_country);
+        country = (TextView) findViewById(R.id.student_country);
 
         country.setText(student.getCountry());
 
-        mail = (TextView)findViewById(R.id.student_mail);
+        mail = (TextView) findViewById(R.id.student_mail);
 
         mail.setText(student.getMail());
 
-        startDate = (TextView)findViewById(R.id.student_startdate);
+        startDate = (TextView) findViewById(R.id.student_startdate);
 
         startDate.setText(student.getStartDate());
 
-        endDate = (TextView)findViewById(R.id.student_enddate);
+        endDate = (TextView) findViewById(R.id.student_enddate);
 
         endDate.setText(student.getEndDate());
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_student);
+        //get lectures list and set it
+        listView_lectures = (ListView) findViewById(R.id.student_list_lectures);
+        adapterLecture = new CustomAdapterLecture(this, student.getLecturesList());
+        listView_lectures.setAdapter(adapterLecture);
+
+        fab = (FloatingActionButton) findViewById(R.id.fab_student);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,6 +94,7 @@ public class StudentActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -86,7 +107,7 @@ public class StudentActivity extends AppCompatActivity {
             finish();
             Toast toast = Toast.makeText(this, student.toString() + " " + getResources().getString(R.string.Student) + " " + getResources().getString(R.string.DeletedSuccess), Toast.LENGTH_SHORT);
             toast.show();
-        } else{
+        } else {
             finish();
             return true;
         }
@@ -108,4 +129,24 @@ public class StudentActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateDisplay();
+    }
+
+    public void updateDisplay() {
+        student = dbStudent.getStudentById(student.getId());
+        address.setText(student.getAddress());
+        country.setText(student.getCountry());
+        mail.setText(student.getMail());
+        startDate.setText(student.getStartDate());
+        endDate.setText(student.getEndDate());
+
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        collapsingToolbarLayout.setTitle(student.toString());
+
+    }
+
 }

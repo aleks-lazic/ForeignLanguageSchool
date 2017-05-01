@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import ch.hes.foreignlanguageschool.DAO.Teacher;
 import ch.hes.foreignlanguageschool.DB.DBAssignment;
 import ch.hes.foreignlanguageschool.DB.DBDay;
 import ch.hes.foreignlanguageschool.DB.DBLecture;
@@ -28,7 +29,6 @@ import ch.hes.foreignlanguageschool.Fragments.CalendarFragment;
 import ch.hes.foreignlanguageschool.Fragments.LecturesFragment;
 import ch.hes.foreignlanguageschool.Fragments.SettingsFragment;
 import ch.hes.foreignlanguageschool.Fragments.StudentsFragment;
-import ch.hes.foreignlanguageschool.Fragments.TeachersFragment;
 import ch.hes.foreignlanguageschool.Fragments.TodayFragment;
 import ch.hes.foreignlanguageschool.R;
 
@@ -41,7 +41,7 @@ public class NavigationActivity extends AppCompatActivity
     public final String TAG_ASSIGNMENTS = "Assignments";
     public final String TAG_LECTURES = "Lectures";
     public final String TAG_STUDENTS = "Students";
-    public final String TAG_TEACHERS = "Teachers";
+//    public final String TAG_TEACHERS = "Teachers";
     public final String TAG_SETTINGS = "Settings";
 
     public String CURRENT_TAG = "";
@@ -54,7 +54,6 @@ public class NavigationActivity extends AppCompatActivity
 
     private DrawerLayout drawer;
     private NavigationView navigationView;
-    private FloatingActionButton fab;
     private Toolbar toolbar;
     private Handler mHandler;
 
@@ -66,12 +65,17 @@ public class NavigationActivity extends AppCompatActivity
     private DBStudent dbStudent;
     private DBTeacher dbTeacher;
 
+    public static Teacher currentTeacher;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
 
         addToDatabase();
+
+        //create the current teacher like if it was in a database
+        currentTeacher = Teacher.getInstance(databaseHelper, 1);
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -135,9 +139,9 @@ public class NavigationActivity extends AppCompatActivity
         } else if (id == R.id.nav_students) {
             navItemIndex = 4;
             CURRENT_TAG = TAG_STUDENTS;
-        } else if (id == R.id.nav_teachers) {
-            navItemIndex = 5;
-            CURRENT_TAG = TAG_TEACHERS;
+//        } else if (id == R.id.nav_teachers) {
+//            navItemIndex = 5;
+//            CURRENT_TAG = TAG_TEACHERS;
         } else if (id == R.id.nav_settings) {
             CURRENT_TAG = TAG_SETTINGS;
             navItemIndex = 6;
@@ -222,10 +226,10 @@ public class NavigationActivity extends AppCompatActivity
                 // students
                 StudentsFragment studentsFragment = new StudentsFragment();
                 return studentsFragment;
-            case 5:
-                // teachers
-                TeachersFragment teachersFragment = new TeachersFragment();
-                return teachersFragment;
+//            case 5:
+//                // teachers
+//                TeachersFragment teachersFragment = new TeachersFragment();
+//                return teachersFragment;
             case 6:
                 // settings
                 SettingsFragment settingsFragment = new SettingsFragment();
@@ -252,11 +256,7 @@ public class NavigationActivity extends AppCompatActivity
 
         //adding teachers
         dbTeacher = new DBTeacher(databaseHelper);
-        dbTeacher.insertValues("Alexandre", "Cotting", "alexandre.cotting@hevs.ch");
-        dbTeacher.insertValues("Jean-Claude", "Rey", "j-c.rey@hotmail.com");
-        dbTeacher.insertValues("Michel", "Favre", "michel.favre@gmail.com");
-        dbTeacher.insertValues("Predrag", "Ljubicic", "pedjo.ljubo@mail.srb");
-        dbTeacher.insertValues("Frédéric", "Bonvin", "fred.bonvin@mail.ch");
+        dbTeacher.insertValues("Predrag", "Ljubicic", "predrag.ljubicic@gmail.srb");
 
         //adding days
         dbDay = new DBDay(databaseHelper);
@@ -270,7 +270,7 @@ public class NavigationActivity extends AppCompatActivity
         //adding lectures
         dbLecture = new DBLecture(databaseHelper);
         dbLecture.insertValues("English", "English advanced course", dbTeacher.getTeacherById(1).getId());
-        dbLecture.insertValues("Written Communication", "Written communication course for beginners", dbTeacher.getTeacherById(2).getId());
+        dbLecture.insertValues("Written Communication", "Written communication course for beginners", dbTeacher.getTeacherById(1).getId());
 
         //adding students
         dbStudent = new DBStudent(databaseHelper);
@@ -284,7 +284,7 @@ public class NavigationActivity extends AppCompatActivity
 
         //adding assignments
         dbAssignment = new DBAssignment(databaseHelper);
-        dbAssignment.insertValues("Correction IT exams", null, currentDate, dbTeacher.getTeacherById(4).getId());
+        dbAssignment.insertValues("Correction IT exams", null, currentDate, dbTeacher.getTeacherById(1).getId());
         dbAssignment.insertValues("Prepare English course", "Organize the presentations", currentDate, dbTeacher.getTeacherById(1).getId());
 
 
@@ -297,12 +297,10 @@ public class NavigationActivity extends AppCompatActivity
         dbLecture.addStudentToLecture(1, 2);
 
 
-
         //adding lectures to a date
         dbLecture.addDayAndHoursToLecture(1, 1, "08:30", "10:00");
         dbLecture.addDayAndHoursToLecture(2, 2, "08:30", "10:00");
 
     }
-
 
 }

@@ -70,7 +70,7 @@ public class DBAssignment {
     }
 
     public ArrayList<Assignment> getAllAssignmentsForSpecialDate(String date) {
-        SQLiteDatabase sql = db.getWritableDatabase();
+        SQLiteDatabase sql = db.getReadableDatabase();
 
         ArrayList<Assignment> assignmentsList = new ArrayList<Assignment>();
         String selectQuery = "SELECT *"
@@ -105,6 +105,35 @@ public class DBAssignment {
 
     }
 
+    public Assignment getAssignmentById(int idAssignment) {
+
+        SQLiteDatabase sql = db.getReadableDatabase();
+
+        String selectQuery = "SELECT *"
+                + " FROM " + db.getTableAssignement()
+                + " WHERE " + db.getKeyId() + " = " + idAssignment;
+
+        Cursor cursor = sql.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        Assignment assignment = new Assignment();
+        assignment.setId(Integer.parseInt(cursor.getString(0)));
+        assignment.setTitle(cursor.getString(1));
+        assignment.setDescription(cursor.getString(2));
+        assignment.setDate(cursor.getString(3));
+        assignment.setImageName(cursor.getString(4));
+
+
+        sql.close();
+
+        return assignment;
+    }
+
     public void deleteAssignmentById(int idAssignment) {
 
         SQLiteDatabase sql = db.getWritableDatabase();
@@ -112,6 +141,20 @@ public class DBAssignment {
         sql.delete(db.getTableAssignement(), db.getKeyId() + " = ?",
                 new String[]{String.valueOf(idAssignment)});
         sql.close();
+
+    }
+
+    public int updateAssignmentById(int idAssignment, String title, String description, String date) {
+        SQLiteDatabase sql = db.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(db.getASSIGNMENT_TITLE(), title);
+        values.put(db.getASSIGNMENT_DESCRIPTION(), description);
+        values.put(db.getASSIGNMENT_DATE(), date);
+
+        return sql.update(db.getTableAssignement(), values, db.getKeyId() + " = ?",
+                new String[]{String.valueOf(idAssignment)});
 
     }
 }

@@ -109,7 +109,12 @@ public class StudentEdit extends AppCompatActivity {
             String startDate = editTxtDatePickerStart.getText().toString();
             String endDate = editTxtDatePickerEnd.getText().toString();
 
-            dbStudent.insertValues(firstname, lastname, address, country, mail, startDate, endDate);
+
+            if(student != null){
+                dbStudent.updateStudentById(student.getId(), firstname, lastname, address, country, mail, startDate, endDate);
+            }else{
+                dbStudent.insertValues(firstname, lastname, address, country, mail, startDate, endDate);
+            }
             finish();
         }
 

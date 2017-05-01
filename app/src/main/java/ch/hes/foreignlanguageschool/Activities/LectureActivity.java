@@ -2,6 +2,7 @@ package ch.hes.foreignlanguageschool.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,11 +17,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import ch.hes.foreignlanguageschool.Adapters.CustomAdapterStudent;
-import ch.hes.foreignlanguageschool.DAO.Day;
 import ch.hes.foreignlanguageschool.DAO.Lecture;
 import ch.hes.foreignlanguageschool.DAO.Student;
 import ch.hes.foreignlanguageschool.DB.DBDay;
 import ch.hes.foreignlanguageschool.DB.DBLecture;
+import ch.hes.foreignlanguageschool.DB.DBStudent;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
 
@@ -35,21 +36,23 @@ public class LectureActivity extends AppCompatActivity {
     private TextView endTime;
     private TextView day;
 
-    private Day dayLecture;
-
     private DatabaseHelper db;
     private DBLecture dbLecture;
     private DBDay dbDay;
+    private DBStudent dbStudent;
 
     private ArrayList<Student> students;
     private CustomAdapterStudent studentsAdapter;
+
+    private Toolbar toolbar;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lecture);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
@@ -66,6 +69,7 @@ public class LectureActivity extends AppCompatActivity {
         db = DatabaseHelper.getInstance(this);
         dbLecture = new DBLecture(db);
         dbDay = new DBDay(db);
+        dbStudent = new DBStudent(db);
 
         //set textviews
         setTitle(lecture.getName());
@@ -80,8 +84,6 @@ public class LectureActivity extends AppCompatActivity {
         //set the students from the lecture
         students = lecture.getStudentsList();
         studentsAdapter = new CustomAdapterStudent(this, students);
-
-//        ArrayAdapter adapter = new ArrayAdapter(this, android.R)
         listView_students.setAdapter(studentsAdapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.activity_lecture_fab);
@@ -106,7 +108,7 @@ public class LectureActivity extends AppCompatActivity {
             finish();
             Toast toast = Toast.makeText(this, lecture.toString() + " " + getResources().getString(R.string.Lecture) + " " + getResources().getString(R.string.DeletedSuccess), Toast.LENGTH_SHORT);
             toast.show();
-        } else{
+        } else {
             finish();
             return true;
         }
@@ -128,5 +130,28 @@ public class LectureActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateDisplay();
+    }
+
+    public void updateDisplay() {
+        lecture = dbLecture.getLectureByIdForUpdate(lecture.getId());
+        lecture.setStudentsList(dbStudent.getStudentsListByLecture(lecture.getId()));
+
+        description.setText(lecture.getDescription());
+        startTime.setText(lecture.getStartTime());
+        endTime.setText(lecture.getEndTime());
+        day.setText(dbDay.getDayById(lecture.getIdDay()).toString());
+        students = lecture.getStudentsList();
+        studentsAdapter = new CustomAdapterStudent(this, students);
+        listView_students.setAdapter(studentsAdapter);
+
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        collapsingToolbarLayout.setTitle(lecture.getName());
+
     }
 }

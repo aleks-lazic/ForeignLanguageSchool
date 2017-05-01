@@ -54,6 +54,8 @@ public class DBTeacher {
             cursor.moveToFirst();
         }
 
+        DBLecture dbLecture = new DBLecture(db);
+
 
         teacher.setId(Integer.parseInt(cursor.getString(0)));
         teacher.setFirstName(cursor.getString(1));
@@ -63,40 +65,43 @@ public class DBTeacher {
 
         sql.close();
 
+        teacher.setLecturesList(dbLecture.getLecturesForTeacher(idTeacher));
+
+
         // return teacher
         return teacher;
     }
 
-    public ArrayList<Teacher> getAllTeachers() {
-
-        SQLiteDatabase sql = db.getReadableDatabase();
-
-        ArrayList<Teacher> teachersList = new ArrayList<Teacher>();
-        String selectQuery = "SELECT * FROM " + db.getTableTeacher();
-
-        Cursor cursor = sql.rawQuery(selectQuery, null);
-
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                Teacher teacher = new Teacher();
-                teacher.setId(Integer.parseInt(cursor.getString(0)));
-                teacher.setFirstName(cursor.getString(1));
-                teacher.setLastName(cursor.getString(2));
-                teacher.setMail(cursor.getString(3));
-                teacher.setImageName(cursor.getString(4));
-
-                // Adding teacher to list
-                teachersList.add(teacher);
-            } while (cursor.moveToNext());
-        }
-
-        sql.close();
-
-
-        // return teachers list
-        return teachersList;
-    }
+//    public ArrayList<Teacher> getAllTeachers() {
+//
+//        SQLiteDatabase sql = db.getReadableDatabase();
+//
+//        ArrayList<Teacher> teachersList = new ArrayList<Teacher>();
+//        String selectQuery = "SELECT * FROM " + db.getTableTeacher();
+//
+//        Cursor cursor = sql.rawQuery(selectQuery, null);
+//
+//        // looping through all rows and adding to list
+//        if (cursor.moveToFirst()) {
+//            do {
+//                Teacher teacher = new Teacher();
+//                teacher.setId(Integer.parseInt(cursor.getString(0)));
+//                teacher.setFirstName(cursor.getString(1));
+//                teacher.setLastName(cursor.getString(2));
+//                teacher.setMail(cursor.getString(3));
+//                teacher.setImageName(cursor.getString(4));
+//
+//                // Adding teacher to list
+//                teachersList.add(teacher);
+//            } while (cursor.moveToNext());
+//        }
+//
+//        sql.close();
+//
+//
+//        // return teachers list
+//        return teachersList;
+//    }
 
 
     //we don't want to delete a teacher

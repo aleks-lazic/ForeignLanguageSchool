@@ -54,16 +54,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@string/TeachersNavigation"
+            android:text="@string/TeacherTitle"
             android:textColor="@color/colorAccent"
             android:textSize="20sp" />
 
-        <Spinner
-            android:id="@+id/spinnerTeacher"
+        <TextView
+            android:id="@+id/teacherName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:spinnerMode="dialog"
             android:textSize="18sp" />
 
     </LinearLayout>

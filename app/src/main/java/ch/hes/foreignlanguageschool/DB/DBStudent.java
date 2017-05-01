@@ -105,7 +105,7 @@ public class DBStudent {
                 " WHERE " + db.getLECTURESTUDENT_FKSTUDENT() + " NOT IN" +
                 " (SELECT " + db.getLECTURESTUDENT_FKSTUDENT() +
                 " FROM " + db.getTableLecturestudent() +
-                " WHERE " + db.getLECTURESTUDENT_FKLECTURE() + " = " + idLecture+")";
+                " WHERE " + db.getLECTURESTUDENT_FKLECTURE() + " = " + idLecture + ")";
 
         Cursor cursor = sql.rawQuery(selectQuery, null);
 
@@ -186,5 +186,24 @@ public class DBStudent {
         sql.close();
     }
 
+    public int updateStudentById(int idStudent, String firstName, String lastName, String address, String country, String mail, String startDate, String endDate) {
 
+        SQLiteDatabase sql = db.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(db.getSTUDENT_FIRSTNAME(), firstName);
+        values.put(db.getSTUDENT_LASTNAME(), lastName);
+        values.put(db.getSTUDENT_ADDRESS(), address);
+        values.put(db.getSTUDENT_COUNTRY(), country);
+        values.put(db.getSTUDENT_MAIL(), mail);
+        values.put(db.getSTUDENT_STARTDATE(), startDate);
+        values.put(db.getSTUDENT_ENDDATE(), endDate);
+
+
+        return sql.update(db.getTableStudent(),
+                values,
+                db.getKeyId() + " = ?",
+                new String[]{String.valueOf(idStudent)});
+
+    }
 }

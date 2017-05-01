@@ -91,6 +91,21 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp" />
 
+        <TextView
+            android:id="@+id/title_lectures"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/LecturesNavigation"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp" />
+
+        <ListView
+            android:id="@+id/student_list_lectures"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"></ListView>
+
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

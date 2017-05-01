@@ -12,6 +12,11 @@ import java.util.GregorianCalendar;
 import ch.hes.foreignlanguageschool.DAO.Lecture;
 import ch.hes.foreignlanguageschool.DAO.Student;
 
+import static android.R.attr.description;
+import static android.R.attr.end;
+import static android.R.attr.id;
+import static android.R.attr.name;
+
 /**
  * Created by patrickclivaz on 11.04.17.
  */
@@ -38,50 +43,150 @@ public class DBLecture {
         sql.close();
     }
 
+    public ArrayList<Lecture> getLecturesForTeacher(int idTeacher) {
+        SQLiteDatabase sql = db.getReadableDatabase();
+
+        ArrayList<Lecture> lecturesList = new ArrayList<Lecture>();
+        String selectQuery = "SELECT * "
+                + "FROM " + db.getTableLecture()
+                + " WHERE " + db.getLECTURE_FKTEACHER() + " = " + idTeacher;
+
+
+        Cursor cursor = sql.rawQuery(selectQuery, null);
+
+        DBTeacher teacher = new DBTeacher(db);
+        DBStudent student = new DBStudent(db);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Lecture lecture = new Lecture();
+                lecture.setId(Integer.parseInt(cursor.getString(0)));
+                lecture.setName(cursor.getString(1));
+                lecture.setDescription(cursor.getString(2));
+                lecture.setImageName(cursor.getString((3)));
+
+                // Adding lecture to list
+                lecturesList.add(lecture);
+            } while (cursor.moveToNext());
+        }
+
+        sql.close();
+
+
+        // return lectures list
+        return lecturesList;
+    }
+
+    public ArrayList<Lecture> getLecturesForStudent(int idStudent) {
+        SQLiteDatabase sql = db.getReadableDatabase();
+
+        ArrayList<Lecture> lecturesList = new ArrayList<Lecture>();
+        String selectQuery = "SELECT " + db.getLECTURESTUDENT_FKLECTURE()
+                + " FROM " + db.getTableLecturestudent()
+                + " WHERE " + db.getLECTURESTUDENT_FKSTUDENT() + " = " + idStudent;
+
+
+        Cursor cursor = sql.rawQuery(selectQuery, null);
+
+        DBTeacher teacher = new DBTeacher(db);
+        DBStudent student = new DBStudent(db);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Lecture lecture = getLectureById(Integer.parseInt(cursor.getString(0)));
+
+                // Adding lecture to list
+                lecturesList.add(lecture);
+            } while (cursor.moveToNext());
+        }
+
+        sql.close();
+
+
+        // return lectures list
+        return lecturesList;
+    }
+
+    public Lecture getLectureById(int idLecture) {
+
+        SQLiteDatabase sql = db.getReadableDatabase();
+
+        String selectQuery = "SELECT * "
+                + "FROM " + db.getTableLecture()
+                + " WHERE " + db.getKeyId() + " = " + idLecture;
+
+
+        Cursor cursor = sql.rawQuery(selectQuery, null);
+
+        DBTeacher teacher = new DBTeacher(db);
+
+        // looping through all rows and adding to list
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        Lecture lecture = new Lecture();
+        lecture.setId(Integer.parseInt(cursor.getString(0)));
+        lecture.setName(cursor.getString(1));
+        lecture.setDescription(cursor.getString(2));
+        lecture.setImageName(cursor.getString((3)));
+
+
+        sql.close();
+
+
+        // return lectures
+        return lecture;
+    }
+
+    public Lecture getLectureByIdForUpdate(int idLecture) {
+        SQLiteDatabase sql = db.getReadableDatabase();
+
+        ArrayList<Lecture> lecturesList = new ArrayList<Lecture>();
+        String selectQuery = "SELECT "
+                + db.getKeyId() + ", "
+                + db.getLECTURE_NAME() + ", "
+                + db.getLECTURE_DESCRIPTION() + ", "
+                + db.getIMAGE_NAME() + ", "
+                + db.getLECTURE_FKTEACHER() + ", "
+                + db.getLECTUREDATE_FKDAY() + ", "
+                + db.getLECTUREDATE_STARTTIME() + ", "
+                + db.getLECTUREDATE_ENDTIME() + " "
+                + "FROM " + db.getTableLecture()
+                + " LEFT JOIN " + db.getTableLecturedate() + " ON " + db.getTableLecture() + "." + db.getKeyId() + " = " + db.getTableLecturedate() + "." + db.getLECTUREDATE_FKLECTURE();
+
+
+        Cursor cursor = sql.rawQuery(selectQuery, null);
+
+        DBTeacher teacher = new DBTeacher(db);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        Lecture lecture = new Lecture();
+        lecture.setId(Integer.parseInt(cursor.getString(0)));
+        lecture.setName(cursor.getString(1));
+        lecture.setDescription(cursor.getString(2));
+        lecture.setImageName(cursor.getString((3)));
+        lecture.setTeacher(teacher.getTeacherById(Integer.parseInt(cursor.getString(4))));
+        lecture.setIdDay(Integer.parseInt(cursor.getString(5)));
+        lecture.setStartTime(cursor.getString(6));
+        lecture.setEndTime(cursor.getString(7));
+
+
+        sql.close();
+
+
+        // return lectures list
+        return lecture;
+    }
+
     public ArrayList<Lecture> getAllLectures() {
-//        SQLiteDatabase sql = db.getWritableDatabase();
-//
-//        ArrayList<Lecture> lecturesList = new ArrayList<Lecture>();
-////        String selectQuery = "SELECT * FROM " + db.getTableLecture() + " ORDER BY " + db.getLECTURE_NAME();
-//        String selectQuery = "SELECT * FROM " + db.getTableLecture();
-//
-//        Cursor cursor = sql.rawQuery(selectQuery, null);
-//
-//        DBTeacher dbTeacher = new DBTeacher(db);
-//        DBStudent dbStudent = new DBStudent(db);
-//
-//        // looping through all rows and adding to list
-//        if (cursor.moveToFirst()) {
-//            do {
-//                Lecture lecture = new Lecture();
-//                lecture.setId(Integer.parseInt(cursor.getString(0)));
-//                lecture.setName(cursor.getString(1));
-//                lecture.setDescription(cursor.getString(2));
-//                lecture.setImageName(cursor.getString((3)));
-//                lecture.setTeacher(dbTeacher.getTeacherById(Integer.parseInt(cursor.getString(4))));
-//                lecture.setStudentsList(dbStudent.getStudentsListByLecture(Integer.parseInt(cursor.getString(0))));
-//
-//                // Adding lecture to list
-//                lecturesList.add(lecture);
-//            } while (cursor.moveToNext());
-//        }
-//
-//        sql.close();
-//
-//
-//        // return lectures list
-//        return lecturesList;
-
-
-
-
-
-
-
-
-
-
-        SQLiteDatabase sql = db.getWritableDatabase();
+        SQLiteDatabase sql = db.getReadableDatabase();
 
         ArrayList<Lecture> lecturesList = new ArrayList<Lecture>();
         String selectQuery = "SELECT "
@@ -360,6 +465,35 @@ public class DBLecture {
         sql.delete(db.getTableLecturedate(), db.getLECTUREDATE_FKLECTURE() + " = ?",
                 new String[]{String.valueOf(idLecture)});
         sql.close();
+    }
+
+
+    public int updateLectureNameAndDescription(int idLecture, String name, String description) {
+        SQLiteDatabase sql = db.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(db.getLECTURE_NAME(), name);
+        values.put(db.getLECTURE_DESCRIPTION(), description);
+
+        return sql.update(db.getTableLecture(), values, db.getKeyId() + " = ?",
+                new String[]{String.valueOf(idLecture)});
+    }
+
+    public int updateDayTime(int idLecture, int oldIdDay, int idDay, String beginTime, String endTime) {
+        SQLiteDatabase sql = db.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(db.getLECTUREDATE_FKDAY(), idDay);
+        values.put(db.getLECTUREDATE_STARTTIME(), beginTime);
+        values.put(db.getLECTUREDATE_ENDTIME(), endTime);
+
+
+        return sql.update(db.getTableLecturedate(),
+                values,
+                db.getLECTUREDATE_FKLECTURE() + " = ? AND " + db.getLECTUREDATE_FKDAY() + " = ?",
+                new String[]{String.valueOf(idLecture), String.valueOf(oldIdDay)});
     }
 
 

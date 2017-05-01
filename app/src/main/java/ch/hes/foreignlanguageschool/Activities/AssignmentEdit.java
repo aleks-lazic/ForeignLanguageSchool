@@ -7,39 +7,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 import ch.hes.foreignlanguageschool.DAO.Assignment;
-import ch.hes.foreignlanguageschool.DAO.Teacher;
 import ch.hes.foreignlanguageschool.DB.DBAssignment;
-import ch.hes.foreignlanguageschool.DB.DBTeacher;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
-
-import static ch.hes.foreignlanguageschool.R.id.spinnerTeacher;
 
 public class AssignmentEdit extends AppCompatActivity {
 
     private TextView txtViewTitle;
     private TextView txtViewDescription;
     private TextView txtViewDueDate;
-    private Spinner spinnerTeachers;
+    private TextView txtViewCurrentTeacher;
 
     private Assignment assignment;
 
-    private ArrayList<Teacher> teachers;
-    private ArrayAdapter<Teacher> adapter;
-    private Teacher teacher;
-
     private DatabaseHelper db;
-    private DBTeacher dbTeacher;
     private DBAssignment dbAssignment;
 
     @Override
@@ -54,17 +42,23 @@ public class AssignmentEdit extends AppCompatActivity {
         txtViewTitle = (TextView) findViewById(R.id.activity_assignment_edit_title);
         txtViewDescription = (TextView) findViewById(R.id.activity_assignment_edit_description);
         txtViewDueDate = (TextView) findViewById(R.id.datePicker);
-        spinnerTeachers = (Spinner) findViewById(spinnerTeacher);
+        txtViewCurrentTeacher = (TextView) findViewById(R.id.teacherName);
 
         txtViewDueDate.setText("");
+        txtViewCurrentTeacher.setText(NavigationActivity.currentTeacher.toString());
+
 
         //create database objects
         db = DatabaseHelper.getInstance(this);
-        dbTeacher = new DBTeacher(db);
         dbAssignment = new DBAssignment(db);
 
         Intent intent = getIntent();
 
+        /**if we have something in the intent it means that we want to update an assignment
+         if our intent contains nothing it means that we want to create a new one
+         this is to prevent us from creating new activities becauses the fields are quite
+         the same
+         **/
         if (intent.getSerializableExtra("assignment") != null) {
             assignment = (Assignment) intent.getSerializableExtra("assignment");
             txtViewTitle.setText(assignment.getTitle());
@@ -73,30 +67,13 @@ public class AssignmentEdit extends AppCompatActivity {
 
             createDatePicker();
 
-            //create spinnerTeacher and set default position
-            teachers = dbTeacher.getAllTeachers();
-            adapter = new ArrayAdapter<Teacher>(this, android.R.layout.simple_spinner_dropdown_item, teachers);
-            spinnerTeachers.setAdapter(adapter);
-
-            teacher = assignment.getTeacher();
-            setDefaultValueSpinner(spinnerTeachers, teacher.getId());
-
-
         } else {
 
             createDatePicker();
 
             //create database objects
             db = DatabaseHelper.getInstance(this);
-            dbTeacher = new DBTeacher(db);
             dbAssignment = new DBAssignment(db);
-
-            //getallteachers
-            teachers = dbTeacher.getAllTeachers();
-            adapter = new ArrayAdapter<Teacher>(this, android.R.layout.simple_spinner_dropdown_item, teachers);
-
-            spinnerTeachers.setAdapter(adapter);
-
 
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -122,18 +99,20 @@ public class AssignmentEdit extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
             }
 
-            //get the teacher from spinner
-            teacher = (Teacher) spinnerTeachers.getSelectedItem();
-
             //get the teacher from DB
             String title = txtViewTitle.getText().toString();
             String description = txtViewDescription.getText().toString();
             String date = txtViewDueDate.getText().toString();
-            int idTeacher = teacher.getId();
+            int idTeacher = NavigationActivity.currentTeacher.getId();
 
+            if (assignment != null) {
+                //update the current assignment
+                dbAssignment.updateAssignmentById(assignment.getId(), title, description, date);
+            } else {
+                //insert everything in DB
+                dbAssignment.insertValues(title, description, date, idTeacher);
+            }
 
-            //insert everything in DB
-            dbAssignment.insertValues(title, description, date, idTeacher);
 
             finish();
 
@@ -170,11 +149,6 @@ public class AssignmentEdit extends AppCompatActivity {
         });
     }
 
-    public void setDefaultValueSpinner(final Spinner spinner, final int id){
-        spinner.post(new Runnable() {
-            public void run() {
-                spinner.setSelection(id-1);
-            }
-        });
-    }
+
+
 }

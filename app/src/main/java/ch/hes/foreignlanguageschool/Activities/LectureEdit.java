@@ -18,25 +18,27 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import ch.hes.foreignlanguageschool.DAO.Assignment;
 import ch.hes.foreignlanguageschool.DAO.Day;
 import ch.hes.foreignlanguageschool.DAO.Lecture;
 import ch.hes.foreignlanguageschool.DAO.Student;
-import ch.hes.foreignlanguageschool.DAO.Teacher;
 import ch.hes.foreignlanguageschool.DB.DBDay;
 import ch.hes.foreignlanguageschool.DB.DBLecture;
 import ch.hes.foreignlanguageschool.DB.DBStudent;
-import ch.hes.foreignlanguageschool.DB.DBTeacher;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
+
 
 public class LectureEdit extends AppCompatActivity {
 
     private TextView txtTitle;
     private TextView txtDescription;
-    private Spinner spinnerTeacher;
+    private TextView txtTeacherName;
     private Spinner spinnerDays;
     private ListView listViewStudents;
     private EditText editTxtTimePickerFrom;
@@ -46,17 +48,12 @@ public class LectureEdit extends AppCompatActivity {
     private ArrayAdapter<Student> adapterStudent;
     private Student student;
 
-    private ArrayList<Teacher> teachers;
-    private ArrayAdapter<Teacher> adapterTeacher;
-    private Teacher teacher;
-
     private ArrayList<Day> days;
     private ArrayAdapter<Day> adapterDay;
     private Day day;
 
     private DatabaseHelper db;
     private DBStudent dbStudent;
-    private DBTeacher dbTeacher;
     private DBLecture dbLecture;
     private DBDay dbDay;
 
@@ -77,7 +74,7 @@ public class LectureEdit extends AppCompatActivity {
         //fill layout objects
         txtTitle = (EditText) findViewById(R.id.editTxtName);
         txtDescription = (EditText) findViewById(R.id.editTxtDescription);
-        spinnerTeacher = (Spinner) findViewById(R.id.spinnerTeacher);
+        txtTeacherName = (TextView) findViewById(R.id.teacherName);
         listViewStudents = (ListView) findViewById(R.id.listViewStudents);
         spinnerDays = (Spinner) findViewById(R.id.spinnerDay);
         editTxtTimePickerFrom = (EditText) findViewById(R.id.timePickerFrom);
@@ -85,12 +82,12 @@ public class LectureEdit extends AppCompatActivity {
 
         editTxtTimePickerTo.setText("");
         editTxtTimePickerFrom.setText("");
+        txtTeacherName.setText(NavigationActivity.currentTeacher.toString());
 
         //create database objects
         db = DatabaseHelper.getInstance(this);
         dbDay = new DBDay(db);
         dbStudent = new DBStudent(db);
-        dbTeacher = new DBTeacher(db);
         dbLecture = new DBLecture(db);
 
         //get the intent to check if it is an update or a new lecture
@@ -110,14 +107,6 @@ public class LectureEdit extends AppCompatActivity {
 
             //create the time picker
             createTimePicker();
-
-            //create spinnerTeacher and set default position
-            teachers = dbTeacher.getAllTeachers();
-            adapterTeacher = new ArrayAdapter<Teacher>(this, android.R.layout.simple_spinner_dropdown_item, teachers);
-            spinnerTeacher.setAdapter(adapterTeacher);
-            teacher = lecture.getTeacher();
-            setDefaultValueSpinner(spinnerTeacher, teacher.getId());
-
 
             //create spinnerDay and set default position
             days = dbDay.getAllDays();
@@ -143,13 +132,6 @@ public class LectureEdit extends AppCompatActivity {
             onFocusListenerForTitleAndDescription();
 
             createTimePicker();
-
-
-            //Fill in spinner with all teachers
-            teachers = dbTeacher.getAllTeachers();
-            adapterTeacher = new ArrayAdapter<Teacher>(this, android.R.layout.simple_spinner_dropdown_item, teachers);
-            spinnerTeacher.setAdapter(adapterTeacher);
-
 
             //Fill in the listview with all students
             students = dbStudent.getAllStudents();
@@ -196,24 +178,26 @@ public class LectureEdit extends AppCompatActivity {
                 students.add(student);
             }
 
-            //get the teacher from spinner
-            teacher = (Teacher) spinnerTeacher.getSelectedItem();
-
             //get the day from spinner
             day = (Day) spinnerDays.getSelectedItem();
 
             //insert everything in DB
             String title = txtTitle.getText().toString();
             String description = txtDescription.getText().toString();
-            int idTeacher = teacher.getId();
+            int idTeacher = NavigationActivity.currentTeacher.getId();
             int idDay = day.getId();
             String timeFrom = editTxtTimePickerFrom.getText().toString();
             String timeTo = editTxtTimePickerTo.getText().toString();
 
-            dbLecture.insertLectureWithTeacherDayAndHoursAndStudents
-                    (title, description, idTeacher, idDay, timeFrom, timeTo, students);
+            if (lecture != null) {
+                dbLecture.updateLectureNameAndDescription(lecture.getId(), title, description);
+                dbLecture.updateDayTime(lecture.getId(), lecture.getIdDay(), idDay, timeFrom, timeTo);
+                dbLecture.addStudentsToLecture(students, lecture.getId());
+            } else {
+                dbLecture.insertLectureWithTeacherDayAndHoursAndStudents
+                        (title, description, idTeacher, idDay, timeFrom, timeTo, students);
+            }
 
-            finish();
 
         }
         finish();
@@ -258,7 +242,12 @@ public class LectureEdit extends AppCompatActivity {
         return true;
     }
 
-    public boolean checkSizeSelectedStudents(int size) {
+    public boolean checkSizeSelectedStudents(int size, Lecture lecture) {
+
+        if(lecture != null ){
+            return true;
+        }
+
         if (size == 0) {
             Toast toast = Toast.makeText(this, " " + getResources().getString(R.string.StudentAlert), Toast.LENGTH_SHORT);
             toast.show();
@@ -334,7 +323,7 @@ public class LectureEdit extends AppCompatActivity {
         //check if minimum one student is selected
         checked = listViewStudents.getCheckedItemPositions();
 
-        if (!checkSizeSelectedStudents(checked.size())) {
+        if (!checkSizeSelectedStudents(checked.size(), lecture)) {
             return false;
         }
 

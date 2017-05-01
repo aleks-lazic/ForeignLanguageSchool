@@ -114,7 +114,7 @@ public class LecturesFragment extends Fragment {
                 Lecture lecture = (Lecture) parent.getItemAtPosition(position);
                 lecture.setStudentsList(dbStudent.getStudentsListByLecture(lecture.getId()));
 
-                myIntent.putExtra("lecture", lectures.get(position));
+                myIntent.putExtra("lecture",lecture);
 
                 startActivity(myIntent);
             }
