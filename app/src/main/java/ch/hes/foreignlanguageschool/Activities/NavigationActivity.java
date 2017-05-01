@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -13,9 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,11 +25,11 @@ import ch.hes.foreignlanguageschool.DB.DBTeacher;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.Fragments.AssignmentsFragment;
 import ch.hes.foreignlanguageschool.Fragments.CalendarFragment;
-import ch.hes.foreignlanguageschool.Fragments.TodayFragment;
 import ch.hes.foreignlanguageschool.Fragments.LecturesFragment;
 import ch.hes.foreignlanguageschool.Fragments.SettingsFragment;
 import ch.hes.foreignlanguageschool.Fragments.StudentsFragment;
 import ch.hes.foreignlanguageschool.Fragments.TeachersFragment;
+import ch.hes.foreignlanguageschool.Fragments.TodayFragment;
 import ch.hes.foreignlanguageschool.R;
 
 public class NavigationActivity extends AppCompatActivity

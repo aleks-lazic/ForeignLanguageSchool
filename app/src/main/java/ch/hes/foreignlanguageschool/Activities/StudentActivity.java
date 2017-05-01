@@ -3,23 +3,31 @@ package ch.hes.foreignlanguageschool.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import ch.hes.foreignlanguageschool.DAO.Assignment;
 import ch.hes.foreignlanguageschool.DAO.Student;
-import ch.hes.foreignlanguageschool.DB.DBAssignment;
 import ch.hes.foreignlanguageschool.DB.DBStudent;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
 
-import static android.R.attr.description;
 
 public class StudentActivity extends AppCompatActivity {
+    private Student student;
+    private DatabaseHelper db;
+    private DBStudent dbStudent;
+
+    private TextView address;
+    private TextView country;
+    private TextView mail;
+    private TextView startDate;
+    private TextView endDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,31 +36,32 @@ public class StudentActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DatabaseHelper db = DatabaseHelper.getInstance(getApplicationContext());
-        DBStudent dbStudent = new DBStudent(db);
-
         Intent intent = getIntent();
 
-        Student student = (Student) intent.getSerializableExtra("student");
+        //database
+        db = DatabaseHelper.getInstance(this);
+        dbStudent = new DBStudent(db);
+
+        student = (Student) intent.getSerializableExtra("student");
         setTitle(student.getFirstName()+" "+student.getLastName());
 
-        TextView address = (TextView)findViewById(R.id.student_address);
+        address = (TextView)findViewById(R.id.student_address);
 
         address.setText(student.getAddress());
 
-        TextView country = (TextView)findViewById(R.id.student_country);
+        country = (TextView)findViewById(R.id.student_country);
 
         country.setText(student.getCountry());
 
-        TextView mail = (TextView)findViewById(R.id.student_mail);
+        mail = (TextView)findViewById(R.id.student_mail);
 
         mail.setText(student.getMail());
 
-        TextView startDate = (TextView)findViewById(R.id.student_startdate);
+        startDate = (TextView)findViewById(R.id.student_startdate);
 
         startDate.setText(student.getStartDate());
 
-        TextView endDate = (TextView)findViewById(R.id.student_enddate);
+        endDate = (TextView)findViewById(R.id.student_enddate);
 
         endDate.setText(student.getEndDate());
 
@@ -60,8 +69,9 @@ public class StudentActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(StudentActivity.this, StudentEdit.class);
+                intent.putExtra("student", student);
+                startActivity(intent);
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -69,7 +79,33 @@ public class StudentActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        finish();
+        int id = item.getItemId();
+
+        if (id == R.id.action_delete) {
+            dbStudent.deleteStudent(student.getId());
+            finish();
+            Toast toast = Toast.makeText(this, student.toString() + " " + getResources().getString(R.string.Student) + " " + getResources().getString(R.string.DeletedSuccess), Toast.LENGTH_SHORT);
+            toast.show();
+        } else{
+            finish();
+            return true;
+        }
+
         return true;
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.more_menu, menu);
+
+        // return true so that the menu pop up is opened
+        return true;
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
     }
 }

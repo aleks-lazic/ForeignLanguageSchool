@@ -3,7 +3,6 @@ package ch.hes.foreignlanguageschool.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -14,9 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ch.hes.foreignlanguageschool.DAO.Assignment;
-import ch.hes.foreignlanguageschool.DAO.Lecture;
 import ch.hes.foreignlanguageschool.DB.DBAssignment;
-import ch.hes.foreignlanguageschool.DB.DBLecture;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
 

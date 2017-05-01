@@ -18,44 +18,44 @@
 
 
     <EditText
-        android:id="@+id/editTxtName"
+        android:id="@+id/editTxtFirstName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hintName"
+        android:hint="@string/FistnameTitle"
+        android:inputType="textPersonName" />
+
+
+    <EditText
+        android:id="@+id/editTxtLastName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="@string/LastnameTitle"
+        android:inputType="textPersonName" />
+
+
+    <EditText
+        android:id="@+id/editTxtAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="@string/AddressTitle"
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/editTxtDescription"
+        android:id="@+id/editTxtCountry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:lines="3"
-        android:hint="@string/DescriptionTitle"
-        android:inputType="textMultiLine" />
+        android:hint="@string/CountryTitle" />
 
-
-    <LinearLayout
+    <EditText
+        android:id="@+id/editTxtMail"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        android:weightSum="1">
-
-        <TextView
-            android:id="@+id/titleDate"
-            android:layout_width="67dp"
-            android:layout_height="wrap_content"
-            android:text="@string/DayTitle"
-            android:textColor="@color/colorAccent"
-            android:textSize="20sp" />
-
-        <Spinner
-            android:id="@+id/spinnerDay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:spinnerMode="dialog"
-            android:textSize="18sp" />
-    </LinearLayout>
+        android:hint="@string/MailTitle"
+        android:inputType="textEmailAddress"/>
 
 
     <LinearLayout
@@ -67,15 +67,15 @@
         android:weightSum="1">
 
         <TextView
-            android:id="@+id/titleFrom"
+            android:id="@+id/titleStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/from"
+            android:text="@string/StartDateTitle"
             android:textColor="@color/colorAccent"
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/timePickerFrom"
+            android:id="@+id/datePickerStart"
             android:layout_width="115dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.33"
@@ -85,15 +85,15 @@
             android:focusableInTouchMode="false" />
 
         <TextView
-            android:id="@+id/titleTo"
+            android:id="@+id/titleEnd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/to"
+            android:text="@string/EndDateTitle"
             android:textColor="@color/colorAccent"
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/timePickerTo"
+            android:id="@+id/datePickerEnd"
             android:layout_width="115dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.33"
@@ -103,38 +103,6 @@
             android:focusableInTouchMode="false" />
 
     </LinearLayout>
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/TeacherTitle"
-        android:textColor="@color/colorAccent"
-        android:textSize="20sp" />
-
-    <Spinner
-        android:id="@+id/spinnerTeacher"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:spinnerMode="dialog"
-        android:textSize="18sp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/StudentsNavigation"
-        android:textColor="@color/colorAccent"
-        android:textSize="20sp" />
-
-    <ListView
-        android:id="@+id/listViewStudents"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp" />
 
 
 </LinearLayout>

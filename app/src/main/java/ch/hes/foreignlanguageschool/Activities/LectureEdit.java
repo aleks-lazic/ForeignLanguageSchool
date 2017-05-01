@@ -5,10 +5,8 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -33,8 +31,6 @@ import ch.hes.foreignlanguageschool.DB.DBStudent;
 import ch.hes.foreignlanguageschool.DB.DBTeacher;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 public class LectureEdit extends AppCompatActivity {
 
@@ -171,7 +167,7 @@ public class LectureEdit extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.menu_lecture_edit, menu);
+        getMenuInflater().inflate(R.menu.menu_edit, menu);
         return true;
     }
 
@@ -180,7 +176,7 @@ public class LectureEdit extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        if (id == R.id.save_lecture) {
+        if (id == R.id.save) {
 
             if (!checkEverythingOnSaveClick()) {
 

@@ -4,22 +4,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import ch.hes.foreignlanguageschool.Activities.AssignmentActivity;
 import ch.hes.foreignlanguageschool.Activities.StudentActivity;
-import ch.hes.foreignlanguageschool.Adapters.CustomAdapterAssignment;
+import ch.hes.foreignlanguageschool.Activities.StudentEdit;
 import ch.hes.foreignlanguageschool.Adapters.CustomAdapterStudent;
 import ch.hes.foreignlanguageschool.DAO.Student;
-import ch.hes.foreignlanguageschool.DB.DBLecture;
 import ch.hes.foreignlanguageschool.DB.DBStudent;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
@@ -114,6 +112,15 @@ public class StudentsFragment extends Fragment {
                 myIntent.putExtra("student", student);
 
                 startActivity(myIntent);
+            }
+        });
+
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fragment_fab_students);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), StudentEdit.class);
+                startActivity(intent);
             }
         });
 

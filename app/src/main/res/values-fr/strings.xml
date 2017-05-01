@@ -46,5 +46,6 @@
     <string name="StudentAlert">Sélectionnez au moins un étudiant</string>
     <string name="SelectTime">Sélectionnez une heure</string>
     <string name="SelectDate">Sélectionnez une date</string>
-    <string name="TitleAlert">Un titre est requis</string>
+    <string name="TitleAlert">Cette ligne est requise</string>
+    <string name="Student">Etudiant</string>
 </resources>

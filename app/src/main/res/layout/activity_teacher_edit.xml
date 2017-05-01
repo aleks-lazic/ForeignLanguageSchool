@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearlayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="16dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="32dp"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:clickable="true"
+    android:orientation="vertical"
+    tools:context="ch.hes.foreignlanguageschool.Activities.LectureEdit">
+
+
+    <EditText
+        android:id="@+id/editTxtFirstName_teacher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/FistnameTitle"
+        android:inputType="textPersonName" />
+
+
+    <EditText
+        android:id="@+id/editTxtLastName_teacher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="@string/LastnameTitle"
+        android:inputType="textPersonName" />
+
+
+    <EditText
+        android:id="@+id/editTxtMail_teacher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="@string/MailTitle"
+        android:inputType="textEmailAddress" />
+
+
+</LinearLayout>

@@ -166,7 +166,8 @@
     <string name="StudentAlert">Please select minimum a Student</string>
     <string name="SelectTime">Select Time</string>
     <string name="SelectDate">Select Date</string>
-    <string name="TitleAlert">Title is required</string>
+    <string name="TitleAlert">This line is required</string>
+    <string name="Student">Student</string>
 
 
 </resources>

@@ -2,7 +2,6 @@ package ch.hes.foreignlanguageschool.DAO;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by patrickclivaz on 11.04.17.

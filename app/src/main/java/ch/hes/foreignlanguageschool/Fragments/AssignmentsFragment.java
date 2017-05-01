@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ import java.util.ArrayList;
 import ch.hes.foreignlanguageschool.Activities.AssignmentActivity;
 import ch.hes.foreignlanguageschool.Activities.AssignmentEdit;
 import ch.hes.foreignlanguageschool.Adapters.CustomAdapterAssignment;
-import ch.hes.foreignlanguageschool.Adapters.CustomAdapterLecture;
 import ch.hes.foreignlanguageschool.DAO.Assignment;
 import ch.hes.foreignlanguageschool.DB.DBAssignment;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;

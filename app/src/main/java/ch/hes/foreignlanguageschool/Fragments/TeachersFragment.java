@@ -4,23 +4,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import ch.hes.foreignlanguageschool.Activities.StudentActivity;
+import ch.hes.foreignlanguageschool.Activities.LectureEdit;
 import ch.hes.foreignlanguageschool.Activities.TeacherActivity;
-import ch.hes.foreignlanguageschool.Adapters.CustomAdapterStudent;
+import ch.hes.foreignlanguageschool.Activities.TeacherEdit;
 import ch.hes.foreignlanguageschool.Adapters.CustomAdapterTeacher;
 import ch.hes.foreignlanguageschool.DAO.Teacher;
-import ch.hes.foreignlanguageschool.DB.DBLecture;
-import ch.hes.foreignlanguageschool.DB.DBStudent;
 import ch.hes.foreignlanguageschool.DB.DBTeacher;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
@@ -114,6 +112,15 @@ public class TeachersFragment extends Fragment {
                 myIntent.putExtra("teacher", teacher);
 
                 startActivity(myIntent);
+            }
+        });
+
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fragment_fab_teachers);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), TeacherEdit.class);
+                startActivity(intent);
             }
         });
 

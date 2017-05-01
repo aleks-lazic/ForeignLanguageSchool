@@ -11,9 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,9 +19,6 @@ import java.util.Date;
 import ch.hes.foreignlanguageschool.DAO.Assignment;
 import ch.hes.foreignlanguageschool.DAO.Teacher;
 import ch.hes.foreignlanguageschool.DB.DBAssignment;
-import ch.hes.foreignlanguageschool.DB.DBDay;
-import ch.hes.foreignlanguageschool.DB.DBLecture;
-import ch.hes.foreignlanguageschool.DB.DBStudent;
 import ch.hes.foreignlanguageschool.DB.DBTeacher;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
@@ -110,7 +105,7 @@ public class AssignmentEdit extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.menu_assignment_edit, menu);
+        getMenuInflater().inflate(R.menu.menu_edit, menu);
         return true;
     }
 
@@ -118,7 +113,7 @@ public class AssignmentEdit extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        if (id == R.id.save_assignment) {
+        if (id == R.id.save) {
 
 
             //check if the title is filled
