@@ -19,12 +19,13 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
-import ch.hes.foreignlanguageschool.DAO.Assignment;
 import ch.hes.foreignlanguageschool.DAO.Day;
 import ch.hes.foreignlanguageschool.DAO.Lecture;
 import ch.hes.foreignlanguageschool.DAO.Student;
@@ -44,6 +45,7 @@ public class LectureEdit extends AppCompatActivity {
     private ListView listViewStudents;
     private EditText editTxtTimePickerFrom;
     private EditText editTxtTimePickerTo;
+    private TextView txtViewNoStudents;
 
     private ArrayList<Student> students;
     private ArrayAdapter<Student> adapterStudent;
@@ -58,6 +60,7 @@ public class LectureEdit extends AppCompatActivity {
     private DBLecture dbLecture;
     private DBDay dbDay;
 
+    private ArrayList<Lecture> lectures;
     private Lecture lecture;
 
 
@@ -80,6 +83,7 @@ public class LectureEdit extends AppCompatActivity {
         spinnerDays = (Spinner) findViewById(R.id.spinnerDay);
         editTxtTimePickerFrom = (EditText) findViewById(R.id.timePickerFrom);
         editTxtTimePickerTo = (EditText) findViewById(R.id.timePickerTo);
+        txtViewNoStudents = (TextView) findViewById(R.id.txtViewNoStudents);
 
         editTxtTimePickerTo.setText("");
         editTxtTimePickerFrom.setText("");
@@ -121,6 +125,12 @@ public class LectureEdit extends AppCompatActivity {
 
             //set listview
             students = dbStudent.getStudentsListNotInLecture(lecture.getId());
+
+            if (students.size() == 0) {
+                listViewStudents.setVisibility(View.INVISIBLE);
+                txtViewNoStudents.setText("All students are already in this lecture");
+            }
+
             adapterStudent = new ArrayAdapter<Student>(this, android.R.layout.simple_list_item_multiple_choice, students);
             listViewStudents.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
             listViewStudents.setAdapter(adapterStudent);
@@ -139,7 +149,6 @@ public class LectureEdit extends AppCompatActivity {
 
             //Fill in the listview with all students
             students = dbStudent.getAllStudents();
-
             adapterStudent = new ArrayAdapter<Student>(this, android.R.layout.simple_list_item_multiple_choice, students);
             listViewStudents.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
             listViewStudents.setAdapter(adapterStudent);
@@ -193,21 +202,15 @@ public class LectureEdit extends AppCompatActivity {
             String timeFrom = editTxtTimePickerFrom.getText().toString();
             String timeTo = editTxtTimePickerTo.getText().toString();
 
+            if (!checkIfLectureAtSameTime(lecture, idDay, timeFrom, timeTo)) {
+                return super.onOptionsItemSelected(item);
+            }
+
             if (lecture != null) {
                 dbLecture.updateLectureNameAndDescription(lecture.getId(), title, description);
                 dbLecture.updateDayTime(lecture.getId(), lecture.getIdDay(), idDay, timeFrom, timeTo);
-                for (Student s : lecture.getStudentsList()
-                        ) {
-                    Log.d("Aleks", "Lecture ID : " + lecture.getId() + "  " + s.toString());
-                }
-
-                for (Student s: students
-                     ) {
-                    Log.d("Aleks" , "New students : " + s.toString());
-                }
                 dbLecture.addStudentsToLecture(students, lecture.getId());
             } else {
-                Log.d("Aleks", "Lecture ID : " + lecture.getId() + "  " );
                 dbLecture.insertLectureWithTeacherDayAndHoursAndStudents
                         (title, description, idTeacher, idDay, timeFrom, timeTo, students);
             }
@@ -373,4 +376,51 @@ public class LectureEdit extends AppCompatActivity {
             }
         });
     }
+
+    public boolean checkIfLectureAtSameTime(Lecture lecture, int idDay, String beginTime, String endTime) {
+
+        if (lecture != null) {
+            lectures = dbLecture.getAllLecturesExceptById(lecture.getId());
+        } else {
+            lectures = dbLecture.getAllLectures();
+        }
+
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        Date beginTimeA = null;
+        Date endTimeA = null;
+
+        try {
+            beginTimeA = dateFormat.parse(beginTime);
+            endTimeA = dateFormat.parse(endTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        for (Lecture l : lectures
+                ) {
+
+            if (l.getId() != idDay) {
+                return true;
+            }
+            Date beginTimeB = null;
+            Date endTimeB = null;
+
+            try {
+                beginTimeB = dateFormat.parse(l.getStartTime());
+                endTimeB = dateFormat.parse(l.getEndTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            if ((beginTimeA.before(endTimeB) || beginTimeA.equals(endTimeB)) && (beginTimeB.before(endTimeA) || beginTimeB.equals(endTimeA))
+                    && (beginTimeA.before(endTimeB) || beginTimeA.equals(endTimeB)) && (beginTimeB.before(endTimeB) || beginTimeB.equals(endTimeB))) {
+                Toast.makeText(getApplicationContext(), "Conflict with other lecture", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+        }
+
+        return true;
+    }
 }
+

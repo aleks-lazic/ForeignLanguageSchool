@@ -284,7 +284,7 @@ public class NavigationActivity extends AppCompatActivity
 
         //adding assignments
         dbAssignment = new DBAssignment(databaseHelper);
-        dbAssignment.insertValues("Correction IT exams", null, currentDate, dbTeacher.getTeacherById(1).getId());
+        dbAssignment.insertValues("Correction IT exams", null, "01.05.2017", dbTeacher.getTeacherById(1).getId());
         dbAssignment.insertValues("Prepare English course", "Organize the presentations", currentDate, dbTeacher.getTeacherById(1).getId());
 
 
