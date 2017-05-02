@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_marginTop="25dp"
         android:layout_marginLeft="50dp"
@@ -104,7 +104,7 @@
             android:id="@+id/activity_lecture_title_students"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:text="@string/StudentsNavigation"
             android:textColor="@color/colorAccent"
             android:textSize="20sp" />
@@ -112,7 +112,7 @@
         <ListView
             android:id="@+id/activity_lecture_students"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="10dp" />
 
     </LinearLayout>

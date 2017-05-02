@@ -106,6 +106,7 @@
 
 
     <TextView
+        android:id="@+id/title_teacher_editlecture"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="16dp"
@@ -118,13 +119,16 @@
         android:id="@+id/teacherName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/title_teacher_editlecture"
         android:layout_marginTop="10dp"
         android:textSize="18sp" />
 
     <TextView
+        android:id="@+id/teacherBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_below="@+id/teacherName"
         android:text="@string/StudentsNavigation"
         android:textColor="@color/colorAccent"
         android:textSize="20sp" />
@@ -132,7 +136,8 @@
     <ListView
         android:id="@+id/listViewStudents"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/teacherBox"
         android:layout_marginTop="20dp" />
 
 
