@@ -9,7 +9,7 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     android:layout_marginStart="16dp"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="@dimen/margin_top"
     android:clickable="true"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
@@ -29,6 +29,7 @@
         android:id="@+id/editTxtDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_top"
         android:hint="@string/DescriptionTitle"
         android:inputType="textMultiLine"
         android:lines="2" />
@@ -37,32 +38,31 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin_top"
         android:orientation="horizontal"
         android:weightSum="1">
 
         <TextView
             android:id="@+id/titleDate"
-            android:layout_width="67dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:text="@string/DayTitle"
             android:textColor="@color/colorAccent"
-            android:textSize="20sp" />
+            android:textSize="@dimen/text_title" />
 
         <Spinner
             android:id="@+id/spinnerDay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:spinnerMode="dialog"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_title" />
     </LinearLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin_top"
         android:orientation="horizontal"
         android:weightSum="1">
 
@@ -72,13 +72,14 @@
             android:layout_height="wrap_content"
             android:text="@string/from"
             android:textColor="@color/colorAccent"
-            android:textSize="20sp" />
+            android:textSize="@dimen/text_title" />
 
         <EditText
             android:id="@+id/timePickerFrom"
             android:layout_width="115dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.33"
+            android:layout_gravity="center"
             android:textAlignment="center"
             android:clickable="false"
             android:cursorVisible="false"
@@ -91,13 +92,14 @@
             android:layout_height="wrap_content"
             android:text="@string/to"
             android:textColor="@color/colorAccent"
-            android:textSize="20sp" />
+            android:textSize="@dimen/text_title" />
 
         <EditText
             android:id="@+id/timePickerTo"
             android:layout_width="115dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.33"
+            android:layout_gravity="center"
             android:textAlignment="center"
             android:clickable="false"
             android:cursorVisible="false"
@@ -111,40 +113,36 @@
         android:id="@+id/title_teacher_editlecture"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin_top"
         android:text="@string/TeacherTitle"
         android:textColor="@color/colorAccent"
-        android:textSize="20sp" />
+        android:textSize="@dimen/text_title" />
 
     <TextView
         android:id="@+id/teacherName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title_teacher_editlecture"
-        android:layout_marginTop="10dp"
-        android:textSize="18sp" />
+        android:layout_marginTop="@dimen/margin_child" />
 
     <TextView
         android:id="@+id/teacherBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/teacherName"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin_top"
         android:text="@string/StudentsNavigation"
         android:textColor="@color/colorAccent"
-        android:textSize="20sp" />
+        android:textSize="@dimen/text_title" />
+
+    <ListView
+        android:id="@+id/listViewStudents"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
 
     <TextView
         android:id="@+id/txtViewNoStudents"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textAlignment="center" />
-
-    <ListView
-        android:id="@+id/listViewStudents"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_marginTop="@dimen/margin_child"/>
 
 
 </LinearLayout>

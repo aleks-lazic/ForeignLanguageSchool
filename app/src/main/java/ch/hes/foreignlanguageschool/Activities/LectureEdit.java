@@ -126,7 +126,7 @@ public class LectureEdit extends AppCompatActivity {
 
             if (students.size() == 0) {
                 listViewStudents.setVisibility(View.INVISIBLE);
-                txtViewNoStudents.setText("All students are already in this lecture");
+                txtViewNoStudents.setText(getResources().getString(R.string.AllStudents));
             }
 
             adapterStudent = new ArrayAdapter<Student>(this, android.R.layout.simple_list_item_multiple_choice, students);

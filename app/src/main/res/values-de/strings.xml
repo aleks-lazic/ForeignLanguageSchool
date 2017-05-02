@@ -48,4 +48,6 @@
     <string name="SelectDate">Datum auswählen</string>
     <string name="Student">Schüler</string>
     <string name="TitleAlert">diese Zeile ist erforderlich</string>
+    <string name="AddCalendar">In Kalender</string>
+    <string name="AllStudents">Alle Schüler sind bereits in diesem Kurs</string>
 </resources>

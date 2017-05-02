@@ -42,7 +42,7 @@
     <string name="EndDateTitle">End</string>
     <string name="MailTitle">Mail</string>
 
-    <string name="AddCalendar">Add to the phone\'s calendar</string>
+    <string name="AddCalendar">Add to Calendar</string>
 
     <!--Hint ressources for the edit text-->
     <string name="hintTitle">Title</string>
@@ -170,6 +170,7 @@
     <string name="SelectDate">Select Date</string>
     <string name="TitleAlert">This line is required</string>
     <string name="Student">Student</string>
+    <string name="AllStudents">All students are already in this lecture</string>
 
 
 </resources>
