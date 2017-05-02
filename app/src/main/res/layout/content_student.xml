@@ -81,6 +81,7 @@
                 android:layout_width="115dp"
                 android:layout_weight="0.33"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:textAlignment="center"/>
 
             <TextView
@@ -96,6 +97,7 @@
                 android:layout_width="115dp"
                 android:layout_weight="0.33"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:textAlignment="center"/>
 
         </LinearLayout>

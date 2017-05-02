@@ -14,7 +14,7 @@
     android:focusableInTouchMode="true"
     android:clickable="true"
     android:orientation="vertical"
-    tools:context="ch.hes.foreignlanguageschool.Activities.LectureEdit">
+    tools:context="ch.hes.foreignlanguageschool.Activities.AssignmentEdit">
 
 
 

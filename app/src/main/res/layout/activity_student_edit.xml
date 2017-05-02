@@ -14,7 +14,7 @@
     android:focusableInTouchMode="true"
     android:clickable="true"
     android:orientation="vertical"
-    tools:context="ch.hes.foreignlanguageschool.Activities.LectureEdit">
+    tools:context="ch.hes.foreignlanguageschool.Activities.StudentEdit">
 
 
     <EditText
@@ -62,7 +62,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_top"
-        android:layout_marginRight="16dp"
         android:orientation="horizontal"
         android:weightSum="1">
 
