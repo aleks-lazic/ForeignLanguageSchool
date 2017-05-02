@@ -10,11 +10,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
+        android:layout_marginTop="@dimen/margin_top"
+        android:layout_marginLeft="@dimen/margin_left"
+        android:layout_marginRight="@dimen/margin_right"
         android:padding="10dp">
 
         <TextView
@@ -23,88 +23,102 @@
             android:layout_height="wrap_content"
             android:text="@string/AddressTitle"
             android:textColor="@color/colorAccent"
-            android:textSize="20sp" />
+            android:textSize="@dimen/text_title" />
 
         <TextView
             android:id="@+id/student_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="@dimen/margin_child" />
 
         <TextView
             android:id="@+id/title_student_country"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/margin_top"
             android:text="@string/CountryTitle"
             android:textColor="@color/colorAccent"
-            android:textSize="20sp" />
+            android:textSize="@dimen/text_title" />
 
         <TextView
             android:id="@+id/student_country"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="@dimen/margin_child" />
 
         <TextView
             android:id="@+id/title_student_mail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/margin_top"
             android:text="@string/MailTitle"
             android:textColor="@color/colorAccent"
-            android:textSize="20sp" />
+            android:textSize="@dimen/text_title" />
 
         <TextView
             android:id="@+id/student_mail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="@dimen/margin_child" />
 
-        <TextView
-            android:id="@+id/title_startdate"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/StartDateTitle"
-            android:textColor="@color/colorAccent"
-            android:textSize="20sp" />
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/margin_top"
+            android:weightSum="1">
 
-        <TextView
-            android:id="@+id/student_startdate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
+            <TextView
+                android:id="@+id/title_startdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/StartDateTitle"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_title"/>
 
-        <TextView
-            android:id="@+id/title_enddate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/EndDateTitle"
-            android:textColor="@color/colorAccent"
-            android:textSize="20sp" />
+            <TextView
+                android:id="@+id/student_startdate"
+                android:layout_width="115dp"
+                android:layout_weight="0.33"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAlignment="center"/>
 
-        <TextView
-            android:id="@+id/student_enddate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
+            <TextView
+                android:id="@+id/title_enddate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/EndDateTitle"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_title"/>
+
+            <TextView
+                android:id="@+id/student_enddate"
+                android:layout_width="115dp"
+                android:layout_weight="0.33"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAlignment="center"/>
+
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/title_lectures"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/margin_top"
             android:text="@string/LecturesNavigation"
             android:textColor="@color/colorAccent"
-            android:textSize="20sp" />
+            android:textSize="@dimen/text_title" />
 
         <ListView
             android:id="@+id/student_list_lectures"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"></ListView>
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+
 
     </LinearLayout>
 
