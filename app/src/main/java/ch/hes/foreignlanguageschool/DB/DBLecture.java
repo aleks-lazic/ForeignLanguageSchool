@@ -156,7 +156,8 @@ public class DBLecture {
                 + db.getLECTUREDATE_STARTTIME() + ", "
                 + db.getLECTUREDATE_ENDTIME() + " "
                 + "FROM " + db.getTableLecture()
-                + " LEFT JOIN " + db.getTableLecturedate() + " ON " + db.getTableLecture() + "." + db.getKeyId() + " = " + db.getTableLecturedate() + "." + db.getLECTUREDATE_FKLECTURE();
+                + " LEFT JOIN " + db.getTableLecturedate() + " ON " + db.getTableLecture() + "." + db.getKeyId() + " = " + db.getTableLecturedate() + "." + db.getLECTUREDATE_FKLECTURE()
+                + " WHERE " + db.getKeyId() + " = " + idLecture;
 
 
         Cursor cursor = sql.rawQuery(selectQuery, null);

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,6 +113,7 @@ public class LecturesFragment extends Fragment {
                 Intent myIntent = new Intent(view.getContext(), LectureActivity.class);
 
                 Lecture lecture = (Lecture) parent.getItemAtPosition(position);
+                Log.d("Aleks", lecture.toString());
                 lecture.setStudentsList(dbStudent.getStudentsListByLecture(lecture.getId()));
 
                 myIntent.putExtra("lecture",lecture);

@@ -6,6 +6,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -58,6 +59,7 @@ public class LectureActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         lecture = (Lecture) intent.getSerializableExtra("lecture");
+        Log.d("Aleks", "In the lecture activity : " + lecture.toString());
         description = (TextView) findViewById(R.id.activity_lecture_description);
         teacher = (TextView) findViewById(R.id.activity_lecture_teacher);
         startTime = (TextView) findViewById(R.id.activity_lecture_starttime);
@@ -72,7 +74,7 @@ public class LectureActivity extends AppCompatActivity {
         dbStudent = new DBStudent(db);
 
         //set textviews
-        setTitle(lecture.getName());
+        setTitle(lecture.toString());
         description.setText(lecture.getDescription());
         teacher.setText(lecture.getTeacher().getFirstName() + " " + lecture.getTeacher().getLastName());
         startTime.setText(lecture.getStartTime());
@@ -92,6 +94,7 @@ public class LectureActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(LectureActivity.this, LectureEdit.class);
                 intent.putExtra("lecture", lecture);
+                Log.d("Aleks", "Sent from lecture activity to lecture edit : " + lecture.toString());
                 startActivity(intent);
             }
         });
@@ -151,7 +154,9 @@ public class LectureActivity extends AppCompatActivity {
         listView_students.setAdapter(studentsAdapter);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-        collapsingToolbarLayout.setTitle(lecture.getName());
+        collapsingToolbarLayout.setTitle(lecture.toString());
+
+
 
     }
 }

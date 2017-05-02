@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -97,6 +98,9 @@ public class LectureEdit extends AppCompatActivity {
 
             //fill values for update
             lecture = (Lecture) intent.getSerializableExtra("lecture");
+
+            Log.d("Aleks", "lecture edit : " + lecture.toString());
+
             txtTitle.setText(lecture.getName());
             txtDescription.setText(lecture.getDescription());
             editTxtTimePickerFrom.setText(lecture.getStartTime());
@@ -244,7 +248,7 @@ public class LectureEdit extends AppCompatActivity {
 
     public boolean checkSizeSelectedStudents(int size, Lecture lecture) {
 
-        if(lecture != null ){
+        if (lecture != null) {
             return true;
         }
 
