@@ -39,7 +39,7 @@
     <string name="LastnameTitle">Lastname</string>
     <string name="AddressTitle">Address</string>
     <string name="CountryTitle">Country</string>
-    <string name="EndDateTitle">End Date</string>
+    <string name="EndDateTitle">End</string>
     <string name="MailTitle">Mail</string>
 
     <!--Hint ressources for the edit text-->
@@ -69,7 +69,7 @@
     <string name="Assignment">Assignment</string>
     <string name="Lecture">Lecture</string>
     <string name="hintName">Name</string>
-    <string name="StartDateTitle">Start Date</string>
+    <string name="StartDateTitle">Start</string>
     <string name="title_activity_scrolling" translatable="false">ScrollingActivity</string>
     <string name="large_text" translatable="false">
         "Material is the metaphor.\n\n"

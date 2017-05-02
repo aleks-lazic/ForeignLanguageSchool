@@ -12,9 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
+        android:layout_marginTop="@dimen/margin_top"
+        android:layout_marginLeft="@dimen/margin_left"
+        android:layout_marginRight="@dimen/margin_right"
         android:padding="10dp">
 
         <TextView
@@ -23,13 +23,13 @@
             android:layout_height="wrap_content"
             android:text="@string/DescriptionTitle"
             android:textColor="@color/colorAccent"
-            android:textSize="20sp" />
+            android:textSize="@dimen/text_title" />
 
         <TextView
             android:id="@+id/assignment_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/margin_child"
             android:inputType="textMultiLine"
             android:maxLines="5" />
 
@@ -37,31 +37,31 @@
             android:id="@+id/title_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/margin_top"
             android:text="@string/DueDateTitle"
             android:textColor="@color/colorAccent"
-            android:textSize="20sp" />
+            android:textSize="@dimen/text_title" />
 
         <TextView
             android:id="@+id/assignment_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="@dimen/margin_child" />
 
         <TextView
             android:id="@+id/title_teacher_ass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/margin_top"
             android:text="@string/TeacherTitle"
             android:textColor="@color/colorAccent"
-            android:textSize="20sp"/>
+            android:textSize="@dimen/text_title"/>
 
         <TextView
             android:id="@+id/assignment_teacher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="@dimen/margin_child" />
 
     </LinearLayout>
 

@@ -14,7 +14,7 @@
     <string name="AddressTitle">Adresse</string>
     <string name="CountryTitle">Pays</string>
     <string name="FistnameTitle">Prénom</string>
-    <string name="EndDateTitle">Date de fin</string>
+    <string name="EndDateTitle">Fin</string>
     <string name="LastnameTitle">Nom</string>
     <string name="MailTitle">Mail</string>
     <string name="TodayNavigation">Aujourd\'hui</string>
@@ -37,7 +37,7 @@
     <string name="Lecture">Cours</string>
     <string name="hintTitle">Titre</string>
     <string name="hintName">Nom</string>
-    <string name="StartDateTitle">Date de début</string>
+    <string name="StartDateTitle">Début</string>
     <string name="delete">Supprimer</string>
     <string name="more">Plus</string>
     <string name="DeletedSuccess">correctement supprimé</string>

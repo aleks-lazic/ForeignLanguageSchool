@@ -13,9 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
+        android:layout_marginTop="@dimen/margin_top"
+        android:layout_marginLeft="@dimen/margin_left"
+        android:layout_marginRight="@dimen/margin_right"
         android:padding="10dp">
 
         <TextView
@@ -24,13 +24,13 @@
             android:layout_height="wrap_content"
             android:text="@string/DescriptionTitle"
             android:textColor="@color/colorAccent"
-            android:textSize="20sp" />
+            android:textSize="@dimen/text_title" />
 
         <TextView
             android:id="@+id/activity_lecture_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/margin_child"
             android:inputType="textMultiLine"
             android:maxLines="5"/>
 
@@ -38,64 +38,68 @@
             android:id="@+id/activity_lecture_title_teacher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/margin_top"
             android:text="@string/TeacherTitle"
             android:textColor="@color/colorAccent"
-            android:textSize="20sp" />
+            android:textSize="@dimen/text_title" />
 
         <TextView
             android:id="@+id/activity_lecture_teacher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="@dimen/margin_child" />
 
         <TextView
             android:id="@+id/activity_lecture_title_day"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/margin_top"
             android:text="@string/DayTitle"
             android:textColor="@color/colorAccent"
-            android:textSize="20sp" />
+            android:textSize="@dimen/text_title" />
 
         <TextView
             android:id="@+id/activity_lecture_day"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="@dimen/margin_child" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/margin_child"
+            android:weightSum="1">
 
             <TextView
                 android:id="@+id/activity_lecture_title_starttime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:text="@string/from"
-                android:textColor="@color/colorAccent" />
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_title"/>
 
             <TextView
                 android:id="@+id/activity_lecture_starttime"
-                android:layout_width="wrap_content"
+                android:layout_width="115dp"
+                android:layout_weight="0.33"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp" />
+                android:textAlignment="center"/>
 
             <TextView
                 android:id="@+id/activity_lecture_title_endtime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:text="@string/to"
-                android:textColor="@color/colorAccent" />
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_title"/>
 
             <TextView
                 android:id="@+id/activity_lecture_endtime"
-                android:layout_width="wrap_content"
+                android:layout_width="115dp"
+                android:layout_weight="0.33"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp" />
+                android:textAlignment="center"/>
 
         </LinearLayout>
 
@@ -104,16 +108,17 @@
             android:id="@+id/activity_lecture_title_students"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/margin_top"
             android:text="@string/StudentsNavigation"
             android:textColor="@color/colorAccent"
-            android:textSize="20sp" />
+            android:textSize="@dimen/text_title" />
 
         <ListView
             android:id="@+id/activity_lecture_students"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
 
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

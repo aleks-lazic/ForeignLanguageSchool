@@ -13,7 +13,7 @@
     <string name="DueDateTitle">Geburtstermin</string>
     <string name="AddressTitle">Adresse</string>
     <string name="CountryTitle">Land</string>
-    <string name="EndDateTitle">Enddatum</string>
+    <string name="EndDateTitle">End</string>
     <string name="FistnameTitle">Vorname</string>
     <string name="LastnameTitle">Nachname</string>
     <string name="MailTitle">Mail</string>
@@ -37,7 +37,7 @@
     <string name="Lecture">Kurs</string>
     <string name="hintTitle">Titel</string>
     <string name="hintName">Name</string>
-    <string name="StartDateTitle">StartDatum</string>
+    <string name="StartDateTitle">Start</string>
     <string name="delete">Löschen</string>
     <string name="more">Mehr</string>
     <string name="DeletedSuccess">erfolgreich gelöscht</string>
