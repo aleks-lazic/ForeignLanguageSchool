@@ -111,11 +111,6 @@ public class TodayFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_today, container, false);
 
-        //create everything linked to the current date
-        simpleDateFormat = new SimpleDateFormat(("dd.MM.yyyy"));
-        currentDate = simpleDateFormat.format(new Date());
-
-
         //get listViews
         listViewLectures = (ListView) view.findViewById(R.id.home_lectures);
         listViewAssignments = (ListView) view.findViewById(R.id.home_assignments);
@@ -124,19 +119,6 @@ public class TodayFragment extends Fragment {
         db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
         dbLecture = new DBLecture(db);
         dbAssignment = new DBAssignment(db);
-
-        //SQL to get every lecture for current day
-        lectures = dbLecture.getLecturesForCurrentDateInHome(currentDate);
-
-        //SQL to get every lecture for current day
-        assignments = getAssignmentsForGoodDate();
-
-        // Set the list of lectures
-        adapterLecture = new CustomAdapterLecture(getActivity(),
-                lectures);
-
-        listViewLectures.setAdapter(adapterLecture);
-
 
         //set itemclicklistener
         listViewLectures.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -152,20 +134,6 @@ public class TodayFragment extends Fragment {
                 startActivity(myIntent);
             }
         });
-
-        //get current date in Date format
-        try {
-            todayDate = simpleDateFormat.parse(currentDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        // Set the list of assignments
-        adapterAssignment = new CustomAdapterAssignment(getActivity(),
-                assignments, todayDate);
-
-        listViewAssignments.setAdapter(adapterAssignment);
-
 
         listViewAssignments.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -229,13 +197,23 @@ public class TodayFragment extends Fragment {
 
     public void updateDisplay() {
 
-        lectures = dbLecture.getLecturesForCurrentDateInHome(currentDate);
-        assignments = getAssignmentsForGoodDate();
+        //create everything linked to the current date
+        simpleDateFormat = new SimpleDateFormat(("dd.MM.yyyy"));
+        currentDate = simpleDateFormat.format(new Date());
+        try {
+            todayDate = simpleDateFormat.parse(currentDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
+
+        lectures = dbLecture.getLecturesForCurrentDateInHome(currentDate);
         adapterLecture = new CustomAdapterLecture(getActivity(),
                 lectures);
         listViewLectures.setAdapter(adapterLecture);
 
+
+        assignments = getAssignmentsForGoodDate();
         adapterAssignment = new CustomAdapterAssignment(getActivity(),
                 assignments, todayDate);
         listViewAssignments.setAdapter(adapterAssignment);
@@ -265,11 +243,8 @@ public class TodayFragment extends Fragment {
 
             if (todayDate.equals(assignmentDate) || assignmentDate.before(todayDate)) {
                 res.add(a);
-                Log.d("Aleks", "J'ai ajouté : " + a.getTitle());
             }
         }
-
-        Log.d("Aleks", res.size()+" Res size : ");
         return res;
     }
 }

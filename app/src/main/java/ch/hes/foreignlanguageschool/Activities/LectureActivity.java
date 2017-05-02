@@ -61,7 +61,6 @@ public class LectureActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         lecture = (Lecture) intent.getSerializableExtra("lecture");
-        Log.d("Aleks", "In the lecture activity : " + lecture.toString());
         description = (TextView) findViewById(R.id.activity_lecture_description);
         teacher = (TextView) findViewById(R.id.activity_lecture_teacher);
         startTime = (TextView) findViewById(R.id.activity_lecture_starttime);
@@ -98,7 +97,6 @@ public class LectureActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(LectureActivity.this, LectureEdit.class);
                 intent.putExtra("lecture", lecture);
-                Log.d("Aleks", "Sent from lecture activity to lecture edit : " + lecture.toString());
                 startActivity(intent);
             }
         });

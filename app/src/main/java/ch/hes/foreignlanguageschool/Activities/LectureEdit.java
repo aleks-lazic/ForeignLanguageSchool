@@ -103,8 +103,6 @@ public class LectureEdit extends AppCompatActivity {
             //fill values for update
             lecture = (Lecture) intent.getSerializableExtra("lecture");
 
-            Log.d("Aleks", "lecture edit : " + lecture.toString());
-
             txtTitle.setText(lecture.getName());
             txtDescription.setText(lecture.getDescription());
             editTxtTimePickerFrom.setText(lecture.getStartTime());

@@ -113,7 +113,6 @@ public class LecturesFragment extends Fragment {
                 Intent myIntent = new Intent(view.getContext(), LectureActivity.class);
 
                 Lecture lecture = (Lecture) parent.getItemAtPosition(position);
-                Log.d("Aleks", lecture.toString());
                 lecture.setStudentsList(dbStudent.getStudentsListByLecture(lecture.getId()));
 
                 myIntent.putExtra("lecture",lecture);

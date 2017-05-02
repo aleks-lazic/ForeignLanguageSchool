@@ -12,7 +12,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import ch.hes.foreignlanguageschool.Activities.AssignmentActivity;
 import ch.hes.foreignlanguageschool.Activities.AssignmentEdit;
@@ -41,15 +44,18 @@ public class AssignmentsFragment extends Fragment {
 
     private CustomAdapterAssignment adapterAssignment;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private OnFragmentInteractionListener mListener;
 
     private ListView mListView;
 
     private ArrayList<Assignment> assignments;
+
+    private SimpleDateFormat simpleDateFormat;
+    private String currentDate;
+    private Date todayDate;
+
+    private String mParam1;
+    private String mParam2;
 
     public AssignmentsFragment() {
         // Required empty public constructor
@@ -91,15 +97,9 @@ public class AssignmentsFragment extends Fragment {
         // Set the list of assignments
         mListView = (ListView) view.findViewById(R.id.assignments_list);
 
+        //Everything linked to the DB
         db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
         dbAssignment = new DBAssignment(db);
-
-        assignments = dbAssignment.getAllAssignments();
-
-        adapterAssignment = new CustomAdapterAssignment(getActivity(),
-                assignments);
-
-        mListView.setAdapter(adapterAssignment);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
@@ -174,11 +174,19 @@ public class AssignmentsFragment extends Fragment {
     }
 
     public void updateDisplay() {
+
+        //everything linked to the date
+        simpleDateFormat = new SimpleDateFormat(("dd.MM.yyyy"));
+        currentDate = simpleDateFormat.format(new Date());
+        try {
+            todayDate = simpleDateFormat.parse(currentDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         assignments = dbAssignment.getAllAssignments();
-
         adapterAssignment = new CustomAdapterAssignment(getActivity(),
-                assignments);
-
+                assignments, todayDate);
         mListView.setAdapter(adapterAssignment);
 
     }

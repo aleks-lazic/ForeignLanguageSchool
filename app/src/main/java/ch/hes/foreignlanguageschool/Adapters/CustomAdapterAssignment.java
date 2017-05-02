@@ -2,6 +2,7 @@ package ch.hes.foreignlanguageschool.Adapters;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,7 @@ public class CustomAdapterAssignment extends ArrayAdapter<Assignment> {
 
         this.activity = activity;
         this.assignments = assignments;
+        currentDate = null;
     }
     public View getView(int position, View view, ViewGroup parent) {
 
@@ -58,6 +60,7 @@ public class CustomAdapterAssignment extends ArrayAdapter<Assignment> {
         }
 
         Assignment assignment = (Assignment) getItem(position);
+        Log.d("Aleks", "Assignment name : " + assignment.toString());
 
         if (assignment != null) {
             txtTitle = (TextView) v.findViewById(R.id.calendar_lectures_name);
@@ -72,6 +75,7 @@ public class CustomAdapterAssignment extends ArrayAdapter<Assignment> {
             }
             if(currentDate != null) {
                 if (assignmentDate.before(currentDate)) {
+                    Log.d("Aleks", "Je rentre dans le assignment before current date" + assignment.toString());
                     txtTitle.setTextColor(Color.RED);
                 }
             }
