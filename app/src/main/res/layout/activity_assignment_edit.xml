@@ -59,4 +59,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_child" />
 
-    </LinearLayout>
+        <CheckBox
+            android:id="@+id/checkBoxCalendar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/AddCalendar" />
+
+</LinearLayout>

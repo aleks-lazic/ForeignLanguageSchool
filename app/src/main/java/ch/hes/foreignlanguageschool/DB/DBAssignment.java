@@ -20,7 +20,7 @@ public class DBAssignment {
         this.db = db;
     }
 
-    public void insertValues(String title, String description, String date, int idTeacher) {
+    public void insertValues(String title, String description, String date, int idTeacher, int addedToCalendar) {
 
         SQLiteDatabase sql = db.getWritableDatabase();
 
@@ -30,6 +30,7 @@ public class DBAssignment {
         values.put(db.getASSIGNMENT_DATE(), date);
         values.put(db.getIMAGE_NAME(), "assignment_icon");
         values.put(db.getASSIGNMENT_FKTEACHER(), idTeacher);
+        values.put(db.getASSIGNMENT_ADDTOCALENDAR(), addedToCalendar);
 
         sql.insert(db.getTableAssignement(), null, values);
         sql.close();
@@ -56,6 +57,8 @@ public class DBAssignment {
                 assignment.setDate(cursor.getString(3));
                 assignment.setImageName(cursor.getString(4));
                 assignment.setTeacher(teacher.getTeacherById(Integer.parseInt(cursor.getString(5))));
+                boolean flag = (Integer.parseInt(cursor.getString(6)) > 0);
+                assignment.setAddedToCalendar(flag);
 
                 // Adding assignment to list
                 assignmentsList.add(assignment);
@@ -91,6 +94,8 @@ public class DBAssignment {
                 assignment.setDate(cursor.getString(3));
                 assignment.setImageName(cursor.getString(4));
                 assignment.setTeacher(teacher.getTeacherById(Integer.parseInt(cursor.getString(5))));
+                boolean flag = (Integer.parseInt(cursor.getString(6)) > 0);
+                assignment.setAddedToCalendar(flag);
 
                 // Adding assignment to list
                 assignmentsList.add(assignment);
@@ -127,6 +132,8 @@ public class DBAssignment {
         assignment.setDescription(cursor.getString(2));
         assignment.setDate(cursor.getString(3));
         assignment.setImageName(cursor.getString(4));
+        boolean flag = (Integer.parseInt(cursor.getString(6)) > 0);
+        assignment.setAddedToCalendar(flag);
 
 
         sql.close();
@@ -144,7 +151,7 @@ public class DBAssignment {
 
     }
 
-    public int updateAssignmentById(int idAssignment, String title, String description, String date) {
+    public int updateAssignmentById(int idAssignment, String title, String description, String date, int addedToCalendar) {
         SQLiteDatabase sql = db.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -152,6 +159,8 @@ public class DBAssignment {
         values.put(db.getASSIGNMENT_TITLE(), title);
         values.put(db.getASSIGNMENT_DESCRIPTION(), description);
         values.put(db.getASSIGNMENT_DATE(), date);
+        values.put(db.getASSIGNMENT_ADDTOCALENDAR(), addedToCalendar);
+
 
         return sql.update(db.getTableAssignement(), values, db.getKeyId() + " = ?",
                 new String[]{String.valueOf(idAssignment)});

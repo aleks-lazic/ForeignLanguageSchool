@@ -42,6 +42,8 @@
     <string name="EndDateTitle">End</string>
     <string name="MailTitle">Mail</string>
 
+    <string name="AddCalendar">Add to the phone\'s calendar</string>
+
     <!--Hint ressources for the edit text-->
     <string name="hintTitle">Title</string>
 

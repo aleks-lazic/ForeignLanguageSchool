@@ -37,6 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private final String ASSIGNMENT_DESCRIPTION = "Description";
     private final String ASSIGNMENT_DATE = "Date";
     private final String ASSIGNMENT_FKTEACHER = "idTeacher";
+    private final String ASSIGNMENT_ADDTOCALENDAR = "Added_To_Calendar";
 
     //Student Table - column names
     private final String STUDENT_FIRSTNAME = "FirstName";
@@ -103,6 +104,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + ASSIGNMENT_DATE + " TEXT, "
             + IMAGE_NAME + " TEXT NOT NULL, "
             + ASSIGNMENT_FKTEACHER + " TEXT NOT NULL, "
+            + ASSIGNMENT_ADDTOCALENDAR + " INTEGER NOT NULL, "
             + "FOREIGN KEY(" + ASSIGNMENT_FKTEACHER + ") REFERENCES " + TABLE_TEACHER + "(" + KEY_ID + "));";
 
     private final String CREATE_DAY_TABLE = "CREATE TABLE " + TABLE_DAY + "("
@@ -289,5 +291,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public String getIMAGE_NAME() {
         return IMAGE_NAME;
+    }
+
+    public String getASSIGNMENT_ADDTOCALENDAR() {
+        return ASSIGNMENT_ADDTOCALENDAR;
     }
 }

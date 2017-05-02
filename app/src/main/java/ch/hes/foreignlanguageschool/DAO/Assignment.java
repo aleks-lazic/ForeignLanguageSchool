@@ -14,6 +14,7 @@ public class Assignment implements Serializable {
     private String date;
     private Teacher teacher;
     private String imageName;
+    private boolean addedToCalendar;
 
     public Assignment(int id, String title, String description, String date, Teacher teacher) {
         this.id = id;
@@ -79,4 +80,11 @@ public class Assignment implements Serializable {
     }
 
 
+    public boolean isAddedToCalendar() {
+        return addedToCalendar;
+    }
+
+    public void setAddedToCalendar(boolean addedToCalendar) {
+        this.addedToCalendar = addedToCalendar;
+    }
 }

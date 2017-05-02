@@ -1,9 +1,14 @@
 package ch.hes.foreignlanguageschool.Activities;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +20,7 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import ch.hes.foreignlanguageschool.DAO.Teacher;
@@ -32,6 +38,8 @@ import ch.hes.foreignlanguageschool.Fragments.StudentsFragment;
 import ch.hes.foreignlanguageschool.Fragments.TodayFragment;
 import ch.hes.foreignlanguageschool.R;
 
+import static android.os.Build.VERSION_CODES.M;
+
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -41,7 +49,7 @@ public class NavigationActivity extends AppCompatActivity
     public final String TAG_ASSIGNMENTS = "Assignments";
     public final String TAG_LECTURES = "Lectures";
     public final String TAG_STUDENTS = "Students";
-//    public final String TAG_TEACHERS = "Teachers";
+    //    public final String TAG_TEACHERS = "Teachers";
     public final String TAG_SETTINGS = "Settings";
 
     public String CURRENT_TAG = "";
@@ -74,9 +82,9 @@ public class NavigationActivity extends AppCompatActivity
 
         addToDatabase();
 
+        checkPermissions();
         //create the current teacher like if it was in a database
         currentTeacher = Teacher.getInstance(databaseHelper, 1);
-
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -275,7 +283,6 @@ public class NavigationActivity extends AppCompatActivity
         //adding students
         dbStudent = new DBStudent(databaseHelper);
         String currentDate = new SimpleDateFormat("dd.MM.yyyy").format(new Date());
-        Log.d("Date", currentDate);
         dbStudent.insertValues("Aleksandar", "Lazic", "Rue Centrale 8", "Serbia", "aleks.lazic@hotmail.com", currentDate, "30.06.2017");
         dbStudent.insertValues("Bernard", "Dubois", "Route des anémones 40", "Suisse", "bernard.dubois@gmail.com", currentDate, "30.07.207");
         dbStudent.insertValues("Kristijan", "Palesko", "Rue de la gare 8", "Croatia", "kiki.palesh@hotmail.com", currentDate, "30.08.2017");
@@ -284,9 +291,8 @@ public class NavigationActivity extends AppCompatActivity
 
         //adding assignments
         dbAssignment = new DBAssignment(databaseHelper);
-        dbAssignment.insertValues("Correction IT exams", null, "01.05.2017", dbTeacher.getTeacherById(1).getId());
-        dbAssignment.insertValues("Prepare English course", "Organize the presentations", currentDate, dbTeacher.getTeacherById(1).getId());
-
+        dbAssignment.insertValues("Correction IT exams", null, "01.05.2017", dbTeacher.getTeacherById(1).getId(), 0);
+        dbAssignment.insertValues("Prepare English course", "Organize the presentations", currentDate, dbTeacher.getTeacherById(1).getId(), 0);
 
         //adding students to lecture
         dbLecture.addStudentToLecture(1, 1);
@@ -296,11 +302,33 @@ public class NavigationActivity extends AppCompatActivity
         dbLecture.addStudentToLecture(5, 1);
         dbLecture.addStudentToLecture(1, 2);
 
-
         //adding lectures to a date
         dbLecture.addDayAndHoursToLecture(1, 1, "08:30", "10:00");
         dbLecture.addDayAndHoursToLecture(2, 2, "08:30", "10:00");
 
     }
 
+    private void checkPermissions() {
+        int PERMISSION_ALL = 1;
+
+        //List of all the permissions needed by the app
+        String[] permissions = new String[]{
+                Manifest.permission.WRITE_CALENDAR,
+        };
+
+        if (!hasPermissions(this, permissions)) {
+            ActivityCompat.requestPermissions(this, permissions, PERMISSION_ALL);
+        }
+    }
+
+    private static boolean hasPermissions(Context context, String... permissions) {
+        if (android.os.Build.VERSION.SDK_INT >= M && context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

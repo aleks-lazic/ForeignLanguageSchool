@@ -7,9 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -24,11 +27,16 @@ public class AssignmentEdit extends AppCompatActivity {
     private TextView txtViewDescription;
     private TextView txtViewDueDate;
     private TextView txtViewCurrentTeacher;
+    private CheckBox checkBoxCalendar;
 
     private Assignment assignment;
 
     private DatabaseHelper db;
     private DBAssignment dbAssignment;
+
+    private SimpleDateFormat simpleDateFormat;
+    private Date todayDate;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +51,7 @@ public class AssignmentEdit extends AppCompatActivity {
         txtViewDescription = (TextView) findViewById(R.id.activity_assignment_edit_description);
         txtViewDueDate = (TextView) findViewById(R.id.datePicker);
         txtViewCurrentTeacher = (TextView) findViewById(R.id.teacherName);
+        checkBoxCalendar = (CheckBox) findViewById(R.id.checkBoxCalendar);
 
         txtViewDueDate.setText("");
         txtViewCurrentTeacher.setText(NavigationActivity.currentTeacher.toString());
@@ -64,6 +73,11 @@ public class AssignmentEdit extends AppCompatActivity {
             txtViewTitle.setText(assignment.getTitle());
             txtViewDescription.setText(assignment.getDescription());
             txtViewDueDate.setText(assignment.getDate());
+
+            if (assignment.isAddedToCalendar()) {
+                checkBoxCalendar.setChecked(true);
+                checkBoxCalendar.setEnabled(false);
+            }
 
             createDatePicker();
 
@@ -104,13 +118,18 @@ public class AssignmentEdit extends AppCompatActivity {
             String description = txtViewDescription.getText().toString();
             String date = txtViewDueDate.getText().toString();
             int idTeacher = NavigationActivity.currentTeacher.getId();
+            int isChecked = 0;
+            if (checkBoxCalendar.isChecked()) {
+                addToPhoneCalendar(title, description, date);
+                isChecked = 1;
+            }
 
             if (assignment != null) {
                 //update the current assignment
-                dbAssignment.updateAssignmentById(assignment.getId(), title, description, date);
+                dbAssignment.updateAssignmentById(assignment.getId(), title, description, date, isChecked);
             } else {
                 //insert everything in DB
-                dbAssignment.insertValues(title, description, date, idTeacher);
+                dbAssignment.insertValues(title, description, date, idTeacher, isChecked);
             }
 
 
@@ -120,6 +139,29 @@ public class AssignmentEdit extends AppCompatActivity {
 
         finish();
         return super.onOptionsItemSelected(item);
+
+    }
+
+    public void addToPhoneCalendar(String title, String description, String date) {
+
+        long startTime = 0;
+
+        simpleDateFormat = new SimpleDateFormat(("dd.MM.yyyy"));
+        try {
+            todayDate = simpleDateFormat.parse(date);
+            startTime =  todayDate.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Intent intent = new Intent(Intent.ACTION_EDIT);
+        intent.setType("vnd.android.cursor.item/event");
+        intent.putExtra("beginTime", startTime);
+        intent.putExtra("allDay", true);
+        intent.putExtra("endTime", startTime);
+        intent.putExtra("title", title);
+        intent.putExtra("description", description);
+        startActivity(intent);
 
     }
 
@@ -139,13 +181,13 @@ public class AssignmentEdit extends AppCompatActivity {
                     public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
                     /*      get date   */
                         selectedmonth = selectedmonth + 1;
-                        String day = ""+selectedday;
-                        String month = ""+selectedmonth;
-                        if(selectedday< 10){
-                            day = "0"+selectedday;
+                        String day = "" + selectedday;
+                        String month = "" + selectedmonth;
+                        if (selectedday < 10) {
+                            day = "0" + selectedday;
                         }
-                        if(selectedmonth < 10){
-                            month = "0"+selectedmonth;
+                        if (selectedmonth < 10) {
+                            month = "0" + selectedmonth;
                         }
                         txtViewDueDate.setText(day + "." + month + "." + selectedyear);
                     }
@@ -156,7 +198,6 @@ public class AssignmentEdit extends AppCompatActivity {
             }
         });
     }
-
 
 
 }
