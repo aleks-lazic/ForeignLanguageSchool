@@ -178,7 +178,7 @@ public class LectureEdit extends AppCompatActivity {
                 int position = checked.keyAt(i);
                 // Add sport if it is checked i.e.) == TRUE!
                 if (checked.valueAt(i))
-                    student = dbStudent.getStudentById(position + 1);
+                    student = adapterStudent.getItem(position);
                 students.add(student);
             }
 
@@ -196,8 +196,18 @@ public class LectureEdit extends AppCompatActivity {
             if (lecture != null) {
                 dbLecture.updateLectureNameAndDescription(lecture.getId(), title, description);
                 dbLecture.updateDayTime(lecture.getId(), lecture.getIdDay(), idDay, timeFrom, timeTo);
+                for (Student s : lecture.getStudentsList()
+                        ) {
+                    Log.d("Aleks", "Lecture ID : " + lecture.getId() + "  " + s.toString());
+                }
+
+                for (Student s: students
+                     ) {
+                    Log.d("Aleks" , "New students : " + s.toString());
+                }
                 dbLecture.addStudentsToLecture(students, lecture.getId());
             } else {
+                Log.d("Aleks", "Lecture ID : " + lecture.getId() + "  " );
                 dbLecture.insertLectureWithTeacherDayAndHoursAndStudents
                         (title, description, idTeacher, idDay, timeFrom, timeTo, students);
             }
@@ -274,7 +284,7 @@ public class LectureEdit extends AppCompatActivity {
                 mTimePicker = new TimePickerDialog(LectureEdit.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        editTxtTimePickerFrom.setText(selectedHour + ":" + selectedMinute);
+                        editTxtTimePickerFrom.setText(String.format("%02d:%02d", selectedHour, selectedMinute));
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle(getResources().getString(R.string.SelectTime));
@@ -294,7 +304,7 @@ public class LectureEdit extends AppCompatActivity {
                 mTimePicker = new TimePickerDialog(LectureEdit.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        editTxtTimePickerTo.setText(selectedHour + ":" + selectedMinute);
+                        editTxtTimePickerTo.setText(String.format("%02d:%02d", selectedHour, selectedMinute));
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle(getResources().getString(R.string.SelectTime));

@@ -139,7 +139,15 @@ public class AssignmentEdit extends AppCompatActivity {
                     public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
                     /*      get date   */
                         selectedmonth = selectedmonth + 1;
-                        txtViewDueDate.setText("" + selectedday + "." + selectedmonth + "." + selectedyear);
+                        String day = ""+selectedday;
+                        String month = ""+selectedmonth;
+                        if(selectedday< 10){
+                            day = "0"+selectedday;
+                        }
+                        if(selectedmonth < 10){
+                            month = "0"+selectedmonth;
+                        }
+                        txtViewDueDate.setText(day + "." + month + "." + selectedyear);
                     }
                 }, mYear, mMonth, mDay);
                 mDatePicker.setTitle(getResources().getString(R.string.SelectDate));

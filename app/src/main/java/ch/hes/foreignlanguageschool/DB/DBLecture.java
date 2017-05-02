@@ -304,7 +304,6 @@ public class DBLecture {
         Cursor cursor = sql.rawQuery(selectQuery, null);
 
         DBTeacher teacher = new DBTeacher(db);
-        DBStudent student = new DBStudent(db);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
@@ -500,17 +499,17 @@ public class DBLecture {
 
     private int getIdOfDayWeek(int day) {
         switch (day) {
-            case 4:
-                return 1;
             case 5:
-                return 2;
+                return 1;
             case 6:
-                return 3;
+                return 2;
             case 7:
-                return 4;
+                return 3;
             case 1:
-                return 5;
+                return 4;
             case 2:
+                return 5;
+            case 3:
                 return 6;
         }
 
