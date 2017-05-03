@@ -33,6 +33,7 @@ import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.Fragments.AssignmentsFragment;
 import ch.hes.foreignlanguageschool.Fragments.CalendarFragment;
 import ch.hes.foreignlanguageschool.Fragments.LecturesFragment;
+import ch.hes.foreignlanguageschool.Fragments.ProfileFragment;
 import ch.hes.foreignlanguageschool.Fragments.SettingsFragment;
 import ch.hes.foreignlanguageschool.Fragments.StudentsFragment;
 import ch.hes.foreignlanguageschool.Fragments.TodayFragment;
@@ -49,7 +50,7 @@ public class NavigationActivity extends AppCompatActivity
     public final String TAG_ASSIGNMENTS = "Assignments";
     public final String TAG_LECTURES = "Lectures";
     public final String TAG_STUDENTS = "Students";
-    //    public final String TAG_TEACHERS = "Teachers";
+    public final String TAG_PROFILE = "Profile";
     public final String TAG_SETTINGS = "Settings";
 
     public String CURRENT_TAG = "";
@@ -147,9 +148,9 @@ public class NavigationActivity extends AppCompatActivity
         } else if (id == R.id.nav_students) {
             navItemIndex = 4;
             CURRENT_TAG = TAG_STUDENTS;
-//        } else if (id == R.id.nav_teachers) {
-//            navItemIndex = 5;
-//            CURRENT_TAG = TAG_TEACHERS;
+        } else if (id == R.id.nav_profile) {
+            navItemIndex = 5;
+            CURRENT_TAG = TAG_PROFILE;
         } else if (id == R.id.nav_settings) {
             CURRENT_TAG = TAG_SETTINGS;
             navItemIndex = 6;
@@ -234,10 +235,10 @@ public class NavigationActivity extends AppCompatActivity
                 // students
                 StudentsFragment studentsFragment = new StudentsFragment();
                 return studentsFragment;
-//            case 5:
-//                // teachers
-//                TeachersFragment teachersFragment = new TeachersFragment();
-//                return teachersFragment;
+            case 5:
+//                // profile
+                ProfileFragment profileFragment = new ProfileFragment();
+                return profileFragment;
             case 6:
                 // settings
                 SettingsFragment settingsFragment = new SettingsFragment();
