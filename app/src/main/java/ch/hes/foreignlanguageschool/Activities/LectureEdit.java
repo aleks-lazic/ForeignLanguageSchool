@@ -47,7 +47,8 @@ public class LectureEdit extends AppCompatActivity {
     private EditText editTxtTimePickerTo;
     private TextView txtViewNoStudents;
 
-    private ArrayList<Student> students;
+    private ArrayList<Student> studentsNotInCourse;
+    private ArrayList<Student> allStudents;
     private ArrayAdapter<Student> adapterStudent;
     private Student student;
 
@@ -94,6 +95,7 @@ public class LectureEdit extends AppCompatActivity {
         dbDay = new DBDay(db);
         dbStudent = new DBStudent(db);
         dbLecture = new DBLecture(db);
+        allStudents = dbStudent.getAllStudents();
 
         //get the intent to check if it is an update or a new lecture
         Intent intent = getIntent();
@@ -122,16 +124,25 @@ public class LectureEdit extends AppCompatActivity {
             setDefaultValueSpinner(spinnerDays, day.getId());
 
             //set listview
-            students = dbStudent.getStudentsListNotInLecture(lecture.getId());
+            studentsNotInCourse = dbStudent.getStudentsListNotInLecture(lecture.getId());
 
-            if (students.size() == 0) {
-                listViewStudents.setVisibility(View.INVISIBLE);
-                txtViewNoStudents.setText("All students are already in this lecture");
-            }
-
-            adapterStudent = new ArrayAdapter<Student>(this, android.R.layout.simple_list_item_multiple_choice, students);
+            adapterStudent = new ArrayAdapter<Student>(this, android.R.layout.simple_list_item_multiple_choice, allStudents);
             listViewStudents.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
             listViewStudents.setAdapter(adapterStudent);
+
+            boolean flag ;
+            for (int i = 0; i < allStudents.size(); i++) {
+                for (int j = 0; j < studentsNotInCourse.size(); j++) {
+                    if (allStudents.get(i).toString().equals(studentsNotInCourse.get(j).toString())) {
+                        Log.d("Aleks", " devrait pas être checké : " + allStudents.get(i).toString());
+                    } else {
+                        Log.d("Aleks", " devrait être checké : " + allStudents.get(i).toString());
+                        listViewStudents.setItemChecked(i, false);
+                    }
+
+                }
+            }
+
         } else {
 
 
@@ -146,8 +157,7 @@ public class LectureEdit extends AppCompatActivity {
             createTimePicker();
 
             //Fill in the listview with all students
-            students = dbStudent.getAllStudents();
-            adapterStudent = new ArrayAdapter<Student>(this, android.R.layout.simple_list_item_multiple_choice, students);
+            adapterStudent = new ArrayAdapter<Student>(this, android.R.layout.simple_list_item_multiple_choice, allStudents);
             listViewStudents.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
             listViewStudents.setAdapter(adapterStudent);
 
@@ -176,42 +186,42 @@ public class LectureEdit extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
             }
 
-            //get students from selected list
-            students = new ArrayList<Student>();
-            student = null;
-
-            for (int i = 0; i < checked.size(); i++) {
-                // Item position in adapter
-                int position = checked.keyAt(i);
-                // Add sport if it is checked i.e.) == TRUE!
-                if (checked.valueAt(i))
-                    student = adapterStudent.getItem(position);
-                students.add(student);
-            }
-
-            //get the day from spinner
-            day = (Day) spinnerDays.getSelectedItem();
-
-            //insert everything in DB
-            String title = txtTitle.getText().toString();
-            String description = txtDescription.getText().toString();
-            int idTeacher = NavigationActivity.currentTeacher.getId();
-            int idDay = day.getId();
-            String timeFrom = editTxtTimePickerFrom.getText().toString();
-            String timeTo = editTxtTimePickerTo.getText().toString();
-
-            if (!checkIfLectureAtSameTime(lecture, idDay, timeFrom, timeTo)) {
-                return super.onOptionsItemSelected(item);
-            }
-
-            if (lecture != null) {
-                dbLecture.updateLectureNameAndDescription(lecture.getId(), title, description);
-                dbLecture.updateDayTime(lecture.getId(), lecture.getIdDay(), idDay, timeFrom, timeTo);
-                dbLecture.addStudentsToLecture(students, lecture.getId());
-            } else {
-                dbLecture.insertLectureWithTeacherDayAndHoursAndStudents
-                        (title, description, idTeacher, idDay, timeFrom, timeTo, students);
-            }
+//            //get students from selected list
+//            all = new ArrayList<Student>();
+//            student = null;
+//
+//            for (int i = 0; i < checked.size(); i++) {
+//                // Item position in adapter
+//                int position = checked.keyAt(i);
+//                // Add sport if it is checked i.e.) == TRUE!
+//                if (checked.valueAt(i))
+//                    student = adapterStudent.getItem(position);
+//                students.add(student);
+//            }
+//
+//            //get the day from spinner
+//            day = (Day) spinnerDays.getSelectedItem();
+//
+//            //insert everything in DB
+//            String title = txtTitle.getText().toString();
+//            String description = txtDescription.getText().toString();
+//            int idTeacher = NavigationActivity.currentTeacher.getId();
+//            int idDay = day.getId();
+//            String timeFrom = editTxtTimePickerFrom.getText().toString();
+//            String timeTo = editTxtTimePickerTo.getText().toString();
+//
+//            if (!checkIfLectureAtSameTime(lecture, idDay, timeFrom, timeTo)) {
+//                return super.onOptionsItemSelected(item);
+//            }
+//
+//            if (lecture != null) {
+//                dbLecture.updateLectureNameAndDescription(lecture.getId(), title, description);
+//                dbLecture.updateDayTime(lecture.getId(), lecture.getIdDay(), idDay, timeFrom, timeTo);
+//                dbLecture.addStudentsToLecture(students, lecture.getId());
+//            } else {
+//                dbLecture.insertLectureWithTeacherDayAndHoursAndStudents
+//                        (title, description, idTeacher, idDay, timeFrom, timeTo, students);
+//            }
 
 
         }
