@@ -25,14 +25,13 @@
             android:padding="10dp"
             android:text="@string/LecturesNavigation"
             android:textColor="@color/colorAccent"
-            android:textSize="20sp" />
+            android:textSize="@dimen/text_title" />
 
 
         <ListView
             android:id="@+id/calendar_listview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_height="wrap_content">
 
         </ListView>
 
