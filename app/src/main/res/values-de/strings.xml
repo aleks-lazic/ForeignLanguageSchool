@@ -6,7 +6,6 @@
     <string name="LecturesNavigation">Kurse</string>
     <string name="SettingsNavigation">Einstellungen</string>
     <string name="StudentsNavigation">Studenten</string>
-    <string name="TeachersNavigation">Lehrer</string>
     <string name="action_settings">Einstellungen</string>
     <string name="TeacherTitle">Lehrer</string>
     <string name="DescriptionTitle">Beschreibung</string>
@@ -26,7 +25,7 @@
         <item>Aufgaben</item>
         <item>Kurse</item>
         <item>Studenten</item>
-        <item>Lehrer</item>
+        <item>Profile</item>
         <item>Einstellungen</item>
     </string-array>
     <string name="DayTitle">Tag</string>
@@ -50,4 +49,5 @@
     <string name="TitleAlert">diese Zeile ist erforderlich</string>
     <string name="AddCalendar">In Kalender</string>
     <string name="AllStudents">Alle Schüler sind bereits in diesem Kurs</string>
+    <string name="ProfileNavigation">Profil</string>
 </resources>

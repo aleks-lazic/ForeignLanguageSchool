@@ -12,7 +12,6 @@
     <string name="AssignmentsNavigation">Assignments</string>
     <string name="LecturesNavigation">Lectures</string>
     <string name="StudentsNavigation">Students</string>
-    <string name="TeachersNavigation">Teachers</string>
     <string name="SettingsNavigation">Settings</string>
 
     <string name="more">More</string>
@@ -24,7 +23,7 @@
         <item>Assignments</item>
         <item>Lectures</item>
         <item>Students</item>
-        <item>Teachers</item>
+        <item>Profile</item>
         <item>Settings</item>
     </string-array>
     <string name="title_activity_lectures" translatable="false">LecturesActivity</string>
@@ -171,6 +170,7 @@
     <string name="TitleAlert">This line is required</string>
     <string name="Student">Student</string>
     <string name="AllStudents">All students are already in this lecture</string>
+    <string name="ProfileNavigation">Profile</string>
 
 
 </resources>

@@ -6,7 +6,6 @@
     <string name="LecturesNavigation">Cours</string>
     <string name="SettingsNavigation">Options</string>
     <string name="StudentsNavigation">Etudiants</string>
-    <string name="TeachersNavigation">Professeurs</string>
     <string name="action_settings">Options</string>
     <string name="TeacherTitle">Professeur</string>
     <string name="DescriptionTitle">Description</string>
@@ -26,7 +25,7 @@
         <item>Tâches</item>
         <item>Cours</item>
         <item>Elèves</item>
-        <item>Professeurs</item>
+        <item>Profil</item>
         <item>Options</item>
     </string-array>
     <string name="DayTitle">Jour</string>
@@ -50,4 +49,5 @@
     <string name="Student">Etudiant</string>
     <string name="AddCalendar">Ajouter au Calendrier</string>
     <string name="AllStudents">Tous les étudiants sont déjà dans ce cours</string>
+    <string name="ProfileNavigation">Profil</string>
 </resources>
