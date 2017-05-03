@@ -117,4 +117,20 @@ public class Student implements Serializable{
     public String toString(){
         return firstName + " " + lastName;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (!(obj instanceof Student)) {
+            return false;
+        }
+
+        Student student = (Student) obj;
+
+        if (id == student.getId()) {
+            return true;
+        }
+
+        return false;
+    }
 }

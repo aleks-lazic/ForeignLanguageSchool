@@ -12,11 +12,6 @@ import java.util.GregorianCalendar;
 import ch.hes.foreignlanguageschool.DAO.Lecture;
 import ch.hes.foreignlanguageschool.DAO.Student;
 
-import static android.R.attr.description;
-import static android.R.attr.end;
-import static android.R.attr.id;
-import static android.R.attr.name;
-
 /**
  * Created by patrickclivaz on 11.04.17.
  */
@@ -497,7 +492,7 @@ public class DBLecture {
 
     }
 
-    private void deleteLectureFromLectureStudent(int idLecture) {
+    public void deleteLectureFromLectureStudent(int idLecture) {
         SQLiteDatabase sql = db.getWritableDatabase();
 
         sql.delete(db.getTableLecturestudent(), db.getLECTURESTUDENT_FKLECTURE() + " = ?",

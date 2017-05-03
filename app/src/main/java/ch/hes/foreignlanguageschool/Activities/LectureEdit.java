@@ -35,6 +35,8 @@ import ch.hes.foreignlanguageschool.DB.DBStudent;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
 
+import static android.R.attr.x;
+
 
 public class LectureEdit extends AppCompatActivity {
 
@@ -45,8 +47,8 @@ public class LectureEdit extends AppCompatActivity {
     private ListView listViewStudents;
     private EditText editTxtTimePickerFrom;
     private EditText editTxtTimePickerTo;
-    private TextView txtViewNoStudents;
 
+    private ArrayList<Student> allStudents;
     private ArrayList<Student> students;
     private ArrayAdapter<Student> adapterStudent;
     private Student student;
@@ -83,7 +85,6 @@ public class LectureEdit extends AppCompatActivity {
         spinnerDays = (Spinner) findViewById(R.id.spinnerDay);
         editTxtTimePickerFrom = (EditText) findViewById(R.id.timePickerFrom);
         editTxtTimePickerTo = (EditText) findViewById(R.id.timePickerTo);
-        txtViewNoStudents = (TextView) findViewById(R.id.txtViewNoStudents);
 
         editTxtTimePickerTo.setText("");
         editTxtTimePickerFrom.setText("");
@@ -94,6 +95,7 @@ public class LectureEdit extends AppCompatActivity {
         dbDay = new DBDay(db);
         dbStudent = new DBStudent(db);
         dbLecture = new DBLecture(db);
+        allStudents = dbStudent.getAllStudents();
 
         //get the intent to check if it is an update or a new lecture
         Intent intent = getIntent();
@@ -122,19 +124,20 @@ public class LectureEdit extends AppCompatActivity {
             setDefaultValueSpinner(spinnerDays, day.getId());
 
             //set listview
-            students = dbStudent.getStudentsListNotInLecture(lecture.getId());
+            students = dbStudent.getStudentsListByLecture(lecture.getId());
 
-            if (students.size() == 0) {
-                listViewStudents.setVisibility(View.INVISIBLE);
-                txtViewNoStudents.setText("All students are already in this lecture");
-            }
-
-            adapterStudent = new ArrayAdapter<Student>(this, android.R.layout.simple_list_item_multiple_choice, students);
+            adapterStudent = new ArrayAdapter<Student>(this, android.R.layout.simple_list_item_multiple_choice, allStudents);
             listViewStudents.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
             listViewStudents.setAdapter(adapterStudent);
+
+            //check which will be checked and which not
+            for (int i = 0; i < allStudents.size(); i++) {
+                if (students.contains(allStudents.get(i))) {
+                    listViewStudents.setItemChecked(i, true);
+                }
+            }
+
         } else {
-
-
             //set days spinner
             days = dbDay.getAllDays();
             adapterDay = new ArrayAdapter<Day>(this, android.R.layout.simple_spinner_dropdown_item, days);
@@ -177,16 +180,22 @@ public class LectureEdit extends AppCompatActivity {
             }
 
             //get students from selected list
+            checked = listViewStudents.getCheckedItemPositions();
             students = new ArrayList<Student>();
-            student = null;
 
             for (int i = 0; i < checked.size(); i++) {
                 // Item position in adapter
                 int position = checked.keyAt(i);
                 // Add sport if it is checked i.e.) == TRUE!
-                if (checked.valueAt(i))
-                    student = adapterStudent.getItem(position);
-                students.add(student);
+                if (checked.valueAt(i)) {
+                    student = (Student) adapterStudent.getItem(position);
+                    students.add(student);
+                }
+            }
+
+            //check if minimum one student is selected
+            if (!checkSizeSelectedStudents(students.size())) {
+                return super.onOptionsItemSelected(item);
             }
 
             //get the day from spinner
@@ -207,11 +216,14 @@ public class LectureEdit extends AppCompatActivity {
             if (lecture != null) {
                 dbLecture.updateLectureNameAndDescription(lecture.getId(), title, description);
                 dbLecture.updateDayTime(lecture.getId(), lecture.getIdDay(), idDay, timeFrom, timeTo);
+                dbLecture.deleteLectureFromLectureStudent(lecture.getId());
                 dbLecture.addStudentsToLecture(students, lecture.getId());
             } else {
                 dbLecture.insertLectureWithTeacherDayAndHoursAndStudents
                         (title, description, idTeacher, idDay, timeFrom, timeTo, students);
             }
+
+            finish();
 
 
         }
@@ -257,11 +269,7 @@ public class LectureEdit extends AppCompatActivity {
         return true;
     }
 
-    public boolean checkSizeSelectedStudents(int size, Lecture lecture) {
-
-        if (lecture != null) {
-            return true;
-        }
+    public boolean checkSizeSelectedStudents(int size) {
 
         if (size == 0) {
             Toast toast = Toast.makeText(this, " " + getResources().getString(R.string.StudentAlert), Toast.LENGTH_SHORT);
@@ -331,13 +339,6 @@ public class LectureEdit extends AppCompatActivity {
         int toTime = Integer.parseInt(editTxtTimePickerTo.getText().toString().replaceAll(":", ""));
 
         if (!checkEndTimeAfterStartTime(fromTime, toTime)) {
-            return false;
-        }
-
-        //check if minimum one student is selected
-        checked = listViewStudents.getCheckedItemPositions();
-
-        if (!checkSizeSelectedStudents(checked.size(), lecture)) {
             return false;
         }
 

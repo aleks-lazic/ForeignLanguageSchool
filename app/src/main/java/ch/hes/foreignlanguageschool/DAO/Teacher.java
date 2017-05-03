@@ -108,4 +108,20 @@ public class Teacher implements Serializable {
     public void setLecturesList(List<Lecture> lecturesList) {
         this.lecturesList = lecturesList;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (!(obj instanceof Teacher)) {
+            return false;
+        }
+
+        Teacher t = (Teacher) obj;
+
+        if (id == t.getId()) {
+            return true;
+        }
+
+        return false;
+    }
 }
