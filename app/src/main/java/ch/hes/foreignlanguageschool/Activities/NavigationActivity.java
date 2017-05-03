@@ -4,8 +4,10 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -24,6 +26,7 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import ch.hes.foreignlanguageschool.DAO.Teacher;
 import ch.hes.foreignlanguageschool.DB.DBAssignment;
@@ -77,6 +80,7 @@ public class NavigationActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadLastLanguage();
         setContentView(R.layout.activity_navigation);
 
         checkPermissions();
@@ -112,6 +116,14 @@ public class NavigationActivity extends AppCompatActivity
         if (savedInstanceState == null) {
             navItemIndex = 0;
             CURRENT_TAG = TAG_TODAY;
+            loadHomeFragment();
+        }
+
+        Intent intent = getIntent();
+
+        if(intent.getStringExtra("tag") != null){
+            navItemIndex = 6;
+            CURRENT_TAG = TAG_SETTINGS;
             loadHomeFragment();
         }
     }
@@ -166,7 +178,6 @@ public class NavigationActivity extends AppCompatActivity
         loadHomeFragment();
         return true;
     }
-
     public void loadHomeFragment() {
 
         // selecting appropriate nav menu item
@@ -288,6 +299,16 @@ public class NavigationActivity extends AppCompatActivity
 
         TextView nav_mail = (TextView)hView.findViewById(R.id.mail);
         nav_mail.setText(currentTeacher.getMail());
+    }
+
+    private void loadLastLanguage(){
+        String language = PreferenceManager.getDefaultSharedPreferences(this).getString("LANGUAGE", "en");
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
     }
 
 }
