@@ -2,8 +2,10 @@ package ch.hes.foreignlanguageschool.Activities;
 
 import android.app.Activity;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseBooleanArray;
@@ -173,6 +175,8 @@ public class LectureEdit extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.save) {
+
+            hideKeyboard();
 
             if (!checkEverythingOnSaveClick()) {
 
@@ -420,5 +424,17 @@ public class LectureEdit extends AppCompatActivity {
 
         return true;
     }
+
+    public void hideKeyboard() {
+        closeKeyboard(LectureEdit.this, txtTitle.getWindowToken());
+        closeKeyboard(LectureEdit.this, txtDescription.getWindowToken());
+    }
+
+    public static void closeKeyboard(Context c, IBinder windowToken) {
+        InputMethodManager mgr = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
+        mgr.hideSoftInputFromWindow(windowToken, 0);
+    }
+
+
 }
 

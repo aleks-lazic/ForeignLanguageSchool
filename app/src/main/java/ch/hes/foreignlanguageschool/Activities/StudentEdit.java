@@ -1,12 +1,15 @@
 package ch.hes.foreignlanguageschool.Activities;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -95,6 +98,8 @@ public class StudentEdit extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.save) {
+
+            hideKeyboard();
 
             if (!checkEverythingOnSaveClick()) {
 
@@ -206,5 +211,18 @@ public class StudentEdit extends AppCompatActivity {
 
 
         return true;
+    }
+
+    public void hideKeyboard() {
+        closeKeyboard(StudentEdit.this, txtFirstName.getWindowToken());
+        closeKeyboard(StudentEdit.this, txtLastName.getWindowToken());
+        closeKeyboard(StudentEdit.this, txtAddress.getWindowToken());
+        closeKeyboard(StudentEdit.this, txtCountry.getWindowToken());
+        closeKeyboard(StudentEdit.this, txtMail.getWindowToken());
+    }
+
+    public static void closeKeyboard(Context c, IBinder windowToken) {
+        InputMethodManager mgr = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
+        mgr.hideSoftInputFromWindow(windowToken, 0);
     }
 }

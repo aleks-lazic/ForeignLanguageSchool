@@ -18,6 +18,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -62,9 +64,9 @@ public class NavigationActivity extends AppCompatActivity
     private String[] activityTitles;
 
     private DrawerLayout drawer;
-    private NavigationView navigationView;
     private Toolbar toolbar;
     private Handler mHandler;
+    private static  NavigationView navigationView;
 
     //Database
     private DatabaseHelper databaseHelper;
@@ -92,6 +94,7 @@ public class NavigationActivity extends AppCompatActivity
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
+        setNavigationView();
 
 
         // load toolbar titles from string resources
@@ -276,4 +279,15 @@ public class NavigationActivity extends AppCompatActivity
         }
         return true;
     }
+
+    public static void setNavigationView() {
+
+        View hView =  navigationView.getHeaderView(0);
+        TextView nav_user = (TextView)hView.findViewById(R.id.name);
+        nav_user.setText(currentTeacher.toString());
+
+        TextView nav_mail = (TextView)hView.findViewById(R.id.mail);
+        nav_mail.setText(currentTeacher.getMail());
+    }
+
 }

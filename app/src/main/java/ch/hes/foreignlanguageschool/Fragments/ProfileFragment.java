@@ -144,6 +144,8 @@ public class ProfileFragment extends Fragment {
 
         if (id == R.id.save) {
 
+            hideKeyboard();
+
             if (!checkEverythingOnSaveClick()) {
 
                 return super.onOptionsItemSelected(item);
@@ -158,7 +160,6 @@ public class ProfileFragment extends Fragment {
             NavigationActivity.setNavigationView();
 
             setEditable(false);
-            hideKeyboard();
             setHasOptionsMenu(false);
 
             fab.setVisibility(View.VISIBLE);

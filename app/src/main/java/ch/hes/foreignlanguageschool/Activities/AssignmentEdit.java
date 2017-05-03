@@ -1,12 +1,15 @@
 package ch.hes.foreignlanguageschool.Activities;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -106,10 +109,16 @@ public class AssignmentEdit extends AppCompatActivity {
 
         if (id == R.id.save) {
 
+            hideKeyboard();
 
             //check if the title is filled
             if (txtViewTitle.getText().toString().trim().equals("")) {
                 txtViewTitle.setError(getResources().getString(R.string.TitleAlert));
+                return super.onOptionsItemSelected(item);
+            }
+
+            if (txtViewDueDate.getText().toString().trim().equals("")) {
+                txtViewDueDate.setError(getResources().getString(R.string.TitleAlert));
                 return super.onOptionsItemSelected(item);
             }
 
@@ -199,5 +208,14 @@ public class AssignmentEdit extends AppCompatActivity {
         });
     }
 
+    public void hideKeyboard() {
+        closeKeyboard(AssignmentEdit.this, txtViewTitle.getWindowToken());
+        closeKeyboard(AssignmentEdit.this, txtViewDescription.getWindowToken());
+    }
+
+    public static void closeKeyboard(Context c, IBinder windowToken) {
+        InputMethodManager mgr = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
+        mgr.hideSoftInputFromWindow(windowToken, 0);
+    }
 
 }

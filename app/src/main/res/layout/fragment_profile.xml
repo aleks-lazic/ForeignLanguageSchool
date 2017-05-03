@@ -26,7 +26,8 @@
             android:id="@+id/teacher_firstname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_child" />
+            android:layout_marginTop="@dimen/margin_child"
+            android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/title_teacher_lastname"
@@ -41,7 +42,8 @@
             android:id="@+id/teacher_lastname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_child" />
+            android:layout_marginTop="@dimen/margin_child"
+            android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/title_teacher_mail"
@@ -56,7 +58,8 @@
             android:id="@+id/teacher_mail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_child" />
+            android:layout_marginTop="@dimen/margin_child"
+            android:inputType="textEmailAddress" />
 
     </LinearLayout>
 

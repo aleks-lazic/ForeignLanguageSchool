@@ -17,13 +17,11 @@
     tools:context="ch.hes.foreignlanguageschool.Activities.AssignmentEdit">
 
 
-
         <EditText
             android:id="@+id/activity_assignment_edit_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hintTitle"
-            android:inputType="textPersonName" />
+            android:hint="@string/hintTitle" />
 
         <EditText
             android:id="@+id/activity_assignment_edit_description"
