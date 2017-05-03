@@ -442,7 +442,7 @@ public class DBLecture {
                 + db.getLECTUREDATE_ENDTIME() + " "
                 + "FROM " + db.getTableLecture()
                 + " LEFT JOIN " + db.getTableLecturedate() + " ON " + db.getTableLecture() + "." + db.getKeyId() + " = " + db.getTableLecturedate() + "." + db.getLECTUREDATE_FKLECTURE()
-                + " WHERE " + db.getLECTUREDATE_FKDAY() + " = " + dayOfWeek;
+                + " WHERE " + db.getLECTUREDATE_FKDAY() + " = " + dayOfWeek + " ORDER BY " + db.getLECTUREDATE_STARTTIME();
 
 
         Cursor cursor = sql.rawQuery(selectQuery, null);

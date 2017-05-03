@@ -24,7 +24,7 @@
             android:title="@string/StudentsNavigation" />
         <item
             android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_teachers"
+            android:icon="@drawable/ic_profile"
             android:title="@string/ProfileNavigation" />
         <item
             android:id="@+id/nav_settings"

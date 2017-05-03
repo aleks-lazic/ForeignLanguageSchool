@@ -4,10 +4,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -24,7 +22,6 @@ import android.view.MenuItem;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 import ch.hes.foreignlanguageschool.DAO.Teacher;
 import ch.hes.foreignlanguageschool.DB.DBAssignment;
@@ -78,7 +75,6 @@ public class NavigationActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadLastLanguage();
         setContentView(R.layout.activity_navigation);
 
         checkPermissions();
@@ -97,6 +93,7 @@ public class NavigationActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
 
+
         // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.MenuItems);
 
@@ -109,21 +106,11 @@ public class NavigationActivity extends AppCompatActivity
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        Intent intent = getIntent();
-
         if (savedInstanceState == null) {
             navItemIndex = 0;
             CURRENT_TAG = TAG_TODAY;
             loadHomeFragment();
         }
-
-        if(intent.getStringExtra("tag") != null){
-            navItemIndex = 6;
-            CURRENT_TAG = TAG_SETTINGS;
-            loadHomeFragment();
-        }
-
-
     }
 
     @Override
@@ -246,7 +233,7 @@ public class NavigationActivity extends AppCompatActivity
                 StudentsFragment studentsFragment = new StudentsFragment();
                 return studentsFragment;
             case 5:
-                // profile
+//                // profile
                 ProfileFragment profileFragment = new ProfileFragment();
                 return profileFragment;
             case 6:
@@ -288,18 +275,5 @@ public class NavigationActivity extends AppCompatActivity
             }
         }
         return true;
-    }
-
-    private void loadLastLanguage(){
-        String language = PreferenceManager.getDefaultSharedPreferences(this).getString("LANGUAGE", "en");
-        Log.d("Aleks", language);
-        Locale locale = new Locale(language);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config,
-                getBaseContext().getResources().getDisplayMetrics());
-
-
     }
 }
