@@ -268,7 +268,6 @@ public class LectureEdit extends AppCompatActivity {
             toast.show();
             return false;
         }
-
         return true;
     }
 
