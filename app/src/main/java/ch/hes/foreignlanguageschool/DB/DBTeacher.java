@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import ch.hes.foreignlanguageschool.DAO.Teacher;
 
+import static android.R.attr.description;
+
 /**
  * Created by Aleksandar on 06.04.2017.
  */
@@ -70,6 +72,22 @@ public class DBTeacher {
 
         // return teacher
         return teacher;
+    }
+
+
+    public int updateTeacherById(int idTeacher, String firstName, String lastName, String mail) {
+        SQLiteDatabase sql = db.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(db.getTEACHER_FIRSTNAME(), firstName);
+        values.put(db.getTEACHER_LASTNAME(), lastName);
+        values.put(db.getTEACHER_MAIL(), mail);
+
+
+        return sql.update(db.getTableTeacher(), values, db.getKeyId() + " = ?",
+                new String[]{String.valueOf(idTeacher)});
+
     }
 
 //    public ArrayList<Teacher> getAllTeachers() {

@@ -4,21 +4,28 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.TextView;
 
-import ch.hes.foreignlanguageschool.Activities.TeacherActivity;
-import ch.hes.foreignlanguageschool.Activities.TeacherEdit;
-import ch.hes.foreignlanguageschool.Adapters.CustomAdapterTeacher;
-import ch.hes.foreignlanguageschool.DAO.Teacher;
+import ch.hes.foreignlanguageschool.Activities.NavigationActivity;
+import ch.hes.foreignlanguageschool.Activities.StudentEdit;
 import ch.hes.foreignlanguageschool.DB.DBTeacher;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,14 +45,17 @@ public class ProfileFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
-
-    private ListView mListView;
+    private EditText txtFirstName;
+    private EditText txtLastName;
+    private EditText txtMail;
 
     private DatabaseHelper db;
     private DBTeacher dbTeacher;
 
-    private CustomAdapterTeacher adapterTeacher;
+    private FloatingActionButton fab;
+
+
+    private OnFragmentInteractionListener mListener;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -69,6 +79,11 @@ public class ProfileFragment extends Fragment {
         return fragment;
     }
 
+    public static void closeKeyboard(Context c, IBinder windowToken) {
+        InputMethodManager mgr = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
+        mgr.hideSoftInputFromWindow(windowToken, 0);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,45 +96,71 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        // Inflate the layout for this fragment
+//      Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-//
-//        // Set the list of assignments
-////        mListView = (ListView) view.findViewById(R.id.teachers_list);
-//
-//        db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
-//        dbTeacher = new DBTeacher(db);
-//
-////        teachers = dbTeacher.getAllTeachers();
-//
-////        adapterTeacher = new CustomAdapterTeacher(getActivity(), teachers);
-//
-//        mListView.setAdapter(adapterTeacher);
-//
-//
-//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            public void onItemClick(AdapterView<?> parent, View view,
-//                                    int position, long id) {
-//
-//                Intent myIntent = new Intent(view.getContext(), TeacherActivity.class);
-//
-//                Teacher teacher = (Teacher) parent.getItemAtPosition(position);
-//                myIntent.putExtra("teacher", teacher);
-//
-//                startActivity(myIntent);
-//            }
-//        });
-//
-//        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fragment_fab_teachers);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getActivity().getApplicationContext(), TeacherEdit.class);
-//                startActivity(intent);
-//            }
-//        });
-//
+
+        txtFirstName = (EditText) view.findViewById(R.id.teacher_firstname);
+        txtFirstName.setText(NavigationActivity.currentTeacher.getFirstName());
+
+        txtLastName = (EditText) view.findViewById(R.id.teacher_lastname);
+        txtLastName.setText(NavigationActivity.currentTeacher.getLastName());
+
+        txtMail = (EditText) view.findViewById(R.id.teacher_mail);
+        txtMail.setText(NavigationActivity.currentTeacher.getMail());
+
+        setEditable(false);
+
+        //create database objects
+        db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
+        dbTeacher = new DBTeacher(db);
+
+        fab = (FloatingActionButton) view.findViewById(R.id.fragment_fab_profile);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setEditable(true);
+                setHasOptionsMenu(true);
+                fab.setVisibility(View.INVISIBLE);
+            }
+        });
+
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // TODO Add your menu entries here
+        inflater.inflate(R.menu.menu_edit, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.save) {
+
+            if (!checkEverythingOnSaveClick()) {
+
+                return super.onOptionsItemSelected(item);
+            }
+
+            String fistname = txtFirstName.getText().toString();
+            String lastname = txtLastName.getText().toString();
+            String mail = txtMail.getText().toString();
+
+            dbTeacher.updateTeacherById(NavigationActivity.currentTeacher.getId(),fistname, lastname, mail);
+            NavigationActivity.currentTeacher=dbTeacher.getTeacherById(1);
+
+            setEditable(false);
+            hideKeyboard();
+            setHasOptionsMenu(false);
+
+            fab.setVisibility(View.VISIBLE);
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -146,6 +187,52 @@ public class ProfileFragment extends Fragment {
         mListener = null;
     }
 
+    public void hideKeyboard() {
+        closeKeyboard(getActivity(), txtFirstName.getWindowToken());
+        closeKeyboard(getActivity(), txtLastName.getWindowToken());
+        closeKeyboard(getActivity(), txtMail.getWindowToken());
+    }
+
+
+    public void setEditable (boolean bool) {
+        txtFirstName.setCursorVisible(bool);
+        txtFirstName.setClickable(bool);
+        txtFirstName.setFocusable(bool);
+        txtFirstName.setFocusableInTouchMode(bool);
+
+        txtLastName.setCursorVisible(bool);
+        txtLastName.setClickable(bool);
+        txtLastName.setFocusable(bool);
+        txtLastName.setFocusableInTouchMode(bool);
+
+        txtMail.setCursorVisible(bool);
+        txtMail.setClickable(bool);
+        txtMail.setFocusable(bool);
+        txtMail.setFocusableInTouchMode(bool);
+    }
+
+    public boolean checkEverythingOnSaveClick() {
+        //check if the firsname is filled
+        if (txtFirstName.getText().toString().trim().equals("")) {
+            txtFirstName.setError(getResources().getString(R.string.TitleAlert));
+            return false;
+        }
+
+        //check if the lastname is filled
+        else if (txtLastName.getText().toString().trim().equals("")) {
+            txtLastName.setError(getResources().getString(R.string.TitleAlert));
+            return false;
+        }
+
+        //check if the mail is filled
+        else if (txtMail.getText().toString().trim().equals("")) {
+            txtMail.setError(getResources().getString(R.string.TitleAlert));
+            return false;
+        }
+
+        return true;
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -161,18 +248,4 @@ public class ProfileFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-//        updateDisplay();
-    }
-
-    public void updateDisplay() {
-//        teachers = dbTeacher.getAllTeachers();
-
-//        adapterTeacher = new CustomAdapterTeacher(getActivity(), teachers);
-
-        mListView.setAdapter(adapterTeacher);
-
-    }
 }
