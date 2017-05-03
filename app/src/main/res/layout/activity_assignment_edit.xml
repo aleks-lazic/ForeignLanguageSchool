@@ -9,7 +9,7 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     android:layout_marginStart="16dp"
-    android:layout_marginTop="32dp"
+    android:layout_marginTop="@dimen/margin_top"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
     android:clickable="true"
@@ -63,6 +63,7 @@
             android:id="@+id/checkBoxCalendar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top"
             android:text="@string/AddCalendar" />
 
 </LinearLayout>

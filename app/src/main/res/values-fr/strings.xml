@@ -48,4 +48,6 @@
     <string name="SelectDate">Sélectionnez une date</string>
     <string name="TitleAlert">Cette ligne est requise</string>
     <string name="Student">Etudiant</string>
+    <string name="AddCalendar">Ajouter au Calendrier</string>
+    <string name="AllStudents">Tous les étudiants sont déjà dans ce cours</string>
 </resources>
