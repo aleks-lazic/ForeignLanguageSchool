@@ -1,17 +1,17 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/margin_top"
     tools:context="ch.hes.foreignlanguageschool.Fragments.SettingsFragment">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:alpha="0.3"
-        app:srcCompat="@drawable/ic_settings" />
-
-</FrameLayout>
+    <Button
+        android:id="@+id/btnLanguage"
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:text="@string/Settings"
+        android:textAlignment="textStart"
+        android:textAllCaps="false" />
+</LinearLayout>

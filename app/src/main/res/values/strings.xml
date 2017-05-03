@@ -43,6 +43,17 @@
 
     <string name="AddCalendar">Add to Calendar</string>
 
+    <string name="Settings">Language</string>
+
+    <string name="chooseLanguage">Choose a language</string>
+
+    <string-array name="languages">
+        <item>English</item>
+        <item>French</item>
+        <item>German</item>
+    </string-array>
+
+
     <!--Hint ressources for the edit text-->
     <string name="hintTitle">Title</string>
 
