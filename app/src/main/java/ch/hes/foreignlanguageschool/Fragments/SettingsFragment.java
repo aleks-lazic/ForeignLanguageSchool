@@ -177,6 +177,7 @@ public class SettingsFragment extends Fragment {
         startActivity(myIntent);
     }
 
+
     public void changeToGE(View v) {
         String languageToLoad = "de";
         Locale locale = new Locale(languageToLoad);
