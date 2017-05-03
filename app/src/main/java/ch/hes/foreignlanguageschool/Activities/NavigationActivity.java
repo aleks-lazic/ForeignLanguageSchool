@@ -73,12 +73,6 @@ public class NavigationActivity extends AppCompatActivity
 
     //Database
     private DatabaseHelper databaseHelper;
-    private DBTeacher dbTeacher;
-    private DBLecture dbLecture;
-    private DBStudent dbStudent;
-    private DBDay dbDay;
-    private DBAssignment dbAssignment;
-
 
     public static Teacher currentTeacher;
 
@@ -87,9 +81,6 @@ public class NavigationActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         loadLastLanguage();
         setContentView(R.layout.activity_navigation);
-
-
-        addToDatabase();
         checkPermissions();
 
         databaseHelper = DatabaseHelper.getInstance(getApplicationContext());
@@ -317,58 +308,4 @@ public class NavigationActivity extends AppCompatActivity
         getBaseContext().getResources().updateConfiguration(config,
                 getBaseContext().getResources().getDisplayMetrics());
     }
-
-    public void addToDatabase() {
-        //Don't delete for the moment
-        this.deleteDatabase("DBForeignSchool");
-
-        //everything about database
-        databaseHelper = DatabaseHelper.getInstance(this);
-
-        //adding teachers
-        dbTeacher = new DBTeacher(databaseHelper);
-        dbTeacher.insertValues("Predrag", "Ljubicic", "predrag.ljubicic@gmail.srb");
-
-        //adding days
-        dbDay = new DBDay(databaseHelper);
-        dbDay.insertValues("Monday");
-        dbDay.insertValues("Tuesday");
-        dbDay.insertValues("Wednesday");
-        dbDay.insertValues("Thursday");
-        dbDay.insertValues("Friday");
-        dbDay.insertValues("Saturday");
-
-        //adding lectures
-        dbLecture = new DBLecture(databaseHelper);
-        dbLecture.insertValues("English", "English advanced course", dbTeacher.getTeacherById(1).getId());
-        dbLecture.insertValues("Written Communication", "Written communication course for beginners", dbTeacher.getTeacherById(1).getId());
-
-        //adding students
-        dbStudent = new DBStudent(databaseHelper);
-        String currentDate = new SimpleDateFormat("dd.MM.yyyy").format(new Date());
-        dbStudent.insertValues("Aleksandar", "Lazic", "Rue Centrale 8", "Serbia", "aleks.lazic@hotmail.com", currentDate, "30.06.2017");
-        dbStudent.insertValues("Bernard", "Dubois", "Route des anémones 40", "Suisse", "bernard.dubois@gmail.com", currentDate, "30.07.207");
-        dbStudent.insertValues("Kristijan", "Palesko", "Rue de la gare 8", "Croatia", "kiki.palesh@hotmail.com", currentDate, "30.08.2017");
-        dbStudent.insertValues("Vlado", "Mitrovic", "Rue de l'armée 15", "Bosnia", "vlado.mitro@myarmy.com", currentDate, "30.09.2017");
-        dbStudent.insertValues("Noah", "Bonvin", "Rue de Tsarbouye 45", "Ouganda", "noah.b@hevs.ch", currentDate, "30.05.2017");
-
-        //adding assignments
-        dbAssignment = new DBAssignment(databaseHelper);
-        dbAssignment.insertValues("Correction IT exams", null, "01.05.2017", dbTeacher.getTeacherById(1).getId(), 0);
-        dbAssignment.insertValues("Prepare English course", "Organize the presentations", currentDate, dbTeacher.getTeacherById(1).getId(), 0);
-
-        //adding students to lecture
-        dbLecture.addStudentToLecture(1, 1);
-        dbLecture.addStudentToLecture(2, 1);
-        dbLecture.addStudentToLecture(3, 1);
-        dbLecture.addStudentToLecture(4, 1);
-        dbLecture.addStudentToLecture(5, 1);
-        dbLecture.addStudentToLecture(1, 2);
-
-        //adding lectures to a date
-        dbLecture.addDayAndHoursToLecture(1, 1, "08:30", "10:00");
-        dbLecture.addDayAndHoursToLecture(2, 2, "08:30", "10:00");
-
-    }
-
 }
