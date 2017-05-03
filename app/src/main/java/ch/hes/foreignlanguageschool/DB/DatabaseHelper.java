@@ -6,18 +6,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    //Singleton
-    private static DatabaseHelper db;
-
-    //Logcat tag
-    private final String LOG = "DatabaseHelper";
-
     //Database Version
     private static final int DATABASE_VERSION = 1;
-
     //Database Name
     private static final String DATABASE_NAME = "DBForeignSchool";
-
+    //Singleton
+    private static DatabaseHelper db;
+    //Logcat tag
+    private final String LOG = "DatabaseHelper";
     //Table Names
     private final String TABLE_ASSIGNEMENT = "Assignment";
     private final String TABLE_STUDENT = "Student";
@@ -30,7 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //Common column names
     private final String KEY_ID = "id";
 
-    private final String IMAGE_NAME = "ImageName" ;
+    private final String IMAGE_NAME = "ImageName";
 
     //Assignment Table - column names
     private final String ASSIGNMENT_TITLE = "Title";
@@ -47,30 +43,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private final String STUDENT_MAIL = "Mail";
     private final String STUDENT_STARTDATE = "StartDate";
     private final String STUDENT_ENDDATE = "EndDate";
-
-    //Lecture Table - column names
-    private final String LECTURE_NAME = "Name";
-    private final String LECTURE_DESCRIPTION = "Description";
-    private final String LECTURE_FKTEACHER = "idTeacher";
-
-    //LectureStudent Table - column names
-    private final String LECTURESTUDENT_FKLECTURE = "idLecture";
-    private final String LECTURESTUDENT_FKSTUDENT = "idStudent";
-
-    //Teacher Table - column names
-    private final String TEACHER_FIRSTNAME = "FirstName";
-    private final String TEACHER_LASTNAME = "LastName";
-    private final String TEACHER_MAIL = "Mail";
-
-    //Day Table - column names
-    private final String DAY_NAME = "Name";
-
-    //LectureDate Table - column names
-    private final String LECTUREDATE_FKLECTURE = "idLecture";
-    private final String LECTUREDATE_FKDAY = "idDay";
-    private final String LECTUREDATE_STARTTIME = "StartTime";
-    private final String LECTUREDATE_ENDTIME = "EndTime";
-
     public final String CREATE_STUDENT_TABLE = "CREATE TABLE " + TABLE_STUDENT + "("
             + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + STUDENT_FIRSTNAME + " TEXT NOT NULL, "
@@ -81,7 +53,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + STUDENT_STARTDATE + " TEXT NOT NULL, "
             + STUDENT_ENDDATE + " TEXT, "
             + IMAGE_NAME + " TEXT);";
-
+    //Lecture Table - column names
+    private final String LECTURE_NAME = "Name";
+    private final String LECTURE_DESCRIPTION = "Description";
+    private final String LECTURE_FKTEACHER = "idTeacher";
+    //LectureStudent Table - column names
+    private final String LECTURESTUDENT_FKLECTURE = "idLecture";
+    private final String LECTURESTUDENT_FKSTUDENT = "idStudent";
+    //Teacher Table - column names
+    private final String TEACHER_FIRSTNAME = "FirstName";
+    private final String TEACHER_LASTNAME = "LastName";
+    private final String TEACHER_MAIL = "Mail";
+    //Day Table - column names
+    private final String DAY_NAME = "Name";
+    //LectureDate Table - column names
+    private final String LECTUREDATE_FKLECTURE = "idLecture";
+    private final String LECTUREDATE_FKDAY = "idDay";
+    private final String LECTUREDATE_STARTTIME = "StartTime";
+    private final String LECTUREDATE_ENDTIME = "EndTime";
     private final String CREATE_TEACHER_TABLE = "CREATE TABLE " + TABLE_TEACHER + "("
             + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + TEACHER_FIRSTNAME + " TEXT NOT NULL, "
@@ -133,6 +122,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    public static DatabaseHelper getInstance(Context context) {
+        if (db == null) {
+            db = new DatabaseHelper(context);
+            return db;
+        }
+
+        return db;
+    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -150,15 +147,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-    }
-
-    public static DatabaseHelper getInstance(Context context) {
-        if (db == null) {
-            db = new DatabaseHelper(context);
-            return db;
-        }
-
-        return db;
     }
 
     public String getTableAssignement() {

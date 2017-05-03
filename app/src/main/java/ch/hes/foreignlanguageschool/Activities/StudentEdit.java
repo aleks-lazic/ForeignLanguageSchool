@@ -36,6 +36,10 @@ public class StudentEdit extends AppCompatActivity {
     private DatabaseHelper db;
     private DBStudent dbStudent;
 
+    public static void closeKeyboard(Context c, IBinder windowToken) {
+        InputMethodManager mgr = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
+        mgr.hideSoftInputFromWindow(windowToken, 0);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,9 +119,9 @@ public class StudentEdit extends AppCompatActivity {
             String endDate = editTxtDatePickerEnd.getText().toString();
 
 
-            if(student != null){
+            if (student != null) {
                 dbStudent.updateStudentById(student.getId(), firstname, lastname, address, country, mail, startDate, endDate);
-            }else{
+            } else {
                 dbStudent.insertValues(firstname, lastname, address, country, mail, startDate, endDate);
             }
             finish();
@@ -219,10 +223,5 @@ public class StudentEdit extends AppCompatActivity {
         closeKeyboard(StudentEdit.this, txtAddress.getWindowToken());
         closeKeyboard(StudentEdit.this, txtCountry.getWindowToken());
         closeKeyboard(StudentEdit.this, txtMail.getWindowToken());
-    }
-
-    public static void closeKeyboard(Context c, IBinder windowToken) {
-        InputMethodManager mgr = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
-        mgr.hideSoftInputFromWindow(windowToken, 0);
     }
 }

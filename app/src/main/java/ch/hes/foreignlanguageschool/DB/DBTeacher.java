@@ -4,11 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.util.ArrayList;
-
 import ch.hes.foreignlanguageschool.DAO.Teacher;
-
-import static android.R.attr.description;
 
 /**
  * Created by Aleksandar on 06.04.2017.

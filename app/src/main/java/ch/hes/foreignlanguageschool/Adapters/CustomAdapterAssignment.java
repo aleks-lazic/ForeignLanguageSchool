@@ -2,7 +2,6 @@ package ch.hes.foreignlanguageschool.Adapters;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +48,7 @@ public class CustomAdapterAssignment extends ArrayAdapter<Assignment> {
         this.assignments = assignments;
         currentDate = null;
     }
+
     public View getView(int position, View view, ViewGroup parent) {
 
         View v = view;
@@ -72,7 +72,7 @@ public class CustomAdapterAssignment extends ArrayAdapter<Assignment> {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            if(currentDate != null) {
+            if (currentDate != null) {
                 if (assignmentDate.before(currentDate)) {
                     txtTitle.setTextColor(Color.RED);
                 }

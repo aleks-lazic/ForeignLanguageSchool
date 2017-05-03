@@ -12,6 +12,9 @@ import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 
 public class Teacher implements Serializable {
 
+    //Singleton unique instance
+    private static Teacher currentTeacher;
+    private static DBTeacher dbTeacher;
     private int id;
     private String firstName;
     private String lastName;
@@ -19,10 +22,6 @@ public class Teacher implements Serializable {
     private List<Assignment> assignmentList;
     private String imageName;
     private List<Lecture> lecturesList;
-
-    //Singleton unique instance
-    private static Teacher currentTeacher;
-    private static DBTeacher dbTeacher;
 
     private Teacher(int id, String firstName, String lastName, String mail) {
         this.id = id;

@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,23 +36,17 @@ public class LecturesFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    String[] tabLectures;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
     private OnFragmentInteractionListener mListener;
-
     private ListView mListView;
     private CustomAdapterLecture adapterLecture;
-
     private ArrayList<Lecture> lectures;
-
     private DatabaseHelper db;
     private DBLecture dbLecture;
     private DBStudent dbStudent;
-
-    String[] tabLectures;
 
     public LecturesFragment() {
         // Required empty public constructor
@@ -115,7 +108,7 @@ public class LecturesFragment extends Fragment {
                 Lecture lecture = (Lecture) parent.getItemAtPosition(position);
                 lecture.setStudentsList(dbStudent.getStudentsListByLecture(lecture.getId()));
 
-                myIntent.putExtra("lecture",lecture);
+                myIntent.putExtra("lecture", lecture);
 
                 startActivity(myIntent);
             }
@@ -159,21 +152,6 @@ public class LecturesFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -187,5 +165,20 @@ public class LecturesFragment extends Fragment {
                 lectures);
 
         mListView.setAdapter(adapterLecture);
+    }
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
     }
 }

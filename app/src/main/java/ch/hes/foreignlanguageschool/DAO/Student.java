@@ -2,13 +2,12 @@ package ch.hes.foreignlanguageschool.DAO;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by patrickclivaz on 11.04.17.
  */
 
-public class Student implements Serializable{
+public class Student implements Serializable {
 
     private int id;
     private String firstName;
@@ -27,12 +26,13 @@ public class Student implements Serializable{
         this.lastName = lastName;
         this.address = address;
         this.country = country;
-        this.mail= mail;
+        this.mail = mail;
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
-    public Student(){}
+    public Student() {
+    }
 
     public int getId() {
         return id;
@@ -114,7 +114,7 @@ public class Student implements Serializable{
         this.imageName = imageName;
     }
 
-    public String toString(){
+    public String toString() {
         return firstName + " " + lastName;
     }
 

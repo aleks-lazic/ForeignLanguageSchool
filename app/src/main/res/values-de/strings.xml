@@ -18,6 +18,26 @@
     <string name="MailTitle">Mail</string>
     <string name="TodayNavigation">Heute</string>
 
+    <string name="Settings">Sprache</string>
+
+    <string name="chooseLanguage">Wählen Sie eine Sprache</string>
+
+    <string-array name="languages">
+        <item>Englisch</item>
+        <item>Französisch</item>
+        <item>Deutsch</item>
+    </string-array>
+
+    <!--Days of week-->
+    <string-array name="DaysOfWeekUntilSaturday">
+        <item>Montag</item>
+        <item>Dienstag</item>
+        <item>Mittwoch</item>
+        <item>Donnerstag</item>
+        <item>Freitag</item>
+        <item>Samstag</item>
+    </string-array>
+
 
     <string-array name="MenuItems">
         <item>Heute</item>

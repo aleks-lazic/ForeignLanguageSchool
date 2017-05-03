@@ -16,7 +16,8 @@ public class Day implements Serializable {
         this.name = name;
     }
 
-    public Day() {}
+    public Day() {
+    }
 
     public int getId() {
         return id;
@@ -34,7 +35,7 @@ public class Day implements Serializable {
         this.name = name;
     }
 
-    public String toString(){
+    public String toString() {
         return name;
     }
 }

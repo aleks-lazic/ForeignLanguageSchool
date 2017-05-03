@@ -3,11 +3,10 @@ package ch.hes.foreignlanguageschool.Fragments;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -15,12 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.preference.PreferenceManager;
 
 import java.util.Locale;
 
-import ch.hes.foreignlanguageschool.Activities.LectureActivity;
-import ch.hes.foreignlanguageschool.Activities.LectureEdit;
 import ch.hes.foreignlanguageschool.Activities.NavigationActivity;
 import ch.hes.foreignlanguageschool.R;
 
@@ -131,21 +127,6 @@ public class SettingsFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
-
     public void changeLanguage(View view, int position) {
 
         switch (position) {
@@ -177,7 +158,6 @@ public class SettingsFragment extends Fragment {
         startActivity(myIntent);
     }
 
-
     public void changeToGE(View v) {
         String languageToLoad = "de";
         Locale locale = new Locale(languageToLoad);
@@ -206,5 +186,20 @@ public class SettingsFragment extends Fragment {
         Intent myIntent = new Intent(v.getContext(), NavigationActivity.class);
         myIntent.putExtra("tag", "Settings");
         startActivity(myIntent);
+    }
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
     }
 }

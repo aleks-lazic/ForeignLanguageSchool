@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,8 +35,6 @@ import ch.hes.foreignlanguageschool.DB.DBLecture;
 import ch.hes.foreignlanguageschool.DB.DBStudent;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
-
-import static android.R.attr.x;
 
 
 public class LectureEdit extends AppCompatActivity {
@@ -69,6 +66,11 @@ public class LectureEdit extends AppCompatActivity {
 
 
     private SparseBooleanArray checked;
+
+    public static void closeKeyboard(Context c, IBinder windowToken) {
+        InputMethodManager mgr = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
+        mgr.hideSoftInputFromWindow(windowToken, 0);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,7 +162,6 @@ public class LectureEdit extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -428,11 +429,6 @@ public class LectureEdit extends AppCompatActivity {
     public void hideKeyboard() {
         closeKeyboard(LectureEdit.this, txtTitle.getWindowToken());
         closeKeyboard(LectureEdit.this, txtDescription.getWindowToken());
-    }
-
-    public static void closeKeyboard(Context c, IBinder windowToken) {
-        InputMethodManager mgr = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
-        mgr.hideSoftInputFromWindow(windowToken, 0);
     }
 
 

@@ -1,34 +1,24 @@
 package ch.hes.foreignlanguageschool.Fragments;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.graphics.drawable.DrawableWrapper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import ch.hes.foreignlanguageschool.Activities.NavigationActivity;
-import ch.hes.foreignlanguageschool.Activities.StudentEdit;
 import ch.hes.foreignlanguageschool.DB.DBTeacher;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -155,8 +145,8 @@ public class ProfileFragment extends Fragment {
             String lastname = txtLastName.getText().toString();
             String mail = txtMail.getText().toString();
 
-            dbTeacher.updateTeacherById(NavigationActivity.currentTeacher.getId(),fistname, lastname, mail);
-            NavigationActivity.currentTeacher=dbTeacher.getTeacherById(1);
+            dbTeacher.updateTeacherById(NavigationActivity.currentTeacher.getId(), fistname, lastname, mail);
+            NavigationActivity.currentTeacher = dbTeacher.getTeacherById(1);
             NavigationActivity.setNavigationView();
 
             setEditable(false);
@@ -200,7 +190,7 @@ public class ProfileFragment extends Fragment {
     }
 
 
-    public void setEditable (boolean bool) {
+    public void setEditable(boolean bool) {
         txtFirstName.setCursorVisible(bool);
         txtFirstName.setClickable(bool);
         txtFirstName.setFocusable(bool);

@@ -8,7 +8,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -18,22 +17,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import ch.hes.foreignlanguageschool.DAO.Teacher;
-import ch.hes.foreignlanguageschool.DB.DBAssignment;
-import ch.hes.foreignlanguageschool.DB.DBDay;
-import ch.hes.foreignlanguageschool.DB.DBLecture;
-import ch.hes.foreignlanguageschool.DB.DBStudent;
-import ch.hes.foreignlanguageschool.DB.DBTeacher;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.Fragments.AssignmentsFragment;
 import ch.hes.foreignlanguageschool.Fragments.CalendarFragment;
@@ -49,6 +39,8 @@ import static android.os.Build.VERSION_CODES.M;
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static Teacher currentTeacher;
+    private static NavigationView navigationView;
     //tags used to attach the fragments
     public final String TAG_TODAY = "Today";
     public final String TAG_CALENDAR = "Calendar";
@@ -57,24 +49,37 @@ public class NavigationActivity extends AppCompatActivity
     public final String TAG_STUDENTS = "Students";
     public final String TAG_PROFILE = "Profile";
     public final String TAG_SETTINGS = "Settings";
-
     public String CURRENT_TAG = "";
-
     //index to identify current nav menu item
     public int navItemIndex = 0;
-
     //toolbar titles respected to selected nav menu item
     private String[] activityTitles;
-
     private DrawerLayout drawer;
     private Toolbar toolbar;
     private Handler mHandler;
-    private static  NavigationView navigationView;
-
     //Database
     private DatabaseHelper databaseHelper;
 
-    public static Teacher currentTeacher;
+    private static boolean hasPermissions(Context context, String... permissions) {
+        if (android.os.Build.VERSION.SDK_INT >= M && context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static void setNavigationView() {
+
+        View hView = navigationView.getHeaderView(0);
+        TextView nav_user = (TextView) hView.findViewById(R.id.name);
+        nav_user.setText(currentTeacher.toString());
+
+        TextView nav_mail = (TextView) hView.findViewById(R.id.mail);
+        nav_mail.setText(currentTeacher.getMail());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +124,7 @@ public class NavigationActivity extends AppCompatActivity
 
         Intent intent = getIntent();
 
-        if(intent.getStringExtra("tag") != null){
+        if (intent.getStringExtra("tag") != null) {
             navItemIndex = 6;
             CURRENT_TAG = TAG_SETTINGS;
             loadHomeFragment();
@@ -135,7 +140,6 @@ public class NavigationActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -176,6 +180,7 @@ public class NavigationActivity extends AppCompatActivity
         loadHomeFragment();
         return true;
     }
+
     public void loadHomeFragment() {
 
         // selecting appropriate nav menu item
@@ -278,28 +283,7 @@ public class NavigationActivity extends AppCompatActivity
         }
     }
 
-    private static boolean hasPermissions(Context context, String... permissions) {
-        if (android.os.Build.VERSION.SDK_INT >= M && context != null && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    public static void setNavigationView() {
-
-        View hView =  navigationView.getHeaderView(0);
-        TextView nav_user = (TextView)hView.findViewById(R.id.name);
-        nav_user.setText(currentTeacher.toString());
-
-        TextView nav_mail = (TextView)hView.findViewById(R.id.mail);
-        nav_mail.setText(currentTeacher.getMail());
-    }
-
-    private void loadLastLanguage(){
+    private void loadLastLanguage() {
         String language = PreferenceManager.getDefaultSharedPreferences(this).getString("LANGUAGE", "en");
         Locale locale = new Locale(language);
         Locale.setDefault(locale);

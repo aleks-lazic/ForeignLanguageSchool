@@ -44,5 +44,4 @@
         app:srcCompat="@drawable/ic_edit" />
 
 
-
 </android.support.design.widget.CoordinatorLayout>

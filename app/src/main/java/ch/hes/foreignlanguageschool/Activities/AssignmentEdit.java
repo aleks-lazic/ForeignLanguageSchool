@@ -40,6 +40,10 @@ public class AssignmentEdit extends AppCompatActivity {
     private SimpleDateFormat simpleDateFormat;
     private Date todayDate;
 
+    public static void closeKeyboard(Context c, IBinder windowToken) {
+        InputMethodManager mgr = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
+        mgr.hideSoftInputFromWindow(windowToken, 0);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,7 +162,7 @@ public class AssignmentEdit extends AppCompatActivity {
         simpleDateFormat = new SimpleDateFormat(("dd.MM.yyyy"));
         try {
             todayDate = simpleDateFormat.parse(date);
-            startTime =  todayDate.getTime();
+            startTime = todayDate.getTime();
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -211,11 +215,6 @@ public class AssignmentEdit extends AppCompatActivity {
     public void hideKeyboard() {
         closeKeyboard(AssignmentEdit.this, txtViewTitle.getWindowToken());
         closeKeyboard(AssignmentEdit.this, txtViewDescription.getWindowToken());
-    }
-
-    public static void closeKeyboard(Context c, IBinder windowToken) {
-        InputMethodManager mgr = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
-        mgr.hideSoftInputFromWindow(windowToken, 0);
     }
 
 }

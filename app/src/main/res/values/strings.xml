@@ -45,8 +45,6 @@
 
     <string name="Settings">Language</string>
 
-    <string name="chooseLanguage">Choose a language</string>
-
     <string-array name="languages">
         <item>English</item>
         <item>French</item>
@@ -182,6 +180,7 @@
     <string name="Student">Student</string>
     <string name="AllStudents">All students are already in this lecture</string>
     <string name="ProfileNavigation">Profile</string>
+    <string name="chooseLanguage">Choose a language</string>
 
 
 </resources>

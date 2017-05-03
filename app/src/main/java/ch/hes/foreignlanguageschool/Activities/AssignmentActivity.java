@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import ch.hes.foreignlanguageschool.Adapters.CustomAdapterStudent;
 import ch.hes.foreignlanguageschool.DAO.Assignment;
 import ch.hes.foreignlanguageschool.DB.DBAssignment;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
@@ -85,7 +84,7 @@ public class AssignmentActivity extends AppCompatActivity {
             finish();
             Toast toast = Toast.makeText(this, assignment.toString() + " " + getResources().getString(R.string.Assignment) + " " + getResources().getString(R.string.DeletedSuccess), Toast.LENGTH_SHORT);
             toast.show();
-        } else{
+        } else {
             finish();
             return true;
         }

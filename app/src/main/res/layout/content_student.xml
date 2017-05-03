@@ -11,10 +11,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="@dimen/margin_top"
         android:layout_marginLeft="@dimen/margin_left"
         android:layout_marginRight="@dimen/margin_right"
+        android:layout_marginTop="@dimen/margin_top"
+        android:orientation="vertical"
         android:padding="10dp">
 
         <TextView
@@ -64,8 +64,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="@dimen/margin_top"
+            android:orientation="horizontal"
             android:weightSum="1">
 
             <TextView
@@ -74,15 +74,15 @@
                 android:layout_height="wrap_content"
                 android:text="@string/StartDateTitle"
                 android:textColor="@color/colorAccent"
-                android:textSize="@dimen/text_title"/>
+                android:textSize="@dimen/text_title" />
 
             <TextView
                 android:id="@+id/student_startdate"
                 android:layout_width="115dp"
-                android:layout_weight="0.33"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textAlignment="center"/>
+                android:layout_weight="0.33"
+                android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/title_enddate"
@@ -90,15 +90,15 @@
                 android:layout_height="wrap_content"
                 android:text="@string/EndDateTitle"
                 android:textColor="@color/colorAccent"
-                android:textSize="@dimen/text_title"/>
+                android:textSize="@dimen/text_title" />
 
             <TextView
                 android:id="@+id/student_enddate"
                 android:layout_width="115dp"
-                android:layout_weight="0.33"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textAlignment="center"/>
+                android:layout_weight="0.33"
+                android:textAlignment="center" />
 
         </LinearLayout>
 
@@ -116,7 +116,7 @@
             android:id="@+id/student_list_lectures"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp" />
 
 
     </LinearLayout>
