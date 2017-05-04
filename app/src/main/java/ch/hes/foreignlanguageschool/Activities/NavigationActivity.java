@@ -24,6 +24,7 @@ import android.widget.TextView;
 import java.util.Locale;
 
 import ch.hes.foreignlanguageschool.DAO.Teacher;
+import ch.hes.foreignlanguageschool.DB.DBTeacher;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.Fragments.AssignmentsFragment;
 import ch.hes.foreignlanguageschool.Fragments.CalendarFragment;
@@ -59,27 +60,8 @@ public class NavigationActivity extends AppCompatActivity
     private Handler mHandler;
     //Database
     private DatabaseHelper databaseHelper;
+    private DBTeacher dbTeacher;
 
-    private static boolean hasPermissions(Context context, String... permissions) {
-        if (android.os.Build.VERSION.SDK_INT >= M && context != null && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    public static void setNavigationView() {
-
-        View hView = navigationView.getHeaderView(0);
-        TextView nav_user = (TextView) hView.findViewById(R.id.name);
-        nav_user.setText(currentTeacher.toString());
-
-        TextView nav_mail = (TextView) hView.findViewById(R.id.mail);
-        nav_mail.setText(currentTeacher.getMail());
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +73,8 @@ public class NavigationActivity extends AppCompatActivity
         databaseHelper = DatabaseHelper.getInstance(getApplicationContext());
 
         //create the current teacher like if he was logged in
-        currentTeacher = Teacher.getInstance(databaseHelper, 1);
+        dbTeacher = new DBTeacher(databaseHelper);
+        currentTeacher = dbTeacher.getTeacherById(1);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -292,4 +275,27 @@ public class NavigationActivity extends AppCompatActivity
         getBaseContext().getResources().updateConfiguration(config,
                 getBaseContext().getResources().getDisplayMetrics());
     }
+
+    private static boolean hasPermissions(Context context, String... permissions) {
+        if (android.os.Build.VERSION.SDK_INT >= M && context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static void setNavigationView() {
+
+        View hView = navigationView.getHeaderView(0);
+        TextView nav_user = (TextView) hView.findViewById(R.id.name);
+        nav_user.setText(currentTeacher.toString());
+
+        TextView nav_mail = (TextView) hView.findViewById(R.id.mail);
+        nav_mail.setText(currentTeacher.getMail());
+    }
+
+
 }
