@@ -6,14 +6,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -39,8 +42,8 @@ import ch.hes.foreignlanguageschool.R;
 
 public class LectureEdit extends AppCompatActivity {
 
-    private TextView txtTitle;
-    private TextView txtDescription;
+    private EditText txtTitle;
+    private EditText txtDescription;
     private TextView txtTeacherName;
     private Spinner spinnerDays;
     private ListView listViewStudents;
@@ -67,8 +70,6 @@ public class LectureEdit extends AppCompatActivity {
 
 
     private SparseBooleanArray checked;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,11 +120,12 @@ public class LectureEdit extends AppCompatActivity {
             editTxtTimePickerFrom.setText(lecture.getStartTime());
             editTxtTimePickerTo.setText(lecture.getEndTime());
 
-            //onFocus for title and description
-            onFocusListenerForTitleAndDescription();
-
             //create the time picker
             createTimePicker();
+
+            //set the cursor at end
+            cursorAtEnd(txtTitle);
+            cursorAtEnd(txtDescription);
 
             //create spinnerDay and set default position
             days = dbDay.getAllDays();
@@ -138,6 +140,7 @@ public class LectureEdit extends AppCompatActivity {
             adapterStudent = new ArrayAdapter<Student>(this, android.R.layout.simple_list_item_multiple_choice, allStudents);
             listViewStudents.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
             listViewStudents.setAdapter(adapterStudent);
+            setDynamicHeight(listViewStudents);
 
             //check which will be checked and which not
             for (int i = 0; i < allStudents.size(); i++) {
@@ -152,8 +155,7 @@ public class LectureEdit extends AppCompatActivity {
             adapterDay = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, daysOfWeek);
             spinnerDays.setAdapter(adapterDay);
 
-
-            onFocusListenerForTitleAndDescription();
+            hideKeyboard();
 
             createTimePicker();
 
@@ -162,6 +164,7 @@ public class LectureEdit extends AppCompatActivity {
             adapterStudent = new ArrayAdapter<Student>(this, android.R.layout.simple_list_item_multiple_choice, students);
             listViewStudents.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
             listViewStudents.setAdapter(adapterStudent);
+            setDynamicHeight(listViewStudents);
 
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -243,14 +246,6 @@ public class LectureEdit extends AppCompatActivity {
     }
 
 
-    /**
-     * Hide the keyboard if needed
-     * @param view
-     */
-    public void hideKeyBoard(View view) {
-        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
 
 
     /**
@@ -395,31 +390,6 @@ public class LectureEdit extends AppCompatActivity {
 
 
     /**
-     * set the focus listener for the edit text
-     * It is used to hide the keyboard if needed
-     */
-    public void onFocusListenerForTitleAndDescription() {
-        //hide keyboard when out of edit text
-        txtTitle.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    hideKeyBoard(v);
-                }
-            }
-        });
-
-        txtDescription.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    hideKeyBoard(v);
-                }
-            }
-        });
-    }
-
-    /**
      * Set the default value that will be shown to the user when the user opens the activity
      *
      * @param spinner
@@ -489,6 +459,39 @@ public class LectureEdit extends AppCompatActivity {
     }
 
     /**
+     * Method for Setting the Height of the ListView dynamically.
+     * Hack to fix the issue of not showing all the items of the ListView
+     * when placed inside a ScrollView
+     * @param mListView
+     */
+    public static void setDynamicHeight(ListView mListView) {
+        ListAdapter mListAdapter = mListView.getAdapter();
+        if (mListAdapter == null) {
+            // when adapter is null
+            return;
+        }
+        int height = 0;
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(mListView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        for (int i = 0; i < mListAdapter.getCount(); i++) {
+            View listItem = mListAdapter.getView(i, null, mListView);
+            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            height += listItem.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = mListView.getLayoutParams();
+        params.height = height + (mListView.getDividerHeight() * (mListAdapter.getCount() - 1));
+        mListView.setLayoutParams(params);
+        mListView.requestLayout();
+    }
+
+    /**
+     * Set the cursot at the end of the editText
+     * @param editText
+     */
+    public void cursorAtEnd(EditText editText) {
+        editText.setSelection(editText.getText().length());
+    }
+
+    /**
      * Hide the keyboard
      */
     public void hideKeyboard() {
@@ -505,5 +508,6 @@ public class LectureEdit extends AppCompatActivity {
         InputMethodManager mgr = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
         mgr.hideSoftInputFromWindow(windowToken, 0);
     }
+
 }
 

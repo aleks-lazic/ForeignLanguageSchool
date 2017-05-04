@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.text.ParseException;
@@ -26,8 +27,8 @@ import ch.hes.foreignlanguageschool.R;
 
 public class AssignmentEdit extends AppCompatActivity {
 
-    private TextView txtViewTitle;
-    private TextView txtViewDescription;
+    private EditText txtViewTitle;
+    private EditText txtViewDescription;
     private TextView txtViewDueDate;
     private TextView txtViewCurrentTeacher;
     private CheckBox checkBoxCalendar;
@@ -51,8 +52,8 @@ public class AssignmentEdit extends AppCompatActivity {
 
         setTitle(title);
 
-        txtViewTitle = (TextView) findViewById(R.id.activity_assignment_edit_title);
-        txtViewDescription = (TextView) findViewById(R.id.activity_assignment_edit_description);
+        txtViewTitle = (EditText) findViewById(R.id.activity_assignment_edit_title);
+        txtViewDescription = (EditText) findViewById(R.id.activity_assignment_edit_description);
         txtViewDueDate = (TextView) findViewById(R.id.datePicker);
         txtViewCurrentTeacher = (TextView) findViewById(R.id.teacherName);
         checkBoxCalendar = (CheckBox) findViewById(R.id.checkBoxCalendar);
@@ -77,6 +78,10 @@ public class AssignmentEdit extends AppCompatActivity {
             txtViewTitle.setText(assignment.getTitle());
             txtViewDescription.setText(assignment.getDescription());
             txtViewDueDate.setText(assignment.getDate());
+
+            cursorAtEnd(txtViewTitle);
+            cursorAtEnd(txtViewDescription);
+
 
             if (assignment.isAddedToCalendar()) {
                 checkBoxCalendar.setChecked(true);
@@ -220,6 +225,14 @@ public class AssignmentEdit extends AppCompatActivity {
                 mDatePicker.show();
             }
         });
+    }
+
+    /**
+     * Set the cursot at the end of the editText
+     * @param editText
+     */
+    public void cursorAtEnd(EditText editText) {
+        editText.setSelection(editText.getText().length());
     }
 
     /**

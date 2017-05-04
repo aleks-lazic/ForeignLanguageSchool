@@ -27,11 +27,11 @@ import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
 
 public class StudentEdit extends AppCompatActivity {
-    private TextView txtFirstName;
-    private TextView txtLastName;
-    private TextView txtAddress;
-    private TextView txtCountry;
-    private TextView txtMail;
+    private EditText txtFirstName;
+    private EditText txtLastName;
+    private EditText txtAddress;
+    private EditText txtCountry;
+    private EditText txtMail;
     private EditText editTxtDatePickerStart;
     private EditText editTxtDatePickerEnd;
 
@@ -73,6 +73,11 @@ public class StudentEdit extends AppCompatActivity {
         //get the intent to check if it is an update or a new lecture
         Intent intent = getIntent();
 
+        /**
+         * If the intent contains a lecture it means that we want to update the content of an existing lecture
+         * If there's no lecture it means that we want to create a lecture
+         * Everything is done in the same class because the fields are quite the same
+         */
         if (intent.getSerializableExtra("student") != null) {
             student = (Student) intent.getSerializableExtra("student");
             txtFirstName.setText(student.getFirstName());
@@ -82,6 +87,12 @@ public class StudentEdit extends AppCompatActivity {
             txtMail.setText(student.getMail());
             editTxtDatePickerStart.setText(student.getStartDate());
             editTxtDatePickerEnd.setText(student.getEndDate());
+
+            cursorAtEnd(txtFirstName);
+            cursorAtEnd(txtLastName);
+            cursorAtEnd(txtAddress);
+            cursorAtEnd(txtCountry);
+            cursorAtEnd(txtMail);
 
             createDatePicker();
         } else {
@@ -264,6 +275,14 @@ public class StudentEdit extends AppCompatActivity {
 
 
         return true;
+    }
+
+    /**
+     * Set the cursot at the end of the editText
+     * @param editText
+     */
+    public void cursorAtEnd(EditText editText) {
+        editText.setSelection(editText.getText().length());
     }
 
     /**
