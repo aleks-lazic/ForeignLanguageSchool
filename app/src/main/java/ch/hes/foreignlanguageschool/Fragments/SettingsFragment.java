@@ -1,6 +1,5 @@
 package ch.hes.foreignlanguageschool.Fragments;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;

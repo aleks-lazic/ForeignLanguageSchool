@@ -2,7 +2,6 @@ package ch.hes.foreignlanguageschool.DB;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
