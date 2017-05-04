@@ -71,4 +71,5 @@
     <string name="AllStudents">Alle Schüler sind bereits in diesem Kurs</string>
     <string name="ProfileNavigation">Profil</string>
     <string name="startdateenddate">Enddatum muss nach dem Startdatum sein</string>
+    <string name="daySummary">Zusamenfassung der</string>
 </resources>

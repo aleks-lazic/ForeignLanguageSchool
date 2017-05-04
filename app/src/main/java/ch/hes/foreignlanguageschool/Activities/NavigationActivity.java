@@ -21,6 +21,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import ch.hes.foreignlanguageschool.DAO.Teacher;
@@ -61,6 +63,9 @@ public class NavigationActivity extends AppCompatActivity
     private DrawerLayout drawer;
     private Toolbar toolbar;
     private Handler mHandler;
+
+    private SimpleDateFormat simpleDateFormat;
+    private String currentDate;
 
     //Database
     private DatabaseHelper databaseHelper;
@@ -127,6 +132,11 @@ public class NavigationActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+
+        } else if (navItemIndex != 0) {
+            navItemIndex = 0;
+            CURRENT_TAG = TAG_TODAY;
+            loadHomeFragment();
         } else {
             super.onBackPressed();
         }

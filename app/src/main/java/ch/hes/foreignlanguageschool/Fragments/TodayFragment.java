@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,6 +52,7 @@ public class TodayFragment extends Fragment {
 
     private ListView listViewLectures;
     private ListView listViewAssignments;
+    private TextView txtSummaryDay;
 
     //the home will display all the lectures and assignments OF THE DAY
     private ArrayList<Lecture> lectures;
@@ -74,15 +76,6 @@ public class TodayFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TodayFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static TodayFragment newInstance(String param1, String param2) {
         TodayFragment fragment = new TodayFragment();
         Bundle args = new Bundle();
@@ -92,27 +85,6 @@ public class TodayFragment extends Fragment {
         return fragment;
     }
 
-    /**** Method for Setting the Height of the ListView dynamically.
-     **** Hack to fix the issue of not showing all the items of the ListView
-     **** when placed inside a ScrollView  ****/
-    public static void setDynamicHeight(ListView mListView) {
-        ListAdapter mListAdapter = mListView.getAdapter();
-        if (mListAdapter == null) {
-            // when adapter is null
-            return;
-        }
-        int height = 0;
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(mListView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-        for (int i = 0; i < mListAdapter.getCount(); i++) {
-            View listItem = mListAdapter.getView(i, null, mListView);
-            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            height += listItem.getMeasuredHeight();
-        }
-        ViewGroup.LayoutParams params = mListView.getLayoutParams();
-        params.height = height + (mListView.getDividerHeight() * (mListAdapter.getCount() - 1));
-        mListView.setLayoutParams(params);
-        mListView.requestLayout();
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -133,6 +105,14 @@ public class TodayFragment extends Fragment {
         //get listViews
         listViewLectures = (ListView) view.findViewById(R.id.home_lectures);
         listViewAssignments = (ListView) view.findViewById(R.id.home_assignments);
+        txtSummaryDay = (TextView) view.findViewById(R.id.today_summary);
+
+        //create everything linked to the current date
+        simpleDateFormat = new SimpleDateFormat(("dd.MM.yyyy"));
+        currentDate = simpleDateFormat.format(new Date());
+
+        txtSummaryDay.setText(getResources().getString(R.string.daySummary) + " " + currentDate);
+
 
         //Everything related to the database
         db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
@@ -180,12 +160,6 @@ public class TodayFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override
@@ -205,9 +179,6 @@ public class TodayFragment extends Fragment {
      */
     public void updateDisplay() {
 
-        //create everything linked to the current date
-        simpleDateFormat = new SimpleDateFormat(("dd.MM.yyyy"));
-        currentDate = simpleDateFormat.format(new Date());
         try {
             todayDate = simpleDateFormat.parse(currentDate);
         } catch (ParseException e) {
@@ -261,18 +232,33 @@ public class TodayFragment extends Fragment {
         return res;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    /**
+     * Method for Setting the Height of the ListView dynamically.
+     * Hack to fix the issue of not showing all the items of the ListView
+     * when placed inside a ScrollView
+     * @param mListView
+     */
+    public static void setDynamicHeight(ListView mListView) {
+        ListAdapter mListAdapter = mListView.getAdapter();
+        if (mListAdapter == null) {
+            // when adapter is null
+            return;
+        }
+        int height = 0;
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(mListView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        for (int i = 0; i < mListAdapter.getCount(); i++) {
+            View listItem = mListAdapter.getView(i, null, mListView);
+            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            height += listItem.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = mListView.getLayoutParams();
+        params.height = height + (mListView.getDividerHeight() * (mListAdapter.getCount() - 1));
+        mListView.setLayoutParams(params);
+        mListView.requestLayout();
     }
 }

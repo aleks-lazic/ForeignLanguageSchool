@@ -72,4 +72,5 @@
     <string name="ProfileNavigation">Profil</string>
     <string name="startdateenddate">La date de fin doit être après la date de début</string>
     <string name="titleDate">Date</string>
+    <string name="daySummary">Résumé du</string>
 </resources>

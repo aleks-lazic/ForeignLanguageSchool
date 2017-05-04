@@ -182,6 +182,7 @@
     <string name="ProfileNavigation">Profile</string>
     <string name="chooseLanguage">Choose a language</string>
     <string name="startdateenddate">End date must be after Start date</string>
+    <string name="daySummary">Summary of the</string>
 
 
 </resources>

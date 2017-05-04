@@ -14,9 +14,17 @@
         android:padding="10dp">
 
         <TextView
+            android:id="@+id/today_summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/text_title" />
+
+        <TextView
             android:id="@+id/title_home_lecture"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top"
             android:text="@string/LecturesNavigation"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/text_title" />
