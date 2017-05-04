@@ -44,7 +44,8 @@ public class CalendarFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    //database
+
+    // Database
     private DatabaseHelper db;
     private DBLecture dbLecture;
     private ListView listView_lectures;
@@ -112,21 +113,23 @@ public class CalendarFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_calendar, container, false);
 
-        //add everything linked to the lectures
+        // Set the list of Lectures
         listView_lectures = (ListView) view.findViewById(R.id.calendar_listview);
 
-        //select everything for current date
+        // Everything linked to the DB
         db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
         dbLecture = new DBLecture(db);
 
         lectures = dbLecture.getLecturesForCurrentDateInHome(currentDate);
 
+        // Set a custom adapter
         adapterLecture = new CustomAdapterLecture(getActivity(), lectures);
 
         listView_lectures.setAdapter(adapterLecture);
         listView_lectures.setFocusable(false);
         setDynamicHeight(listView_lectures);
 
+        // Open an activity when a lecture is selected with all the students related to
         listView_lectures.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -145,6 +148,7 @@ public class CalendarFragment extends Fragment {
             }
         });
 
+        // Change the lectures related to the day selected in the calendar
         CalendarView cv = (CalendarView) view.findViewById(R.id.calendar_calendarview);
         cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
 

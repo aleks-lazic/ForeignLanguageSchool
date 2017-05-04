@@ -39,6 +39,9 @@ public class AssignmentsFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private String mParam1;
+    private String mParam2;
+
     private DatabaseHelper db;
     private DBAssignment dbAssignment;
 
@@ -54,8 +57,7 @@ public class AssignmentsFragment extends Fragment {
     private String currentDate;
     private Date todayDate;
 
-    private String mParam1;
-    private String mParam2;
+    private FloatingActionButton fab;
 
     public AssignmentsFragment() {
         // Required empty public constructor
@@ -97,10 +99,11 @@ public class AssignmentsFragment extends Fragment {
         // Set the list of assignments
         mListView = (ListView) view.findViewById(R.id.assignments_list);
 
-        //Everything linked to the DB
+        // Everything linked to the DB
         db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
         dbAssignment = new DBAssignment(db);
 
+        // Set the listener to switch to the activity when an item is selected
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
@@ -115,8 +118,8 @@ public class AssignmentsFragment extends Fragment {
             }
         });
 
-
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fragment_fab_assignments);
+        // Show a floating action button
+        fab = (FloatingActionButton) view.findViewById(R.id.fragment_fab_assignments);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,6 +161,9 @@ public class AssignmentsFragment extends Fragment {
         updateDisplay();
     }
 
+    /**
+     * Update the display when the user comes back
+     */
     public void updateDisplay() {
 
         //everything linked to the date
