@@ -53,6 +53,8 @@ public class StudentsFragment extends Fragment {
 
     private CustomAdapterStudent adapterStudent;
 
+    private FloatingActionButton fab;
+
     public StudentsFragment() {
         // Required empty public constructor
     }
@@ -93,16 +95,18 @@ public class StudentsFragment extends Fragment {
         // Set the list of assignments
         mListView = (ListView) view.findViewById(R.id.students_list);
 
+        // Everything linked to the DB
         db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
         dbStudent = new DBStudent(db);
 
         students = dbStudent.getAllStudents();
 
+        // Set a custom adapter
         adapterStudent = new CustomAdapterStudent(getActivity(), students);
 
         mListView.setAdapter(adapterStudent);
 
-
+        // Set the listener to switch to the activity when an item is selected
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
@@ -119,7 +123,8 @@ public class StudentsFragment extends Fragment {
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fragment_fab_students);
+        // Show a floating action button
+        fab = (FloatingActionButton) view.findViewById(R.id.fragment_fab_students);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,6 +166,9 @@ public class StudentsFragment extends Fragment {
         updateDisplay();
     }
 
+    /**
+     * Update the display when the user comes back
+     */
     public void updateDisplay() {
         students = dbStudent.getAllStudents();
 

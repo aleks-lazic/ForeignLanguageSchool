@@ -89,7 +89,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//      Inflate the layout for this fragment
+        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         txtFirstName = (EditText) view.findViewById(R.id.teacher_firstname);
@@ -103,10 +103,11 @@ public class ProfileFragment extends Fragment {
 
         setEditable(false);
 
-        //create database objects
+        // Create database objects
         db = DatabaseHelper.getInstance(getActivity().getApplicationContext());
         dbTeacher = new DBTeacher(db);
 
+        // Show a floating action button
         fab = (FloatingActionButton) view.findViewById(R.id.fragment_fab_profile);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +142,7 @@ public class ProfileFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
             }
 
+            // Save the modifications for the current teacher in the Database and update the informations
             String fistname = txtFirstName.getText().toString();
             String lastname = txtLastName.getText().toString();
             String mail = txtMail.getText().toString();
@@ -183,13 +185,19 @@ public class ProfileFragment extends Fragment {
         mListener = null;
     }
 
+    /**
+     * Hide the Keyboard for all the txtEdit
+     */
     public void hideKeyboard() {
         closeKeyboard(getActivity(), txtFirstName.getWindowToken());
         closeKeyboard(getActivity(), txtLastName.getWindowToken());
         closeKeyboard(getActivity(), txtMail.getWindowToken());
     }
 
-
+    /**
+     * Define if the editText are editable or not
+     * @param bool
+     */
     public void setEditable(boolean bool) {
         txtFirstName.setCursorVisible(bool);
         txtFirstName.setClickable(bool);
@@ -207,6 +215,10 @@ public class ProfileFragment extends Fragment {
         txtMail.setFocusableInTouchMode(bool);
     }
 
+    /**
+     * Check if every parameters are correctly written before saving
+     * @return
+     */
     public boolean checkEverythingOnSaveClick() {
         //check if the firsname is filled
         if (txtFirstName.getText().toString().trim().equals("")) {

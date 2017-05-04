@@ -36,17 +36,22 @@ public class LecturesFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    String[] tabLectures;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
     private OnFragmentInteractionListener mListener;
+
     private ListView mListView;
+
     private CustomAdapterLecture adapterLecture;
+
     private ArrayList<Lecture> lectures;
     private DatabaseHelper db;
     private DBLecture dbLecture;
     private DBStudent dbStudent;
+
+    private FloatingActionButton fab;
 
     public LecturesFragment() {
         // Required empty public constructor
@@ -94,11 +99,13 @@ public class LecturesFragment extends Fragment {
 
         lectures = dbLecture.getAllLectures();
 
+        // Set a cutom adapter
         adapterLecture = new CustomAdapterLecture(getActivity(),
                 lectures);
 
         mListView.setAdapter(adapterLecture);
 
+        // Set the listener to open the right lecture when selected
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
@@ -114,8 +121,8 @@ public class LecturesFragment extends Fragment {
             }
         });
 
-
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fragment_fab_lecture);
+        // Show a floating action button
+        fab = (FloatingActionButton) view.findViewById(R.id.fragment_fab_lecture);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -32,11 +32,11 @@ public class SettingsFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private Button btnLanguage;
-
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private Button btnLanguage;
 
     private OnFragmentInteractionListener mListener;
 
@@ -78,13 +78,13 @@ public class SettingsFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
+        // Set a button and its listener
         btnLanguage = (Button) view.findViewById(R.id.btnLanguage);
         btnLanguage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-//                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferencesName(getActivity().getApplicationContext(), )
-
+                // Show a dialog to choose a language
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                 alertDialog.setTitle(getResources().getString(R.string.chooseLanguage));
                 String[] languages = getResources().getStringArray(R.array.languages);
@@ -127,6 +127,11 @@ public class SettingsFragment extends Fragment {
         mListener = null;
     }
 
+    /**
+     * Choose the desired language depending the selection of the user
+     * @param view
+     * @param position
+     */
     public void changeLanguage(View view, int position) {
 
         switch (position) {
@@ -142,6 +147,10 @@ public class SettingsFragment extends Fragment {
         }
     }
 
+    /**
+     * Switch to French language
+     * @param v
+     */
     public void changeToFR(View v) {
         String languageToLoad = "fr";
         Locale locale = new Locale(languageToLoad);
@@ -158,6 +167,10 @@ public class SettingsFragment extends Fragment {
         startActivity(myIntent);
     }
 
+    /**
+     * Switch to German Language
+     * @param v
+     */
     public void changeToGE(View v) {
         String languageToLoad = "de";
         Locale locale = new Locale(languageToLoad);
@@ -173,6 +186,10 @@ public class SettingsFragment extends Fragment {
         startActivity(myIntent);
     }
 
+    /**
+     * Switch to English language
+     * @param v
+     */
     public void changeToEN(View v) {
         String languageToLoad = "en";
         Locale locale = new Locale(languageToLoad);

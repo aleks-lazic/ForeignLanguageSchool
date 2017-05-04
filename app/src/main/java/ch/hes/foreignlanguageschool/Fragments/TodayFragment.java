@@ -92,6 +92,9 @@ public class TodayFragment extends Fragment {
         return fragment;
     }
 
+    /**** Method for Setting the Height of the ListView dynamically.
+     **** Hack to fix the issue of not showing all the items of the ListView
+     **** when placed inside a ScrollView  ****/
     public static void setDynamicHeight(ListView mListView) {
         ListAdapter mListAdapter = mListView.getAdapter();
         if (mListAdapter == null) {
@@ -136,7 +139,7 @@ public class TodayFragment extends Fragment {
         dbLecture = new DBLecture(db);
         dbAssignment = new DBAssignment(db);
 
-        //set itemclicklistener
+        //Set the listener to switch to the activity when an item is selected
         listViewLectures.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -151,6 +154,7 @@ public class TodayFragment extends Fragment {
             }
         });
 
+        //Set the listener to switch to the activity when an item is selected
         listViewAssignments.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -196,6 +200,9 @@ public class TodayFragment extends Fragment {
         updateDisplay();
     }
 
+    /**
+     * Update the display when the user comes back
+     */
     public void updateDisplay() {
 
         //create everything linked to the current date
@@ -223,7 +230,10 @@ public class TodayFragment extends Fragment {
 
     }
 
-
+    /**
+     * Display the curent day assignments
+     * @return
+     */
     public ArrayList<Assignment> getAssignmentsForGoodDate() {
 
         ArrayList<Assignment> allAssignments = dbAssignment.getAllAssignments();
