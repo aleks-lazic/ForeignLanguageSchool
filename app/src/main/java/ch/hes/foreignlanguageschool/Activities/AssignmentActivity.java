@@ -49,15 +49,11 @@ public class AssignmentActivity extends AppCompatActivity {
         setTitle(assignment.getTitle());
 
         description = (TextView) findViewById(R.id.assignment_description);
-
-        description.setText(assignment.getDescription());
-
         date = (TextView) findViewById(R.id.assignment_date);
-
-        date.setText(assignment.getDate());
-
         teacher = (TextView) findViewById(R.id.assignment_teacher);
 
+        description.setText(assignment.getDescription());
+        date.setText(assignment.getDate());
         teacher.setText(assignment.getTeacher().getFirstName() + " " + assignment.getTeacher().getLastName());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_assignment);
@@ -112,6 +108,9 @@ public class AssignmentActivity extends AppCompatActivity {
         updateDisplay();
     }
 
+    /**
+     * Update display when the user comes back in this activity
+     */
     public void updateDisplay() {
         assignment = dbAssignment.getAssignmentById(assignment.getId());
         description.setText(assignment.getDescription());

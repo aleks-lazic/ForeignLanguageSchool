@@ -13,7 +13,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -131,6 +135,7 @@ public class StudentEdit extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     public void createDatePicker() {
         editTxtDatePickerStart.setOnClickListener(new View.OnClickListener() {
 
@@ -147,7 +152,15 @@ public class StudentEdit extends AppCompatActivity {
                     public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
                     /*      get date   */
                         selectedmonth = selectedmonth + 1;
-                        editTxtDatePickerStart.setText("" + selectedday + "." + selectedmonth + "." + selectedyear);
+                        String day = "" + selectedday;
+                        String month = "" + selectedmonth;
+                        if (selectedday < 10) {
+                            day = "0" + selectedday;
+                        }
+                        if (selectedmonth < 10) {
+                            month = "0" + selectedmonth;
+                        }
+                        editTxtDatePickerStart.setText(day + "." + month + "." + selectedyear);
                     }
                 }, mYear, mMonth, mDay);
                 mDatePicker.setTitle(getResources().getString(R.string.SelectDate));
@@ -171,7 +184,15 @@ public class StudentEdit extends AppCompatActivity {
                     public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
                     /*      get date   */
                         selectedmonth = selectedmonth + 1;
-                        editTxtDatePickerEnd.setText("" + selectedday + "." + selectedmonth + "." + selectedyear);
+                        String day = "" + selectedday;
+                        String month = "" + selectedmonth;
+                        if (selectedday < 10) {
+                            day = "0" + selectedday;
+                        }
+                        if (selectedmonth < 10) {
+                            month = "0" + selectedmonth;
+                        }
+                        editTxtDatePickerEnd.setText(day + "." + month + "." + selectedyear);
                     }
                 }, mYear, mMonth, mDay);
                 mDatePicker.setTitle(getResources().getString(R.string.SelectDate));
@@ -181,6 +202,11 @@ public class StudentEdit extends AppCompatActivity {
         });
     }
 
+    /**
+     * Check if everything is filled on save click
+     *
+     * @return
+     */
     public boolean checkEverythingOnSaveClick() {
         //check if the firsname is filled
         if (txtFirstName.getText().toString().trim().equals("")) {
@@ -194,7 +220,7 @@ public class StudentEdit extends AppCompatActivity {
             return false;
         }
 
-        //check if the mail is filled
+        //check if the country is filled
         else if (txtCountry.getText().toString().trim().equals("")) {
             txtCountry.setError(getResources().getString(R.string.TitleAlert));
             return false;
@@ -207,9 +233,32 @@ public class StudentEdit extends AppCompatActivity {
             return false;
         }
 
-        //check if the mail is filled
+        //check if the start date is filled
         else if (editTxtDatePickerStart.getText().toString().trim().equals("")) {
             editTxtDatePickerStart.setError(getResources().getString(R.string.TitleAlert));
+            return false;
+        }
+
+        //check if the end date is filled
+        if (editTxtDatePickerEnd.getText().toString().trim().equals("")) {
+            editTxtDatePickerEnd.setError(getResources().getString(R.string.TitleAlert));
+            return false;
+        }
+
+        //check if the end date is after the start date
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        Date beginTimeA = null;
+        Date endTimeA = null;
+
+        try {
+            beginTimeA = dateFormat.parse(editTxtDatePickerStart.getText().toString());
+            endTimeA = dateFormat.parse(editTxtDatePickerEnd.getText().toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (endTimeA.before(beginTimeA) || endTimeA.equals(beginTimeA)) {
+            Toast.makeText(this, "fkasflk", Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -217,6 +266,9 @@ public class StudentEdit extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Hide the keyboard for all edit text
+     */
     public void hideKeyboard() {
         closeKeyboard(StudentEdit.this, txtFirstName.getWindowToken());
         closeKeyboard(StudentEdit.this, txtLastName.getWindowToken());

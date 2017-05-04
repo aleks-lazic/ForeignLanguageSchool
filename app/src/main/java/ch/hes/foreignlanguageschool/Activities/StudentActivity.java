@@ -81,28 +81,20 @@ public class StudentActivity extends AppCompatActivity {
         student = (Student) intent.getSerializableExtra("student");
         setTitle(student.getMail());
 
+        endDate = (TextView) findViewById(R.id.student_enddate);
+        country = (TextView) findViewById(R.id.student_country);
+        mail = (TextView) findViewById(R.id.student_mail);
         address = (TextView) findViewById(R.id.student_address);
+        startDate = (TextView) findViewById(R.id.student_startdate);
+        listView_lectures = (ListView) findViewById(R.id.student_list_lectures);
 
         address.setText(student.getAddress());
-
-        country = (TextView) findViewById(R.id.student_country);
-
         country.setText(student.getCountry());
-
-        mail = (TextView) findViewById(R.id.student_mail);
-
         mail.setText(student.getMail());
-
-        startDate = (TextView) findViewById(R.id.student_startdate);
-
         startDate.setText(student.getStartDate());
-
-        endDate = (TextView) findViewById(R.id.student_enddate);
-
         endDate.setText(student.getEndDate());
 
         //get lectures list and set it
-        listView_lectures = (ListView) findViewById(R.id.student_list_lectures);
         adapterLecture = new CustomAdapterLecture(this, student.getLecturesList());
         listView_lectures.setAdapter(adapterLecture);
         setListViewHeightBasedOnChildren(listView_lectures);
@@ -158,6 +150,9 @@ public class StudentActivity extends AppCompatActivity {
         updateDisplay();
     }
 
+    /**
+     * Update the display when the user comes back in the activity
+     */
     public void updateDisplay() {
         student = dbStudent.getStudentById(student.getId());
         address.setText(student.getAddress());

@@ -181,6 +181,7 @@
     <string name="AllStudents">All students are already in this lecture</string>
     <string name="ProfileNavigation">Profile</string>
     <string name="chooseLanguage">Choose a language</string>
+    <string name="startdateenddate">End date must be after Start date</string>
 
 
 </resources>

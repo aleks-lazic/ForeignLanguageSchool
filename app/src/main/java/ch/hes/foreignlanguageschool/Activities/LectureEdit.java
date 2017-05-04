@@ -68,10 +68,7 @@ public class LectureEdit extends AppCompatActivity {
 
     private SparseBooleanArray checked;
 
-    public static void closeKeyboard(Context c, IBinder windowToken) {
-        InputMethodManager mgr = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
-        mgr.hideSoftInputFromWindow(windowToken, 0);
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +103,12 @@ public class LectureEdit extends AppCompatActivity {
         //get the intent to check if it is an update or a new lecture
         Intent intent = getIntent();
 
+
+        /**
+         * If the intent contains a lecture it means that we want to update the content of an existing lecture
+         * If there's no lecture it means that we want to create a lecture
+         * Everything is done in the same class because the fields are quite the same
+         */
         if (intent.getSerializableExtra("lecture") != null) {
 
             //fill values for update
@@ -206,7 +209,7 @@ public class LectureEdit extends AppCompatActivity {
             }
 
             //get the day from spinner
-            day = (Day) dbDay.getDayById(spinnerDays.getSelectedItemPosition()+1);
+            day = (Day) dbDay.getDayById(spinnerDays.getSelectedItemPosition() + 1);
 
             //insert everything in DB
             String title = txtTitle.getText().toString();
@@ -239,11 +242,23 @@ public class LectureEdit extends AppCompatActivity {
 
     }
 
+
+    /**
+     * Hide the keyboard if needed
+     * @param view
+     */
     public void hideKeyBoard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+
+    /**
+     * check if endtime is after fromtime
+     * @param fromTime
+     * @param endTime
+     * @return
+     */
     public boolean checkEndTimeAfterStartTime(int fromTime, int endTime) {
         if (fromTime > endTime) {
             Toast toast = Toast.makeText(this, " " + getResources().getString(R.string.TimeAlert), Toast.LENGTH_SHORT);
@@ -254,6 +269,11 @@ public class LectureEdit extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Check if title is filled
+     * @param title
+     * @return
+     */
     public boolean checkTitleFilled(String title) {
         if (title.trim().equals("")) {
             txtTitle.setError(getResources().getString(R.string.TitleAlert));
@@ -262,6 +282,12 @@ public class LectureEdit extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Check if endtime and begin time are filled
+     * @param fromTime
+     * @param endTime
+     * @return
+     */
     public boolean checkFromTimeAndEndTimeFilled(String fromTime, String endTime) {
         if (fromTime.trim().equals("")) {
             editTxtTimePickerFrom.setError(getResources().getString(R.string.HourAlert));
@@ -276,6 +302,11 @@ public class LectureEdit extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Check if minimum one student is selected
+     * @param size
+     * @return
+     */
     public boolean checkSizeSelectedStudents(int size) {
 
         if (size == 0) {
@@ -286,7 +317,9 @@ public class LectureEdit extends AppCompatActivity {
         return true;
     }
 
-    //set timepicker
+    /**
+     * create the time picker
+     */
     public void createTimePicker() {
         //open timepicker from on edittextclick
         editTxtTimePickerFrom.setOnClickListener(new View.OnClickListener() {
@@ -328,6 +361,13 @@ public class LectureEdit extends AppCompatActivity {
         });
     }
 
+    /**
+     * This method will do all the check we need
+     *   - Check if the title is fille
+     *   - Check if end time is after begin time
+     *   - Check if already one student is selected
+     * @return
+     */
     public boolean checkEverythingOnSaveClick() {
 
         if (!checkTitleFilled(txtTitle.getText().toString())) {
@@ -353,6 +393,11 @@ public class LectureEdit extends AppCompatActivity {
 
     }
 
+
+    /**
+     * set the focus listener for the edit text
+     * It is used to hide the keyboard if needed
+     */
     public void onFocusListenerForTitleAndDescription() {
         //hide keyboard when out of edit text
         txtTitle.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -374,6 +419,12 @@ public class LectureEdit extends AppCompatActivity {
         });
     }
 
+    /**
+     * Set the default value that will be shown to the user when the user opens the activity
+     *
+     * @param spinner
+     * @param id
+     */
     public void setDefaultValueSpinner(final Spinner spinner, final int id) {
         spinner.post(new Runnable() {
             public void run() {
@@ -382,6 +433,15 @@ public class LectureEdit extends AppCompatActivity {
         });
     }
 
+    /**
+     * This method will check if a lecture is already available at the same time
+     *
+     * @param lecture
+     * @param idDay
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
     public boolean checkIfLectureAtSameTime(Lecture lecture, int idDay, String beginTime, String endTime) {
 
         if (lecture != null) {
@@ -428,11 +488,22 @@ public class LectureEdit extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Hide the keyboard
+     */
     public void hideKeyboard() {
         closeKeyboard(LectureEdit.this, txtTitle.getWindowToken());
         closeKeyboard(LectureEdit.this, txtDescription.getWindowToken());
     }
 
-
+    /**
+     * It will close the keyboard for edit text
+     * @param c
+     * @param windowToken
+     */
+    public static void closeKeyboard(Context c, IBinder windowToken) {
+        InputMethodManager mgr = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
+        mgr.hideSoftInputFromWindow(windowToken, 0);
+    }
 }
 

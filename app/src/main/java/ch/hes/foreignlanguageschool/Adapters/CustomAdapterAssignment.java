@@ -49,6 +49,13 @@ public class CustomAdapterAssignment extends ArrayAdapter<Assignment> {
         currentDate = null;
     }
 
+    /**
+     * Create the custom adapter
+     * @param position
+     * @param view
+     * @param parent
+     * @return
+     */
     public View getView(int position, View view, ViewGroup parent) {
 
         View v = view;

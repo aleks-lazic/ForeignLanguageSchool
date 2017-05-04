@@ -171,6 +171,9 @@ public class LectureActivity extends AppCompatActivity {
         updateDisplay();
     }
 
+    /**
+     * Update display when the user comes back to the activity
+     */
     public void updateDisplay() {
         lecture = dbLecture.getLectureByIdForUpdate(lecture.getId());
         lecture.setStudentsList(dbStudent.getStudentsListByLecture(lecture.getId()));

@@ -164,6 +164,9 @@ public class NavigationActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * It will load the good fragment depending on the drawer menu
+     */
     public void loadHomeFragment() {
 
         // selecting appropriate nav menu item
@@ -209,6 +212,10 @@ public class NavigationActivity extends AppCompatActivity
 
     }
 
+    /**
+     * Get the good fragment depending on the drawer menu
+     * @return
+     */
     public Fragment getHomeFragment() {
         switch (navItemIndex) {
             case 0:
@@ -249,10 +256,16 @@ public class NavigationActivity extends AppCompatActivity
         navigationView.getMenu().getItem(navItemIndex).setChecked(true);
     }
 
+    /**
+     * change the toolbar title depending on the drawer menu
+     */
     public void setToolbarTitle() {
         getSupportActionBar().setTitle(activityTitles[navItemIndex]);
     }
 
+    /**
+     * Check that the user has all permissions
+     */
     private void checkPermissions() {
         int PERMISSION_ALL = 1;
 
@@ -266,6 +279,10 @@ public class NavigationActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * When the user closes the app, it will save the last language
+     * Then at the next opening of the app, the last language will be loaded
+     */
     private void loadLastLanguage() {
         String language = PreferenceManager.getDefaultSharedPreferences(this).getString("LANGUAGE", "en");
         Locale locale = new Locale(language);
@@ -276,6 +293,12 @@ public class NavigationActivity extends AppCompatActivity
                 getBaseContext().getResources().getDisplayMetrics());
     }
 
+    /**
+     * Check the permissions for the calendar (when we want to add an assignment to the phone's calendar
+     * @param context
+     * @param permissions
+     * @return
+     */
     private static boolean hasPermissions(Context context, String... permissions) {
         if (android.os.Build.VERSION.SDK_INT >= M && context != null && permissions != null) {
             for (String permission : permissions) {
@@ -287,6 +310,10 @@ public class NavigationActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * Modify the navigation view if needed
+     * (name and email in the drawer menu)
+     */
     public static void setNavigationView() {
 
         View hView = navigationView.getHeaderView(0);

@@ -40,10 +40,7 @@ public class AssignmentEdit extends AppCompatActivity {
     private SimpleDateFormat simpleDateFormat;
     private Date todayDate;
 
-    public static void closeKeyboard(Context c, IBinder windowToken) {
-        InputMethodManager mgr = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
-        mgr.hideSoftInputFromWindow(windowToken, 0);
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +69,7 @@ public class AssignmentEdit extends AppCompatActivity {
 
         /**if we have something in the intent it means that we want to update an assignment
          if our intent contains nothing it means that we want to create a new one
-         this is to prevent us from creating new activities becauses the fields are quite
+         this is to prevent us from creating new activities because the fields are quite
          the same
          **/
         if (intent.getSerializableExtra("assignment") != null) {
@@ -155,6 +152,15 @@ public class AssignmentEdit extends AppCompatActivity {
 
     }
 
+    /**
+     *
+     * The current assignment will be added to the phone's calendar
+     * It can be added only once to our calendar
+     *
+     * @param title
+     * @param description
+     * @param date
+     */
     public void addToPhoneCalendar(String title, String description, String date) {
 
         long startTime = 0;
@@ -178,6 +184,10 @@ public class AssignmentEdit extends AppCompatActivity {
 
     }
 
+    /**
+     * Create the date picker
+     * for the date selection
+     */
     public void createDatePicker() {
         txtViewDueDate.setOnClickListener(new View.OnClickListener() {
 
@@ -212,9 +222,21 @@ public class AssignmentEdit extends AppCompatActivity {
         });
     }
 
+    /**
+     * hide the keyboard when the users clicks out of the edit texts
+     */
     public void hideKeyboard() {
         closeKeyboard(AssignmentEdit.this, txtViewTitle.getWindowToken());
         closeKeyboard(AssignmentEdit.this, txtViewDescription.getWindowToken());
     }
 
+    /**
+     * It will close the keyborard for edit text
+     * @param c
+     * @param windowToken
+     */
+    public static void closeKeyboard(Context c, IBinder windowToken) {
+        InputMethodManager mgr = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
+        mgr.hideSoftInputFromWindow(windowToken, 0);
+    }
 }

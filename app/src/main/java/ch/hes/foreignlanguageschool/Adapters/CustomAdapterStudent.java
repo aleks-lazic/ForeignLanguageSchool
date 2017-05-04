@@ -30,6 +30,14 @@ public class CustomAdapterStudent extends ArrayAdapter<Student> {
 
     }
 
+
+    /**
+     * Create the custom adapter
+     * @param position
+     * @param view
+     * @param parent
+     * @return
+     */
     public View getView(int position, View view, ViewGroup parent) {
 
         View v = view;
