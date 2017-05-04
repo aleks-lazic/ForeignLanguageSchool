@@ -20,6 +20,17 @@ public class DBStudent {
         this.db = db;
     }
 
+    /**
+     * Insert all values for teacher
+     *
+     * @param firstName
+     * @param lastName
+     * @param address
+     * @param country
+     * @param mail
+     * @param startDate
+     * @param endDate
+     */
     public void insertValues(String firstName, String lastName, String address, String country, String mail, String startDate, String endDate) {
 
         SQLiteDatabase sql = db.getWritableDatabase();
@@ -38,6 +49,12 @@ public class DBStudent {
         sql.close();
     }
 
+    /**
+     * get a student by id
+     *
+     * @param idStudent
+     * @return
+     */
     public Student getStudentById(int idStudent) {
         SQLiteDatabase sql = db.getWritableDatabase();
 
@@ -67,6 +84,12 @@ public class DBStudent {
         return student;
     }
 
+    /**
+     * get all students for a lecture
+     *
+     * @param idLecture
+     * @return
+     */
     public ArrayList<Student> getStudentsListByLecture(int idLecture) {
         SQLiteDatabase sql = db.getWritableDatabase();
 
@@ -94,39 +117,11 @@ public class DBStudent {
 
     }
 
-    public ArrayList<Student> getStudentsListNotInLecture(int idLecture) {
-
-
-        ArrayList<Student> studentsList = new ArrayList<>();
-
-        SQLiteDatabase sql = db.getWritableDatabase();
-
-        String selectQuery = "SELECT " + db.getLECTURESTUDENT_FKSTUDENT() + " FROM " + db.getTableLecturestudent() +
-                " WHERE " + db.getLECTURESTUDENT_FKSTUDENT() + " NOT IN" +
-                " (SELECT " + db.getLECTURESTUDENT_FKSTUDENT() +
-                " FROM " + db.getTableLecturestudent() +
-                " WHERE " + db.getLECTURESTUDENT_FKLECTURE() + " = " + idLecture + ")";
-
-        Cursor cursor = sql.rawQuery(selectQuery, null);
-
-
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                Student student = getStudentById(Integer.parseInt(cursor.getString(0)));
-                studentsList.add(student);
-                // Adding student to list
-            } while (cursor.moveToNext());
-        }
-
-        sql.close();
-
-
-        // return teacher
-        return studentsList;
-
-    }
-
+    /**
+     * get all students
+     *
+     * @return
+     */
     public ArrayList<Student> getAllStudents() {
 
         SQLiteDatabase sql = db.getWritableDatabase();
@@ -162,11 +157,21 @@ public class DBStudent {
         return studentsList;
     }
 
+    /**
+     * delete a student
+     *
+     * @param idStudent
+     */
     public void deleteStudent(int idStudent) {
         deleteStudentById(idStudent);
         deleteStudentFromLectures(idStudent);
     }
 
+    /**
+     * delete the student in student table
+     *
+     * @param idStudent
+     */
     private void deleteStudentById(int idStudent) {
         SQLiteDatabase sql = db.getWritableDatabase();
 
@@ -176,6 +181,11 @@ public class DBStudent {
 
     }
 
+    /**
+     * delete the student in lecturestudent
+     *
+     * @param idStudent
+     */
     private void deleteStudentFromLectures(int idStudent) {
 
 
@@ -186,6 +196,19 @@ public class DBStudent {
         sql.close();
     }
 
+    /**
+     * update a student by id
+     *
+     * @param idStudent
+     * @param firstName
+     * @param lastName
+     * @param address
+     * @param country
+     * @param mail
+     * @param startDate
+     * @param endDate
+     * @return
+     */
     public int updateStudentById(int idStudent, String firstName, String lastName, String address, String country, String mail, String startDate, String endDate) {
 
         SQLiteDatabase sql = db.getWritableDatabase();

@@ -20,6 +20,10 @@ public class DBDay {
         this.db = db;
     }
 
+    /**
+     * insert values for day in db
+     * @param name
+     */
     public void insertValues(String name) {
 
         SQLiteDatabase sql = db.getWritableDatabase();
@@ -31,6 +35,10 @@ public class DBDay {
         sql.close();
     }
 
+    /**
+     * get all days from db
+     * @return
+     */
     public ArrayList<Day> getAllDays() {
 
         SQLiteDatabase sql = db.getWritableDatabase();
@@ -59,6 +67,11 @@ public class DBDay {
         return daysList;
     }
 
+    /**
+     * get a day by id
+     * @param idDay
+     * @return
+     */
     public Day getDayById(int idDay) {
 
         SQLiteDatabase sql = db.getReadableDatabase();

@@ -42,6 +42,7 @@ public class NavigationActivity extends AppCompatActivity
 
     public static Teacher currentTeacher;
     private static NavigationView navigationView;
+
     //tags used to attach the fragments
     public final String TAG_TODAY = "Today";
     public final String TAG_CALENDAR = "Calendar";
@@ -51,13 +52,16 @@ public class NavigationActivity extends AppCompatActivity
     public final String TAG_PROFILE = "Profile";
     public final String TAG_SETTINGS = "Settings";
     public String CURRENT_TAG = "";
+
     //index to identify current nav menu item
     public int navItemIndex = 0;
+
     //toolbar titles respected to selected nav menu item
     private String[] activityTitles;
     private DrawerLayout drawer;
     private Toolbar toolbar;
     private Handler mHandler;
+
     //Database
     private DatabaseHelper databaseHelper;
     private DBTeacher dbTeacher;
@@ -74,6 +78,11 @@ public class NavigationActivity extends AppCompatActivity
 
         //create the current teacher like if he was logged in
         dbTeacher = new DBTeacher(databaseHelper);
+
+        if (dbTeacher.getNumberOfRowsInTableTeacher() == 0) {
+            dbTeacher.insertValues("Predrag", "Ljubicic", "pedjo.ljubo@mail.srb");
+        }
+
         currentTeacher = dbTeacher.getTeacherById(1);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -95,7 +104,6 @@ public class NavigationActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
 
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -214,6 +222,7 @@ public class NavigationActivity extends AppCompatActivity
 
     /**
      * Get the good fragment depending on the drawer menu
+     *
      * @return
      */
     public Fragment getHomeFragment() {
@@ -295,6 +304,7 @@ public class NavigationActivity extends AppCompatActivity
 
     /**
      * Check the permissions for the calendar (when we want to add an assignment to the phone's calendar
+     *
      * @param context
      * @param permissions
      * @return

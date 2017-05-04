@@ -24,6 +24,13 @@ public class DBLecture {
         this.db = db;
     }
 
+
+    /**
+     * insert values for lecture in db
+     * @param name
+     * @param description
+     * @param idTeacher
+     */
     public void insertValues(String name, String description, int idTeacher) {
 
         SQLiteDatabase sql = db.getWritableDatabase();
@@ -38,6 +45,11 @@ public class DBLecture {
         sql.close();
     }
 
+    /**
+     * get all lectures for a teacher
+     * @param idTeacher
+     * @return
+     */
     public ArrayList<Lecture> getLecturesForTeacher(int idTeacher) {
         SQLiteDatabase sql = db.getReadableDatabase();
 
@@ -73,6 +85,11 @@ public class DBLecture {
         return lecturesList;
     }
 
+    /**
+     * get all lectures for a student
+     * @param idStudent
+     * @return
+     */
     public ArrayList<Lecture> getLecturesForStudent(int idStudent) {
         SQLiteDatabase sql = db.getReadableDatabase();
 
@@ -104,6 +121,11 @@ public class DBLecture {
         return lecturesList;
     }
 
+    /**
+     * get lecture by id
+     * @param idLecture
+     * @return
+     */
     public Lecture getLectureById(int idLecture) {
 
         SQLiteDatabase sql = db.getReadableDatabase();
@@ -137,6 +159,11 @@ public class DBLecture {
         return lecture;
     }
 
+    /**
+     * get lecture by id when there's an update
+     * @param idLecture
+     * @return
+     */
     public Lecture getLectureByIdForUpdate(int idLecture) {
         SQLiteDatabase sql = db.getReadableDatabase();
 
@@ -181,6 +208,11 @@ public class DBLecture {
         return lecture;
     }
 
+    /**
+     * get alle lectures except the parameter id
+     * @param idLecture
+     * @return
+     */
     public ArrayList<Lecture> getAllLecturesExceptById(int idLecture) {
         SQLiteDatabase sql = db.getReadableDatabase();
 
@@ -229,6 +261,10 @@ public class DBLecture {
         return lecturesList;
     }
 
+    /**
+     * get all lectures for db
+     * @return
+     */
     public ArrayList<Lecture> getAllLectures() {
         SQLiteDatabase sql = db.getReadableDatabase();
 
@@ -276,6 +312,11 @@ public class DBLecture {
         return lecturesList;
     }
 
+    /**
+     * add a student to a lecture
+     * @param idStudent
+     * @param idLecture
+     */
     public void addStudentToLecture(int idStudent, int idLecture) {
 
         SQLiteDatabase sql = db.getWritableDatabase();
@@ -290,6 +331,11 @@ public class DBLecture {
 
     }
 
+    /**
+     * add students to lecture
+     * @param students
+     * @param idLecture
+     */
     public void addStudentsToLecture(ArrayList<Student> students, int idLecture) {
 
         for (Student s : students
@@ -299,6 +345,13 @@ public class DBLecture {
         }
     }
 
+    /**
+     * Add day and hours to the lecture
+     * @param idLecture
+     * @param idDay
+     * @param startTime
+     * @param endTime
+     */
     public void addDayAndHoursToLecture(int idLecture, int idDay, String startTime, String endTime) {
         SQLiteDatabase sql = db.getWritableDatabase();
 
@@ -312,6 +365,13 @@ public class DBLecture {
         sql.close();
     }
 
+    /**
+     * Get lectures for special date used in calendar
+     * @param year
+     * @param month
+     * @param dayOfMonth
+     * @return
+     */
     public ArrayList<Lecture> getLecturesForSpecialDate(int year, int month, int dayOfMonth) {
 
         //adapt the current date to the sqlite format
@@ -373,6 +433,10 @@ public class DBLecture {
         return lecturesList;
     }
 
+    /**
+     * get Max Id for lecture's table
+     * @return
+     */
     public int getMaxId() {
         SQLiteDatabase sql = db.getWritableDatabase();
 
@@ -391,6 +455,16 @@ public class DBLecture {
         return id;
     }
 
+    /**
+     * insert a lecture with all informations directly
+     * @param title
+     * @param description
+     * @param idTeacher
+     * @param idDay
+     * @param beginTime
+     * @param endTime
+     * @param students
+     */
     public void insertLectureWithTeacherDayAndHoursAndStudents(String title, String description, int idTeacher, int idDay, String beginTime, String endTime, ArrayList<Student> students) {
 
         insertValues(title, description, idTeacher);
@@ -403,18 +477,11 @@ public class DBLecture {
 
     }
 
-
-    public long getNumberOfRowsInTableLecture() {
-
-        SQLiteDatabase sql = db.getReadableDatabase();
-
-        String query = "SELECT Count(*) FROM " + db.getTableLecture();
-
-
-        long nbRows = DatabaseUtils.queryNumEntries(sql, db.getTableLecture());
-        return nbRows;
-    }
-
+    /**
+     * Get lectures for current date in today fragment
+     * @param date
+     * @return
+     */
     public ArrayList<Lecture> getLecturesForCurrentDateInHome(String date) {
 
         //25.04.2017
@@ -475,6 +542,10 @@ public class DBLecture {
         return lecturesList;
     }
 
+    /**
+     * delete a lecture
+     * @param idLecture
+     */
     public void deleteLecture(int idLecture) {
         deleteLectureById(idLecture);
         deleteLectureFromLectureStudent(idLecture);
@@ -482,6 +553,10 @@ public class DBLecture {
     }
 
 
+    /**
+     * delete the lecture in lecture table
+     * @param idLecture
+     */
     private void deleteLectureById(int idLecture) {
 
         SQLiteDatabase sql = db.getWritableDatabase();
@@ -492,6 +567,10 @@ public class DBLecture {
 
     }
 
+    /**
+     * delete the lecture in lecturestudent table
+     * @param idLecture
+     */
     public void deleteLectureFromLectureStudent(int idLecture) {
         SQLiteDatabase sql = db.getWritableDatabase();
 
@@ -502,6 +581,10 @@ public class DBLecture {
 
     }
 
+    /**
+     * delete the lecture from lecturedate table
+     * @param idLecture
+     */
     private void deleteDayFromLecture(int idLecture) {
         SQLiteDatabase sql = db.getWritableDatabase();
 
@@ -511,6 +594,13 @@ public class DBLecture {
     }
 
 
+    /**
+     * Update a lecture name and description
+     * @param idLecture
+     * @param name
+     * @param description
+     * @return
+     */
     public int updateLectureNameAndDescription(int idLecture, String name, String description) {
         SQLiteDatabase sql = db.getWritableDatabase();
 
@@ -523,6 +613,15 @@ public class DBLecture {
                 new String[]{String.valueOf(idLecture)});
     }
 
+    /**
+     * upadte day and time for a lecture
+     * @param idLecture
+     * @param oldIdDay
+     * @param idDay
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
     public int updateDayTime(int idLecture, int oldIdDay, int idDay, String beginTime, String endTime) {
         SQLiteDatabase sql = db.getWritableDatabase();
 
@@ -540,6 +639,11 @@ public class DBLecture {
     }
 
 
+    /**
+     * get the good day of the week depending on the calendar
+     * @param day
+     * @return
+     */
     private int getIdOfDayWeek(int day) {
         switch (day) {
             case 5:

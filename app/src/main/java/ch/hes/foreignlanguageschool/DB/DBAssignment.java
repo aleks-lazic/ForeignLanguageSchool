@@ -2,6 +2,7 @@ package ch.hes.foreignlanguageschool.DB;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
@@ -20,6 +21,14 @@ public class DBAssignment {
         this.db = db;
     }
 
+    /**
+     * Insert assignment's values in the DB
+     * @param title
+     * @param description
+     * @param date
+     * @param idTeacher
+     * @param addedToCalendar
+     */
     public void insertValues(String title, String description, String date, int idTeacher, int addedToCalendar) {
 
         SQLiteDatabase sql = db.getWritableDatabase();
@@ -36,6 +45,10 @@ public class DBAssignment {
         sql.close();
     }
 
+    /**
+     * get all assignments for db
+     * @return
+     */
     public ArrayList<Assignment> getAllAssignments() {
 
         SQLiteDatabase sql = db.getWritableDatabase();
@@ -72,44 +85,11 @@ public class DBAssignment {
         return assignmentsList;
     }
 
-    public ArrayList<Assignment> getAllAssignmentsForSpecialDate(String date) {
-        SQLiteDatabase sql = db.getReadableDatabase();
-
-        ArrayList<Assignment> assignmentsList = new ArrayList<Assignment>();
-        String selectQuery = "SELECT *"
-                + " FROM " + db.getTableAssignement()
-                + " WHERE " + db.getASSIGNMENT_DATE() + " = " + "'" + date + "'";
-
-        Cursor cursor = sql.rawQuery(selectQuery, null);
-
-        DBTeacher teacher = new DBTeacher(db);
-
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                Assignment assignment = new Assignment();
-                assignment.setId(Integer.parseInt(cursor.getString(0)));
-                assignment.setTitle(cursor.getString(1));
-                assignment.setDescription(cursor.getString(2));
-                assignment.setDate(cursor.getString(3));
-                assignment.setImageName(cursor.getString(4));
-                assignment.setTeacher(teacher.getTeacherById(Integer.parseInt(cursor.getString(5))));
-                boolean flag = (Integer.parseInt(cursor.getString(6)) > 0);
-                assignment.setAddedToCalendar(flag);
-
-                // Adding assignment to list
-                assignmentsList.add(assignment);
-            } while (cursor.moveToNext());
-        }
-
-        sql.close();
-
-
-        // return assignments list
-        return assignmentsList;
-
-    }
-
+    /**
+     * get assignment by id
+     * @param idAssignment
+     * @return
+     */
     public Assignment getAssignmentById(int idAssignment) {
 
         SQLiteDatabase sql = db.getReadableDatabase();
@@ -141,6 +121,10 @@ public class DBAssignment {
         return assignment;
     }
 
+    /**
+     * delete assignment by id
+     * @param idAssignment
+     */
     public void deleteAssignmentById(int idAssignment) {
 
         SQLiteDatabase sql = db.getWritableDatabase();
@@ -151,6 +135,15 @@ public class DBAssignment {
 
     }
 
+    /**
+     * update assignment by id
+     * @param idAssignment
+     * @param title
+     * @param description
+     * @param date
+     * @param addedToCalendar
+     * @return
+     */
     public int updateAssignmentById(int idAssignment, String title, String description, String date, int addedToCalendar) {
         SQLiteDatabase sql = db.getWritableDatabase();
 
@@ -165,5 +158,20 @@ public class DBAssignment {
         return sql.update(db.getTableAssignement(), values, db.getKeyId() + " = ?",
                 new String[]{String.valueOf(idAssignment)});
 
+    }
+
+    /**
+     *
+     * @return
+     */
+    public long getNumberOfRowsInTableAssignment() {
+
+        SQLiteDatabase sql = db.getReadableDatabase();
+
+        String query = "SELECT Count(*) FROM " + db.getTableLecture();
+
+
+        long nbRows = DatabaseUtils.queryNumEntries(sql, db.getTableLecture());
+        return nbRows;
     }
 }

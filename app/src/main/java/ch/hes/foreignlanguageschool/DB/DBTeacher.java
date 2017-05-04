@@ -2,7 +2,10 @@ package ch.hes.foreignlanguageschool.DB;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.util.ArrayList;
 
 import ch.hes.foreignlanguageschool.DAO.Teacher;
 
@@ -19,6 +22,14 @@ public class DBTeacher {
     }
 
 
+    /**
+     * insert values to create a new teacher
+     * We have only one teacher because we don't have the login
+     *
+     * @param firstName
+     * @param lastName
+     * @param mail
+     */
     public void insertValues(String firstName, String lastName, String mail) {
 
         SQLiteDatabase sql = db.getWritableDatabase();
@@ -34,6 +45,12 @@ public class DBTeacher {
         sql.close();
     }
 
+    /**
+     * get a teacher by id
+     *
+     * @param idTeacher
+     * @return
+     */
     public Teacher getTeacherById(int idTeacher) {
         SQLiteDatabase sql = db.getReadableDatabase();
 
@@ -70,7 +87,15 @@ public class DBTeacher {
         return teacher;
     }
 
-
+    /**
+     * update a teacher by id
+     *
+     * @param idTeacher
+     * @param firstName
+     * @param lastName
+     * @param mail
+     * @return
+     */
     public int updateTeacherById(int idTeacher, String firstName, String lastName, String mail) {
         SQLiteDatabase sql = db.getWritableDatabase();
 
@@ -86,59 +111,56 @@ public class DBTeacher {
 
     }
 
-//    public ArrayList<Teacher> getAllTeachers() {
-//
-//        SQLiteDatabase sql = db.getReadableDatabase();
-//
-//        ArrayList<Teacher> teachersList = new ArrayList<Teacher>();
-//        String selectQuery = "SELECT * FROM " + db.getTableTeacher();
-//
-//        Cursor cursor = sql.rawQuery(selectQuery, null);
-//
-//        // looping through all rows and adding to list
-//        if (cursor.moveToFirst()) {
-//            do {
-//                Teacher teacher = new Teacher();
-//                teacher.setId(Integer.parseInt(cursor.getString(0)));
-//                teacher.setFirstName(cursor.getString(1));
-//                teacher.setLastName(cursor.getString(2));
-//                teacher.setMail(cursor.getString(3));
-//                teacher.setImageName(cursor.getString(4));
-//
-//                // Adding teacher to list
-//                teachersList.add(teacher);
-//            } while (cursor.moveToNext());
-//        }
-//
-//        sql.close();
-//
-//
-//        // return teachers list
-//        return teachersList;
-//    }
+    /**
+     * get all teachers from DB
+     * this is not used because have only one teacher
+     *
+     * @return
+     */
+    public ArrayList<Teacher> getAllTeachers() {
+
+        SQLiteDatabase sql = db.getReadableDatabase();
+
+        ArrayList<Teacher> teachersList = new ArrayList<Teacher>();
+        String selectQuery = "SELECT * FROM " + db.getTableTeacher();
+
+        Cursor cursor = sql.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Teacher teacher = new Teacher();
+                teacher.setId(Integer.parseInt(cursor.getString(0)));
+                teacher.setFirstName(cursor.getString(1));
+                teacher.setLastName(cursor.getString(2));
+                teacher.setMail(cursor.getString(3));
+                teacher.setImageName(cursor.getString(4));
+
+                // Adding teacher to list
+                teachersList.add(teacher);
+            } while (cursor.moveToNext());
+        }
+
+        sql.close();
 
 
-    //we don't want to delete a teacher
+        // return teachers list
+        return teachersList;
+    }
 
-//    public void deleteTeacher(int idTeacher) {
-//        deleteTeacherById(idTeacher);
-//        deleteAllAssignmentsByIdTeacher(idTeacher);
-//    }
-//
-//    private void deleteTeacherById(int idTeacher) {
-//        SQLiteDatabase sql = db.getWritableDatabase();
-//
-//        sql.delete(db.getTableTeacher(), db.getKeyId() + " = ?",
-//                new String[]{String.valueOf(idTeacher)});
-//        sql.close();
-//    }
-//
-//    private void deleteAllAssignmentsByIdTeacher(int idTeacher) {
-//
-//        SQLiteDatabase sql = db.getWritableDatabase();
-//
-//        sql.delete(db.getTableAssignement(), db.getASSIGNMENT_FKTEACHER() + " = ?",
-//                new String[]{String.valueOf(idTeacher)});
-//        sql.close();
-//    }
+    /**
+     * Count the number of rows in the teacher table
+     * @return
+     */
+    public long getNumberOfRowsInTableTeacher() {
+
+        SQLiteDatabase sql = db.getReadableDatabase();
+
+        String query = "SELECT Count(*) FROM " + db.getTableTeacher();
+
+
+        long nbRows = DatabaseUtils.queryNumEntries(sql, db.getTableTeacher());
+        return nbRows;
+    }
+
 }

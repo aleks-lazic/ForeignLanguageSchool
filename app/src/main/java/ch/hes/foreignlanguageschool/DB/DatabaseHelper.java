@@ -140,15 +140,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_DAY_TABLE);
         db.execSQL(CREATE_LECTUREDATE_TABLE);
         db.execSQL(CREATE_LECTURESTUDENT_TABLE);
-
-
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        //If we want to modify the db, we delete the old one and recreate a new one
+        db.execSQL("DROP TABLE " + TABLE_STUDENT + ", " + TABLE_TEACHER + ", " + TABLE_LECTURE + ", " +
+                TABLE_ASSIGNEMENT + ", " + TABLE_DAY + ", " + TABLE_LECTUREDATE + ", " + TABLE_LECTURESTUDENT + ";");
+        onCreate(db);
     }
 
+
+    // all getter and setter
     public String getTableAssignement() {
         return TABLE_ASSIGNEMENT;
     }
