@@ -6,6 +6,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import ch.hes.foreignlanguageschool.Adapters.CustomAdapterStudent;
+import ch.hes.foreignlanguageschool.DAO.Day;
 import ch.hes.foreignlanguageschool.DAO.Lecture;
 import ch.hes.foreignlanguageschool.DAO.Student;
 import ch.hes.foreignlanguageschool.DB.DBDay;
@@ -26,6 +28,8 @@ import ch.hes.foreignlanguageschool.DB.DBLecture;
 import ch.hes.foreignlanguageschool.DB.DBStudent;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
+
+import static android.R.attr.y;
 
 public class LectureActivity extends AppCompatActivity {
 
@@ -36,13 +40,15 @@ public class LectureActivity extends AppCompatActivity {
     private TextView teacher;
     private TextView startTime;
     private TextView endTime;
-    private TextView day;
+    private TextView txtDay;
 
     private DatabaseHelper db;
     private DBLecture dbLecture;
     private DBDay dbDay;
     private DBStudent dbStudent;
 
+    private Day day;
+    private String[] daysOfWeek;
     private ArrayList<Student> students;
     private CustomAdapterStudent studentsAdapter;
 
@@ -87,7 +93,7 @@ public class LectureActivity extends AppCompatActivity {
         teacher = (TextView) findViewById(R.id.activity_lecture_teacher);
         startTime = (TextView) findViewById(R.id.activity_lecture_starttime);
         endTime = (TextView) findViewById(R.id.activity_lecture_endtime);
-        day = (TextView) findViewById(R.id.activity_lecture_day);
+        txtDay = (TextView) findViewById(R.id.activity_lecture_day);
         listView_students = (ListView) findViewById(R.id.activity_lecture_students);
         //database
         db = DatabaseHelper.getInstance(this);
@@ -101,9 +107,10 @@ public class LectureActivity extends AppCompatActivity {
         teacher.setText(lecture.getTeacher().getFirstName() + " " + lecture.getTeacher().getLastName());
         startTime.setText(lecture.getStartTime());
         endTime.setText(lecture.getEndTime());
-        day.setText(dbDay.getDayById(lecture.getIdDay()).toString());
 
-        // Set the list of students
+        daysOfWeek = getResources().getStringArray(R.array.DaysOfWeekUntilSaturday);
+        day = dbDay.getDayById(lecture.getIdDay());
+        txtDay.setText(daysOfWeek[(day.getId() - 1)]);
 
         //set the students from the lecture
         students = lecture.getStudentsList();
@@ -171,7 +178,9 @@ public class LectureActivity extends AppCompatActivity {
         description.setText(lecture.getDescription());
         startTime.setText(lecture.getStartTime());
         endTime.setText(lecture.getEndTime());
-        day.setText(dbDay.getDayById(lecture.getIdDay()).toString());
+        daysOfWeek = getResources().getStringArray(R.array.DaysOfWeekUntilSaturday);
+        day = dbDay.getDayById(lecture.getIdDay());
+        txtDay.setText(daysOfWeek[(day.getId() - 1)]);
         students = lecture.getStudentsList();
         studentsAdapter = new CustomAdapterStudent(this, students);
         listView_students.setAdapter(studentsAdapter);

@@ -52,8 +52,9 @@ public class LectureEdit extends AppCompatActivity {
     private ArrayAdapter<Student> adapterStudent;
     private Student student;
 
+    private String[] daysOfWeek;
     private ArrayList<Day> days;
-    private ArrayAdapter<Day> adapterDay;
+    private ArrayAdapter<String> adapterDay;
     private Day day;
 
     private DatabaseHelper db;
@@ -93,6 +94,7 @@ public class LectureEdit extends AppCompatActivity {
         editTxtTimePickerTo.setText("");
         editTxtTimePickerFrom.setText("");
         txtTeacherName.setText(NavigationActivity.currentTeacher.toString());
+        daysOfWeek = getResources().getStringArray(R.array.DaysOfWeekUntilSaturday);
 
         //create database objects
         db = DatabaseHelper.getInstance(this);
@@ -122,7 +124,7 @@ public class LectureEdit extends AppCompatActivity {
 
             //create spinnerDay and set default position
             days = dbDay.getAllDays();
-            adapterDay = new ArrayAdapter<Day>(this, android.R.layout.simple_spinner_dropdown_item, days);
+            adapterDay = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, daysOfWeek);
             spinnerDays.setAdapter(adapterDay);
             day = dbDay.getDayById(lecture.getIdDay());
             setDefaultValueSpinner(spinnerDays, day.getId());
@@ -144,7 +146,7 @@ public class LectureEdit extends AppCompatActivity {
         } else {
             //set days spinner
             days = dbDay.getAllDays();
-            adapterDay = new ArrayAdapter<Day>(this, android.R.layout.simple_spinner_dropdown_item, days);
+            adapterDay = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, daysOfWeek);
             spinnerDays.setAdapter(adapterDay);
 
 
@@ -204,7 +206,7 @@ public class LectureEdit extends AppCompatActivity {
             }
 
             //get the day from spinner
-            day = (Day) spinnerDays.getSelectedItem();
+            day = (Day) dbDay.getDayById(spinnerDays.getSelectedItemPosition()+1);
 
             //insert everything in DB
             String title = txtTitle.getText().toString();
