@@ -72,4 +72,6 @@
     <string name="ProfileNavigation">Profil</string>
     <string name="startdateenddate">Enddatum muss nach dem Startdatum sein</string>
     <string name="daySummary">Zusamenfassung der</string>
+    <string name="EndDateStartDate">Enddatum muss nach Startdatum sein</string>
+    <string name="conflict">Konflikt mit einem anderen Vortrag</string>
 </resources>

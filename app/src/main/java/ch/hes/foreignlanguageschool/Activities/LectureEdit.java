@@ -449,7 +449,7 @@ public class LectureEdit extends AppCompatActivity {
 
             if ((beginTimeA.before(endTimeB) || beginTimeA.equals(endTimeB)) && (beginTimeB.before(endTimeA) || beginTimeB.equals(endTimeA))
                     && (beginTimeA.before(endTimeB) || beginTimeA.equals(endTimeB)) && (beginTimeB.before(endTimeB) || beginTimeB.equals(endTimeB))) {
-                Toast.makeText(getApplicationContext(), "Conflict with other lecture", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.conflict), Toast.LENGTH_SHORT).show();
                 return false;
             }
 

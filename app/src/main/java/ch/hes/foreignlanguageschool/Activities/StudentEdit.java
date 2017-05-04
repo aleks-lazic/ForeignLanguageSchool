@@ -269,7 +269,7 @@ public class StudentEdit extends AppCompatActivity {
         }
 
         if (endTimeA.before(beginTimeA) || endTimeA.equals(beginTimeA)) {
-            Toast.makeText(this, "fkasflk", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.startdateenddate), Toast.LENGTH_SHORT).show();
             return false;
         }
 
