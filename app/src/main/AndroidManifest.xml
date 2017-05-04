@@ -46,7 +46,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.LectureEdit"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".Activities.StudentEdit"
             android:screenOrientation="portrait" />

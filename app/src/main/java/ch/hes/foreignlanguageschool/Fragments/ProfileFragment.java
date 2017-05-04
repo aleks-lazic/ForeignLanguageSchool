@@ -93,6 +93,9 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 setEditable(true);
+                showKeyboard(getActivity().getApplicationContext());
+                txtFirstName.requestFocus();
+                cursorAtEnd(txtFirstName);
                 setHasOptionsMenu(true);
                 fab.setVisibility(View.INVISIBLE);
 
@@ -180,6 +183,18 @@ public class ProfileFragment extends Fragment {
         txtMail.setClickable(bool);
         txtMail.setFocusable(bool);
         txtMail.setFocusableInTouchMode(bool);
+    }
+
+    public static void showKeyboard(Context context) {
+        ((InputMethodManager) (context).getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+    }
+
+    /**
+     * Set the cursot at the end of the editText
+     * @param editText
+     */
+    public void cursorAtEnd(EditText editText) {
+        editText.setSelection(editText.getText().length());
     }
 
     /**
