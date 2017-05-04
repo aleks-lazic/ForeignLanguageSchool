@@ -8,17 +8,7 @@
     android:layout_marginRight="16dp"
     android:layout_marginStart="16dp"
     android:layout_marginTop="@dimen/margin_top"
-    android:paddingBottom="@dimen/margin_top"
     android:orientation="vertical">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
 
     <EditText
@@ -48,6 +38,7 @@
             android:id="@+id/titleDate"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
             android:text="@string/DayTitle"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/text_title" />
@@ -127,8 +118,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_child" />
-        </LinearLayout>
-    </ScrollView>
 
     <TextView
         android:id="@+id/teacherBox"
@@ -142,6 +131,6 @@
     <ListView
         android:id="@+id/listViewStudents"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="match_parent"></ListView>
 
 </LinearLayout>

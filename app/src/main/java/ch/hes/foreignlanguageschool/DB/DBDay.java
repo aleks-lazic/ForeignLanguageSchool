@@ -2,6 +2,7 @@ package ch.hes.foreignlanguageschool.DB;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
@@ -85,14 +86,29 @@ public class DBDay {
 
         if (cursor != null) {
             cursor.moveToFirst();
+
+            day.setId(Integer.parseInt(cursor.getString(0)));
+            day.setName(cursor.getString(1));
         }
 
-        day.setId(Integer.parseInt(cursor.getString(0)));
-        day.setName(cursor.getString(1));
+
 
         sql.close();
 
-        // return teacher
+        // return day
         return day;
+    }
+
+
+    /**
+     * Count the number of rows in the teacher table
+     * @return
+     */
+    public long getNumberOfRowsInTableDay() {
+
+        SQLiteDatabase sql = db.getReadableDatabase();
+
+        long nbRows = DatabaseUtils.queryNumEntries(sql, db.getTableDay());
+        return nbRows;
     }
 }

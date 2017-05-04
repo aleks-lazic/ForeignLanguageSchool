@@ -81,7 +81,7 @@
 
             <TextView
                 android:id="@+id/activity_lecture_starttime"
-                android:layout_width="115dp"
+                android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.33"
                 android:textAlignment="center" />
@@ -96,7 +96,7 @@
 
             <TextView
                 android:id="@+id/activity_lecture_endtime"
-                android:layout_width="115dp"
+                android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.33"
                 android:textAlignment="center" />

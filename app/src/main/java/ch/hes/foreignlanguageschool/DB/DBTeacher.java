@@ -156,9 +156,6 @@ public class DBTeacher {
 
         SQLiteDatabase sql = db.getReadableDatabase();
 
-        String query = "SELECT Count(*) FROM " + db.getTableTeacher();
-
-
         long nbRows = DatabaseUtils.queryNumEntries(sql, db.getTableTeacher());
         return nbRows;
     }

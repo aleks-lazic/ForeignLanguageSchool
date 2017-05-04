@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 import ch.hes.foreignlanguageschool.DAO.Teacher;
+import ch.hes.foreignlanguageschool.DB.DBDay;
 import ch.hes.foreignlanguageschool.DB.DBTeacher;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.Fragments.AssignmentsFragment;
@@ -69,6 +70,7 @@ public class NavigationActivity extends AppCompatActivity
     //Database
     private DatabaseHelper databaseHelper;
     private DBTeacher dbTeacher;
+    private DBDay dbDay;
 
 
     @Override
@@ -82,9 +84,21 @@ public class NavigationActivity extends AppCompatActivity
 
         //create the current teacher like if he was logged in
         dbTeacher = new DBTeacher(databaseHelper);
+        dbDay = new DBDay(databaseHelper);
 
         if (dbTeacher.getNumberOfRowsInTableTeacher() == 0) {
             dbTeacher.insertValues("Predrag", "Ljubicic", "pedjo.ljubo@mail.srb");
+        }
+
+        if(dbDay.getNumberOfRowsInTableDay() == 0) {
+            dbDay.insertValues("Monday");
+            dbDay.insertValues("Tuesday");
+            dbDay.insertValues("Wednesday");
+            dbDay.insertValues("Thursday");
+            dbDay.insertValues("Friday");
+            dbDay.insertValues("Saturday");
+            dbDay.insertValues("Sunday");
+
         }
 
         currentTeacher = dbTeacher.getTeacherById(1);

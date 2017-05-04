@@ -171,6 +171,7 @@ public class TodayFragment extends Fragment {
         adapterLecture = new CustomAdapterLecture(getActivity(),
                 lectures);
         listViewLectures.setAdapter(adapterLecture);
+        listViewLectures.setFocusable(false);
         setDynamicHeight(listViewLectures);
 
 
@@ -178,6 +179,7 @@ public class TodayFragment extends Fragment {
         adapterAssignment = new CustomAdapterAssignment(getActivity(),
                 assignments, todayDate);
         listViewAssignments.setAdapter(adapterAssignment);
+        listViewAssignments.setFocusable(false);
         setDynamicHeight(listViewAssignments);
 
     }

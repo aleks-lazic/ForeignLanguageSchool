@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,6 +38,8 @@ import ch.hes.foreignlanguageschool.DB.DBLecture;
 import ch.hes.foreignlanguageschool.DB.DBStudent;
 import ch.hes.foreignlanguageschool.DB.DatabaseHelper;
 import ch.hes.foreignlanguageschool.R;
+
+import static ch.hes.foreignlanguageschool.R.id.spinnerDay;
 
 
 public class LectureEdit extends AppCompatActivity {
@@ -83,7 +87,7 @@ public class LectureEdit extends AppCompatActivity {
         txtDescription = (EditText) findViewById(R.id.editTxtDescription);
         txtTeacherName = (TextView) findViewById(R.id.teacherName);
         listViewStudents = (ListView) findViewById(R.id.listViewStudents);
-        spinnerDays = (Spinner) findViewById(R.id.spinnerDay);
+        spinnerDays = (Spinner) findViewById(spinnerDay);
         editTxtTimePickerFrom = (EditText) findViewById(R.id.timePickerFrom);
         editTxtTimePickerTo = (EditText) findViewById(R.id.timePickerTo);
 
@@ -138,7 +142,7 @@ public class LectureEdit extends AppCompatActivity {
             adapterStudent = new ArrayAdapter<Student>(this, android.R.layout.simple_list_item_multiple_choice, allStudents);
             listViewStudents.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
             listViewStudents.setAdapter(adapterStudent);
-            setDynamicHeight(listViewStudents);
+            setListViewHeightBasedOnChildren(listViewStudents);
 
             //check which will be checked and which not
             for (int i = 0; i < allStudents.size(); i++) {
@@ -152,6 +156,8 @@ public class LectureEdit extends AppCompatActivity {
             days = dbDay.getAllDays();
             adapterDay = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, daysOfWeek);
             spinnerDays.setAdapter(adapterDay);
+            setDefaultValueSpinner(spinnerDays, 0);
+
 
             hideKeyboard();
 
@@ -162,7 +168,7 @@ public class LectureEdit extends AppCompatActivity {
             adapterStudent = new ArrayAdapter<Student>(this, android.R.layout.simple_list_item_multiple_choice, students);
             listViewStudents.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
             listViewStudents.setAdapter(adapterStudent);
-            setDynamicHeight(listViewStudents);
+            setListViewHeightBasedOnChildren(listViewStudents);
 
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -210,7 +216,9 @@ public class LectureEdit extends AppCompatActivity {
             }
 
             //get the day from spinner
-            day = (Day) dbDay.getDayById(spinnerDays.getSelectedItemPosition() + 1);
+            int position = spinnerDays.getSelectedItemPosition() + 1;
+            Log.d("Aleks", ""+position);
+            day = (Day) dbDay.getDayById(position);
 
             //insert everything in DB
             String title = txtTitle.getText().toString();
@@ -244,16 +252,15 @@ public class LectureEdit extends AppCompatActivity {
     }
 
 
-
-
     /**
      * check if endtime is after fromtime
+     *
      * @param fromTime
      * @param endTime
      * @return
      */
     public boolean checkEndTimeAfterStartTime(int fromTime, int endTime) {
-        if (fromTime > endTime) {
+        if (fromTime > endTime || fromTime == endTime) {
             Toast toast = Toast.makeText(this, " " + getResources().getString(R.string.TimeAlert), Toast.LENGTH_SHORT);
             toast.show();
             return false;
@@ -264,6 +271,7 @@ public class LectureEdit extends AppCompatActivity {
 
     /**
      * Check if title is filled
+     *
      * @param title
      * @return
      */
@@ -277,6 +285,7 @@ public class LectureEdit extends AppCompatActivity {
 
     /**
      * Check if endtime and begin time are filled
+     *
      * @param fromTime
      * @param endTime
      * @return
@@ -297,6 +306,7 @@ public class LectureEdit extends AppCompatActivity {
 
     /**
      * Check if minimum one student is selected
+     *
      * @param size
      * @return
      */
@@ -356,9 +366,10 @@ public class LectureEdit extends AppCompatActivity {
 
     /**
      * This method will do all the check we need
-     *   - Check if the title is fille
-     *   - Check if end time is after begin time
-     *   - Check if already one student is selected
+     * - Check if the title is fille
+     * - Check if end time is after begin time
+     * - Check if already one student is selected
+     *
      * @return
      */
     public boolean checkEverythingOnSaveClick() {
@@ -460,29 +471,33 @@ public class LectureEdit extends AppCompatActivity {
      * Method for Setting the Height of the ListView dynamically.
      * Hack to fix the issue of not showing all the items of the ListView
      * when placed inside a ScrollView
-     * @param mListView
+     *
+     * @param listView
      */
-    public static void setDynamicHeight(ListView mListView) {
-        ListAdapter mListAdapter = mListView.getAdapter();
-        if (mListAdapter == null) {
-            // when adapter is null
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null)
             return;
+
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int totalHeight = 0;
+        View view = null;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            view = listAdapter.getView(i, view, listView);
+            if (i == 0)
+                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, CollapsingToolbarLayout.LayoutParams.WRAP_CONTENT));
+
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
         }
-        int height = 0;
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(mListView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-        for (int i = 0; i < mListAdapter.getCount(); i++) {
-            View listItem = mListAdapter.getView(i, null, mListView);
-            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            height += listItem.getMeasuredHeight();
-        }
-        ViewGroup.LayoutParams params = mListView.getLayoutParams();
-        params.height = height + (mListView.getDividerHeight() * (mListAdapter.getCount() - 1));
-        mListView.setLayoutParams(params);
-        mListView.requestLayout();
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
     }
 
     /**
      * Set the cursot at the end of the editText
+     *
      * @param editText
      */
     public void cursorAtEnd(EditText editText) {
@@ -499,6 +514,7 @@ public class LectureEdit extends AppCompatActivity {
 
     /**
      * It will close the keyboard for edit text
+     *
      * @param c
      * @param windowToken
      */

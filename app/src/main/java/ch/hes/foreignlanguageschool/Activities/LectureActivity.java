@@ -52,9 +52,13 @@ public class LectureActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbarLayout;
 
-    /**** Method for Setting the Height of the ListView dynamically.
-     **** Hack to fix the issue of not showing all the items of the ListView
-     **** when placed inside a ScrollView  ****/
+    /**
+     * Method for Setting the Height of the ListView dynamically.
+     * Hack to fix the issue of not showing all the items of the ListView
+     * when placed inside a ScrollView
+     *
+     * @param listView
+     */
     public static void setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null)
